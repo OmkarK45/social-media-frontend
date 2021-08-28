@@ -1,0 +1,235 @@
+type AuthResponse {
+  success: Boolean!
+  user: User!
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+type Comment {
+  body: String!
+  id: String!
+  isMine: Boolean!
+  user: User!
+}
+
+input CreateCommentInput {
+  body: String!
+  postId: String!
+}
+
+input CreatePostInput {
+  caption: String!
+  media: FileUpload!
+}
+
+scalar DateTime
+
+input EditCommentInput {
+  body: String!
+  id: String!
+  postId: String!
+}
+
+input EditPostInput {
+  caption: String!
+  id: String!
+}
+
+input EditProfileInput {
+  avatar: String
+  bio: String
+  firstName: String!
+  lastName: String
+  username: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar FileUpload
+
+input FollowUserInput {
+  username: String!
+}
+
+type Hashtag {
+  hashtag: String!
+  id: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  changePassword(input: ChangePasswordInput!): ResultResponse!
+  createComment(input: CreateCommentInput!): ResultResponse!
+  createPost(input: CreatePostInput!): Post!
+  deleteComment(id: String!): ResultResponse!
+  deletePost(id: String!): ResultResponse!
+  editComment(input: EditCommentInput!): ResultResponse!
+  editPost(input: EditPostInput!): Post!
+  editProfile(input: EditProfileInput!): User!
+  followUser(input: FollowUserInput!): User!
+  logout: ResultResponse!
+  searchUser(keyword: String!): SearchResponse!
+  signIn(input: SignInInput!): AuthResponse!
+  signUp(input: SignUpInput!): AuthResponse!
+  toggleLike(id: String!): ResultResponse!
+  unfollowUser(input: FollowUserInput!): User!
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type Post implements Node {
+  caption: String
+  comments(after: ID, before: ID, first: Int, last: Int): PostCommentsConnection!
+  hashtags(after: ID, before: ID, first: Int, last: Int): PostHashtagsConnection!
+  id: ID!
+  image: String
+  isLiked: Boolean!
+  isMine: Boolean!
+  likedBy(after: ID, before: ID, first: Int, last: Int): PostLikedByConnection!
+  likes: Int!
+  totalComments: Int!
+  user: User!
+}
+
+type PostCommentsConnection {
+  edges: [PostCommentsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type PostCommentsConnectionEdge {
+  cursor: String!
+  node: Comment!
+}
+
+type PostHashtagsConnection {
+  edges: [PostHashtagsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type PostHashtagsConnectionEdge {
+  cursor: String!
+  node: Hashtag!
+}
+
+type PostLikedByConnection {
+  edges: [PostLikedByConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type PostLikedByConnectionEdge {
+  cursor: String!
+  node: User!
+}
+
+type ProfileResponse {
+  user: User!
+}
+
+type Query {
+  feed(after: ID, before: ID, first: Int, last: Int): QueryFeedConnection!
+  health: String!
+  me: User!
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+  seeLikes(after: ID, before: ID, first: Int, id: String!, last: Int): QuerySeeLikesConnection!
+  seePost(id: String!): Post!
+  seeProfile(username: String!): ProfileResponse!
+}
+
+type QueryFeedConnection {
+  edges: [QueryFeedConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryFeedConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type QuerySeeLikesConnection {
+  edges: [QuerySeeLikesConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QuerySeeLikesConnectionEdge {
+  cursor: String!
+  node: User!
+}
+
+type ResultResponse {
+  success: Boolean!
+}
+
+type SearchResponse {
+  total: Int!
+  users: [User!]!
+}
+
+type Session {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+  userId: ID!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input SignUpInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
+type User implements Node {
+  avatar: String
+  bio: String
+  createdAt: DateTime!
+  email: String!
+  firstName: String!
+  followers(after: ID, before: ID, first: Int, last: Int): UserFollowersConnection!
+  following(after: ID, before: ID, first: Int, last: Int): UserFollowingConnection!
+  id: ID!
+  lastName: String
+  updatedAt: DateTime!
+  username: String!
+}
+
+type UserFollowersConnection {
+  edges: [UserFollowersConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type UserFollowersConnectionEdge {
+  cursor: String!
+  node: User!
+}
+
+type UserFollowingConnection {
+  edges: [UserFollowingConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type UserFollowingConnectionEdge {
+  cursor: String!
+  node: User!
+}

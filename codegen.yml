@@ -1,0 +1,9 @@
+overwrite: true
+schema: 'http://localhost:5000/graphql'
+generates:
+  src/__generated__/schema.generated.ts:
+    plugins:
+      - typescript
+    config:
+      scalars:
+        DateTime: string
