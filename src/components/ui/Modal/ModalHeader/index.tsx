@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react'
 import { useContext } from 'react'
-import { CloseIcon } from '~/components/Assets/CloseIcon'
+import { CloseIcon } from '~/components/ui/Assets/CloseIcon'
 import { ModalContext } from '../index'
 import Button from '../../Button'
 

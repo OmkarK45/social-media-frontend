@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import { useApollo } from '../lib/apollo'
 import { ApolloProvider } from '@apollo/client'
-import { NProgress } from '~/components/NProgress'
+import { NProgress } from '~/components/ui/NProgress'
 import { ThemeProvider } from 'next-themes'
 
 function MyApp({ Component, pageProps }: AppProps) {
