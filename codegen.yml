@@ -1,9 +1,21 @@
 overwrite: true
 schema: 'http://localhost:5000/graphql'
+documents: 'src/**/!(*.d).{ts,tsx}'
 generates:
   src/__generated__/schema.generated.ts:
     plugins:
       - typescript
     config:
+      scalars:
+        DateTime: string
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      folder: __generated__
+      baseTypesPath: '__generated__/schema.generated.ts'
+    plugins:
+      - typescript-operations
+    config:
+      omitOperationSuffix: true
       scalars:
         DateTime: string

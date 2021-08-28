@@ -270,6 +270,7 @@ export type Query = {
   seeLikes: QuerySeeLikesConnection;
   seePost: Post;
   seeProfile: ProfileResponse;
+  sessionById: Session;
 };
 
 
@@ -307,6 +308,11 @@ export type QuerySeePostArgs = {
 
 export type QuerySeeProfileArgs = {
   username: Scalars['String'];
+};
+
+
+export type QuerySessionByIdArgs = {
+  id: Scalars['String'];
 };
 
 export type QueryFeedConnection = {
@@ -347,6 +353,7 @@ export type SearchResponse = {
 export type Session = {
   __typename?: 'Session';
   createdAt: Scalars['DateTime'];
+  expiresAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   updatedAt: Scalars['DateTime'];
   userId: Scalars['ID'];

@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
 			<ThemeProvider storageKey="preferred-theme" attribute="class">
-				<DefaultSeo defaultTitle="DogeSocial" titleTemplate="%s | myapp" />
+				<DefaultSeo defaultTitle="DogeSocial" titleTemplate="%s | DogeSocial" />
 				<NProgress />
 				<Component {...pageProps} />
 			</ThemeProvider>
