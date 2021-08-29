@@ -7,12 +7,12 @@ type Props = {
 	containerClassName?: string
 }
 
-const Avatar = ({
+export function Avatar({
 	url,
 	rounded = false,
 	containerClassName,
 	...props
-}: Props) => {
+}: Props) {
 	return (
 		<div
 			className={clsx('flex-shrink-0 relative w-10 h-10', containerClassName)}
@@ -29,5 +29,3 @@ const Avatar = ({
 		</div>
 	)
 }
-
-export default Avatar

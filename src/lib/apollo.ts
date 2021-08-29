@@ -87,15 +87,7 @@ export const createApolloClient = ({
 		nextClient = new ApolloClient({
 			ssrMode,
 			link: from([errorLink, httpLink]),
-			cache: new InMemoryCache({
-				typePolicies: {
-					Discussion: {
-						fields: {
-							messages: relayStylePagination(),
-						},
-					},
-				},
-			}),
+			cache: new InMemoryCache(),
 		})
 	}
 

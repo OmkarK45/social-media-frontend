@@ -21,7 +21,7 @@ const ModalHeader = ({
 	return (
 		<header className="flex items-center justify-center space-x-8">
 			<div className="flex-1 min-w-0">
-				<Dialog.Title as="h3" className="text-lg uppercase font-bold truncate">
+				<Dialog.Title as="h3" className="text-2xl uppercase font-bold truncate">
 					{title}
 				</Dialog.Title>
 				<Dialog.Description

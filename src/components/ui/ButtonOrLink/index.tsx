@@ -1,28 +1,8 @@
 import { ComponentPropsWithRef, forwardRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
-// TODO : look into this
-export const variants = {
-	default: {
-		base: 'flex items-center justify-center p-3 tracking-wide font-bold border-none outline-none transition duration-150 ease-in-out focus:outline-none disabled:opacity-60 disabled:pointer-events-none',
-		active:
-			'text-white bg-black focus:bg-opacity-80 hover:bg-opacity-80 active:bg-gray-800',
-		inactive:
-			'text-black bg-white focus:bg-gray-100 hover:bg-gray-100 active:bg-gray-200',
-	},
-	purple: {
-		base: 'flex items-center justify-center p-3 tracking-wide font-bold border-none outline-none transition duration-150 ease-in-out focus:outline-none disabled:opacity-60 disabled:pointer-events-none',
-		active:
-			'text-white bg-violet-900 focus:bg-opacity-80 hover:bg-opacity-80 active:bg-violet-800',
-		inactive:
-			'text-purple-700 bg-purple-200 hover:bg-purple-300 active:bg-purple-400 active:text-white focus-visible:bg-purple-300 focus-visible:ring focus-visible:ring-purple-600',
-	},
-}
-
 interface Styles {
 	ignoreStyles?: boolean
-	variant?: keyof typeof variants
 	active?: boolean
 	fullWidth?: boolean
 	rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'

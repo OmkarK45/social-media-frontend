@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { HiOutlineMoon, HiOutlineSun } from 'react-icons/hi'
-import Button from './ui/Button'
+import { Button } from './ui/Button'
 
 /**
  * Guide by https://www.youtube.com/watch?v=1q5oOZE6o4c
