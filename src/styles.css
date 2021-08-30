@@ -11,8 +11,22 @@ form {
 	margin-block-end: 0;
 }
 
-input:-webkit-autofill {
-	-webkit-text-fill-color: theme('colors.gray.800') !important;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-text-fill-color: black !important;
+	-webkit-box-shadow: 0 0 0 999px theme('colors.white') inset !important;
+	background-clip: content-box !important;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+	-webkit-text-fill-color: white !important;
+	-webkit-box-shadow: 0 0 0 999px theme('colors.gray.800') inset !important;
+	background-clip: content-box !important;
 }
 
 .text-muted {

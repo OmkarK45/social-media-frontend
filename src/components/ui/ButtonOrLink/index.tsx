@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 interface Styles {
 	ignoreStyles?: boolean
-	active?: boolean
 	fullWidth?: boolean
 	rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
 	className?: string

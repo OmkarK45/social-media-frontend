@@ -16,6 +16,7 @@ export type Scalars = {
 
 export type AuthResponse = {
   __typename?: 'AuthResponse';
+  session: Session;
   success: Scalars['Boolean'];
   user: User;
 };

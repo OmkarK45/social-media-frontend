@@ -88,6 +88,7 @@ export const resolveClientSession = async ({
 	}
 
 	sessionCache.set(req, session)
+	console.log('SESSION', session)
 	return session
 }
 
@@ -111,7 +112,7 @@ const fetchSession = async (
 				sessionId,
 			},
 		})
-
+		console.log('im run')
 		return data.data.sessionById
 	} catch (error) {
 		console.log('Fetch client session: ', error)

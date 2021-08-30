@@ -1,12 +1,10 @@
 import { gql, useQuery } from '@apollo/client'
 import { NextPage } from 'next'
+import { SignIn } from '~/components/Auth/SignIn'
 import { ThemeToggle } from '~/components/ThemeSwitcher'
 import { Button } from '~/components/ui/Button'
-import { Card } from '~/components/ui/Card/Card'
-import ErrorFallback from '~/components/ui/Fallbacks/ErrorFallback'
-import Toggle from '~/components/ui/Form/Switch'
+import { Card } from '~/components/ui/Card'
 import Heading from '~/components/ui/Heading'
-import { Status } from '~/components/ui/StatusPages/Status'
 import { HealthQuery } from './__generated__/index.generated'
 
 const query = gql`
@@ -22,7 +20,7 @@ const Home: NextPage = () => {
 			<ThemeToggle />
 			OK OK {loading && 'Loading'} {data && data.health}
 			<div className="space-x-3">
-				<Button variant="solid">Hello</Button>
+				<Button variant="solid">Follow</Button>
 				<Button variant="dark">Hello</Button>
 				<Button variant="secondary">Hello</Button>
 				<Button variant="white">Hello</Button>
@@ -32,8 +30,7 @@ const Home: NextPage = () => {
 				<Heading>Hello aaa</Heading>
 				<p className="text-muted">This is muted text</p>
 			</Card>
-			<ErrorFallback action={() => {}} />
-			<Toggle />
+			<SignIn />
 		</div>
 	)
 }

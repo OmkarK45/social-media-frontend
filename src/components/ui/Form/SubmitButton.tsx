@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
-import Button from '../Button'
-import { Props as ButtonProps } from '../ButtonOrLink'
+import { Button } from '../Button'
+import { Props as ButtonProps } from '../Button'
 import Spinner from '../Spinner'
 
 const FormSubmitButton = ({ children, ...props }: ButtonProps) => {
@@ -10,7 +10,6 @@ const FormSubmitButton = ({ children, ...props }: ButtonProps) => {
 		<Button
 			type="submit"
 			rounded="md"
-			active
 			disabled={formState.isSubmitting}
 			{...props}
 		>

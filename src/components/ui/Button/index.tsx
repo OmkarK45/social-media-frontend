@@ -35,6 +35,7 @@ export function Button({
 	loading = false,
 	size = 'base',
 	rounded,
+	fullWidth,
 	...props
 }: Props) {
 	const sizeStyles = ButtonSize[size] || ButtonSize.sm
@@ -47,7 +48,8 @@ export function Button({
 				rounded !== 'full' ? sizeStyles : '',
 				variantStyles,
 				rounded === 'full' ? 'rounded-full p-2' : `rounded-${rounded}`,
-				!rounded && 'rounded-md'
+				!rounded && 'rounded-md',
+				fullWidth && 'w-full'
 			)}
 			{...props}
 		>

@@ -15,7 +15,7 @@ const ErrorFallback = ({ action, icon, message }: Props) => {
 			<p className="font-medium text-gray-400">
 				{message ? message : 'Something went wrong.'}
 			</p>
-			<Button className="text-sm" rounded="md" active onClick={action}>
+			<Button className="text-sm" rounded="md" onClick={action}>
 				Try again
 			</Button>
 		</div>

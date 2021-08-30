@@ -40,7 +40,7 @@ export function FieldError({ name }: FieldErrorProps) {
 	const error = errors[name]
 	if (!error) return null
 
-	return <span className="text-sm text-red-600 italic">{error.message}</span>
+	return <span className="text-sm text-red-600">{error.message}</span>
 }
 
 interface Props<T extends FieldValues = any>
