@@ -40,4 +40,44 @@ input:-webkit-autofill:active {
 	@apply bg-brand-500 fixed z-50 top-0 left-0 w-full h-0.5;
 }
 
+/* Image Loading Logic Starts */
+/* Courtesy : https://joebell.co.uk/blog/loading-images-with-the-blur-down-technique */
+.img {
+	--img-blur: 42px;
+	--img-scale: 1.5;
+	--img-transition-duration: 1.2s;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	transform: translateZ(0); /* [1] */
+}
+
+.img__element {
+	font-size: 0; /* [3] */
+	opacity: 0;
+}
+
+/**
+ * "Blur Down"
+ */
+.img--blur-down .img__element,
+.img--blur-down .img__placeholder {
+	filter: blur(var(--img-blur));
+	transform: scale(var(--img-scale));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.img--blur-down .img__element {
+		transition: var(--img-transition-duration) ease;
+		transition-property: filter, opacity, transform;
+		will-change: filter, transform;
+	}
+}
+
+.img--blur-down.is-loaded .img__element {
+	opacity: 1;
+	transform: scale(1);
+	filter: blur(0);
+}
+
 @tailwind utilities;

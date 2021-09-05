@@ -183,6 +183,7 @@ export type PageInfo = {
 
 export type Post = Node & {
   __typename?: 'Post';
+  blurHash?: Maybe<Scalars['String']>;
   caption?: Maybe<Scalars['String']>;
   comments: PostCommentsConnection;
   hashtags: PostHashtagsConnection;

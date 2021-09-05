@@ -3,14 +3,14 @@ import { Button } from '../Button'
 import { Props as ButtonProps } from '../Button'
 import Spinner from '../Spinner'
 
-const FormSubmitButton = ({ children, ...props }: ButtonProps) => {
+const FormSubmitButton = ({ children, disabled, ...props }: ButtonProps) => {
 	const { formState } = useFormContext()
 
 	return (
 		<Button
 			type="submit"
 			rounded="md"
-			disabled={formState.isSubmitting}
+			disabled={formState.isSubmitting || disabled}
 			{...props}
 		>
 			{formState.isSubmitting && (

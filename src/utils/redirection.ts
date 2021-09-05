@@ -15,7 +15,6 @@ export const unauthenticatedRoute = async (
 			},
 		}
 	}
-	console.log('session', session)
 	return {
 		props: {},
 	}
@@ -37,7 +36,6 @@ export const authenticatedRoute = async (
 			},
 		}
 	}
-	console.log('session', session)
 	return {
 		props: {},
 	}

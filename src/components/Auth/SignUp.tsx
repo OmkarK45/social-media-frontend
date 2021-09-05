@@ -23,27 +23,31 @@ const SignUpSchema = z.object({
 	password: z.string().min(5),
 })
 
-const SIGNUP_MUTATION = gql`
-	mutation SignUpMutation($input: SignUpInput!) {
-		signUp(input: $input) {
-			success
-			session {
-				id
-			}
-			user {
-				username
-			}
-		}
-	}
-`
-
 export function SignUp() {
 	const [signup, { data, error, loading }] = useMutation<
 		SignUpMutation,
 		SignUpMutationVariables
-	>(SIGNUP_MUTATION, {
-		onError: (error) => toast(error.message),
-	})
+	>(
+		gql`
+			mutation SignUpMutation($input: SignUpInput!) {
+				signUp(input: $input) {
+					success
+					session {
+						id
+					}
+					user {
+						username
+					}
+				}
+			}
+		`,
+		{
+			onCompleted: () => {
+				router.push('/about')
+			},
+			onError: (error) => toast(error.message),
+		}
+	)
 
 	const authRedirect = useAuthRedirect()
 	const makeSession = initializeSession()
@@ -56,10 +60,10 @@ export function SignUp() {
 		<AuthLayout title="Sign Up." subtitle="Sign up and join the DogeSocial!">
 			<Form
 				form={form}
-				onSubmit={async (values) => {
-					await signup({ variables: { input: { ...values } } })
+				onSubmit={(values) => {
+					signup({ variables: { input: { ...values } } })
 					if (data?.signUp.success) {
-						await makeSession(data.signUp.session.id)
+						makeSession(data.signUp.session.id)
 						router.push('/about')
 					}
 				}}
@@ -114,14 +118,4 @@ export function SignUp() {
 			</div>
 		</AuthLayout>
 	)
-}
-
-{
-	/* type SignUpInput {
-email: String!
-firstName: String!
-lastName: String!
-password: String!
-username: String!
-} */
 }

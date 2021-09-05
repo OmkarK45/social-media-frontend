@@ -1,105 +1,96 @@
-import { gql, useMutation, useQuery } from '@apollo/client'
-import { useRouter } from 'next/router'
-import toast from 'react-hot-toast'
-import { z } from 'zod'
-import { initializeSession } from '~/utils/initializeSession'
-import { useAuthRedirect } from '~/utils/useAuthRedirect'
-import { Button } from '../ui/Button'
-import { Card } from '../ui/Card'
-import Form, { useZodForm } from '../ui/Form/Form'
-import FormSubmitButton from '../ui/Form/SubmitButton'
+import { object, string } from 'zod'
 import { Input } from '../ui/Input'
+import Form, { useZodForm } from '~/components/ui/Form/Form'
+import { gql, useMutation } from '@apollo/client'
 import { Link } from '../ui/Link'
+import { useAuthRedirect } from '~/utils/useAuthRedirect'
+
+import { useRouter } from 'next/router'
 import { AuthLayout } from './AuthLayout'
+import { Card } from '../ui/Card'
+import { initializeSession } from '~/utils/initializeSession'
+import toast from 'react-hot-toast'
+import { Button } from '../ui/Button'
 import {
-	LoginMutation,
-	LoginMutationVariables,
+	LoginFormMutation,
+	LoginFormMutationVariables,
 } from './__generated__/SignIn.generated'
 
-const LOGIN_MUTATION = gql`
-	mutation LoginMutation($input: SignInInput!) {
-		signIn(input: $input) {
-			success
-			user {
-				username
-			}
-			session {
-				id
-			}
-			success
-		}
-	}
-`
-
-const LoginSchema = z.object({
-	email: z.string().email(),
-	password: z
-		.string()
-		.min(5, 'Make sure password is atleast 5 characters long.'),
+const loginSchema = object({
+	email: string().email(),
+	password: string().min(6),
 })
 
-export function SignIn() {
+export function LoginForm() {
 	const authRedirect = useAuthRedirect()
-	const makeSession = initializeSession()
 	const router = useRouter()
+	const makeSession = initializeSession()
 
-	const [login, result] = useMutation<LoginMutation, LoginMutationVariables>(
-		LOGIN_MUTATION,
+	const [login, loginResult] = useMutation<
+		LoginFormMutation,
+		LoginFormMutationVariables
+	>(
+		gql`
+			mutation LoginFormMutation($input: SignInInput!) {
+				signIn(input: $input) {
+					user {
+						username
+					}
+					session {
+						id
+					}
+					success
+				}
+			}
+		`,
 		{
-			// onCompleted: () => router.push('/about'),
-			onError: (error) => toast(error.message),
+			onCompleted: () => {
+				router.push('/about')
+			},
+			onError(err) {
+				toast(err.message)
+			},
 		}
 	)
 
 	const form = useZodForm({
-		schema: LoginSchema,
+		schema: loginSchema,
 	})
 
-	const handleSubmit = async (values: z.infer<typeof LoginSchema>) => {
-		try {
-			await login({
-				variables: {
-					input: { email: values.email, password: values.password },
-				},
-			})
-			if (result.data?.signIn.success) {
-				await makeSession(result.data.signIn.session.id)
-				router.push('/about')
-			} else {
-				console.log(result)
-			}
-		} catch (e) {
-			console.log('Error occured', e)
-		}
-	}
-
-	console.log('rendered')
 	return (
 		<AuthLayout
 			title="Sign In."
 			subtitle="Welcome back! Sign in to your DogeSocial account."
 		>
-			<Form form={form} onSubmit={(values) => handleSubmit(values)}>
+			<Form
+				form={form}
+				onSubmit={async ({ email, password }) => {
+					await login({ variables: { input: { email, password } } })
+					if (loginResult.data?.signIn.success) {
+						await makeSession(loginResult.data.signIn.session.id)
+						router.push('/about')
+					}
+				}}
+				className="w-full"
+			>
 				<Input
-					{...form.register('email')}
-					label="Email Address"
+					label="Email"
 					type="email"
-					placeholder="you@example.com"
-					autoComplete="new-password"
+					placeholder="Type your email here"
+					autoComplete="email"
+					autoFocus
+					{...form.register('email')}
 				/>
 
 				<Input
-					{...form.register('password')}
 					label="Password"
 					type="password"
-					placeholder="Your password"
+					placeholder="Type your password here"
+					autoComplete="current-password"
+					{...form.register('password')}
 				/>
-				<Button onClick={() => console.log('clicked')} type="submit" fullWidth>
-					Login
-				</Button>
-				{/* <FormSubmitButton size="lg" fullWidth>
-					Login
-				</FormSubmitButton> */}
+
+				<Button type="submit">Login</Button>
 			</Form>
 			<div>
 				<Card rounded="lg" className="mt-4">

@@ -10,6 +10,7 @@ import {
 	useFormContext,
 } from 'react-hook-form'
 import { ZodSchema, TypeOf } from 'zod'
+import FormSubmitButton from '../SubmitButton'
 
 interface UseZodFormProps<T extends ZodSchema<any>>
 	extends UseFormProps<TypeOf<T>> {
@@ -68,5 +69,7 @@ const Form = <T extends FieldValues>({
 		</FormProvider>
 	)
 }
+
+Form.SubmitButton = FormSubmitButton
 
 export default Form

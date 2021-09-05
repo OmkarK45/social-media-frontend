@@ -40,6 +40,7 @@ interface ReqWithSession extends IncomingMessage {
 const create = async (req: ReqWithSession, sessionId: string) => {
 	req.session.set(IRON_SESSION_ID_KEY, sessionId)
 	await req.session.save()
+	console.log('sessionID', sessionId)
 	return sessionId
 }
 
@@ -80,6 +81,7 @@ export const resolveClientSession = async ({
 	let session: Partial<Session> | null = null
 
 	const reqWithSession = req as unknown as ReqWithSession
+
 	const sessionId = reqWithSession.session.get(IRON_SESSION_ID_KEY) as string
 
 	if (sessionId) {
@@ -88,7 +90,6 @@ export const resolveClientSession = async ({
 	}
 
 	sessionCache.set(req, session)
-	console.log('SESSION', session)
 	return session
 }
 
