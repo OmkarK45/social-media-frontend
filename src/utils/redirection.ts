@@ -7,6 +7,7 @@ export const unauthenticatedRoute = async (
 ) => {
 	const session = await resolveClientSession(ctx)
 
+	console.log(session, redirect)
 	if (session) {
 		return {
 			redirect: {
@@ -15,6 +16,7 @@ export const unauthenticatedRoute = async (
 			},
 		}
 	}
+
 	return {
 		props: {},
 	}

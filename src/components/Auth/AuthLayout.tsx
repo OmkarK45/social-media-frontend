@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from '~/components/ui/Card'
-import Heading from '~/components/ui/Heading'
+import { Heading } from '~/components/ui/Heading'
 
 interface Props {
 	title: string
@@ -29,8 +29,10 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 				</div>
 				<p className="mt-3 text-gray-500">{subtitle}</p>
 			</div>
-			<Card rounded="md" className=" py-6 sm:mx-auto sm:w-full sm:max-w-md">
-				<div>{children}</div>
+			<Card rounded="md" className="py-3 sm:mx-auto sm:w-full sm:max-w-md">
+				<Card.Body>
+					<div>{children}</div>
+				</Card.Body>
 			</Card>
 			<p className="text-center text-muted">Footer TODO</p>
 		</main>

@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import Heading from '~/components/ui/Heading'
+import { Heading } from '~/components/ui/Heading'
 import Spinner from '~/components/ui/Spinner'
 import { authenticatedRoute } from '~/utils/redirection'
 import { useUser } from '~/utils/useUser'

@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client'
 import { Link } from '../ui/Link'
 import { useAuthRedirect } from '~/utils/useAuthRedirect'
 
-import { useRouter } from 'next/router'
+import router from 'next/router'
 import { AuthLayout } from './AuthLayout'
 import { Card } from '../ui/Card'
 import { initializeSession } from '~/utils/initializeSession'
@@ -15,6 +15,8 @@ import {
 	LoginFormMutation,
 	LoginFormMutationVariables,
 } from './__generated__/SignIn.generated'
+import FormSubmitButton from '../ui/Form/SubmitButton'
+import { useEffect } from 'react'
 
 const loginSchema = object({
 	email: string().email(),
@@ -22,10 +24,6 @@ const loginSchema = object({
 })
 
 export function LoginForm() {
-	const authRedirect = useAuthRedirect()
-	const router = useRouter()
-	const makeSession = initializeSession()
-
 	const [login, loginResult] = useMutation<
 		LoginFormMutation,
 		LoginFormMutationVariables
@@ -52,10 +50,20 @@ export function LoginForm() {
 			},
 		}
 	)
+	const makeSession = initializeSession()
+	const authRedirect = useAuthRedirect()
 
 	const form = useZodForm({
 		schema: loginSchema,
 	})
+
+	useEffect(() => {
+		console.log(loginResult)
+		if (loginResult.data?.signIn.success) {
+			makeSession(loginResult.data.signIn.session.id)
+			router.push('/about')
+		}
+	}, [loginResult])
 
 	return (
 		<AuthLayout
@@ -66,10 +74,6 @@ export function LoginForm() {
 				form={form}
 				onSubmit={async ({ email, password }) => {
 					await login({ variables: { input: { email, password } } })
-					if (loginResult.data?.signIn.success) {
-						await makeSession(loginResult.data.signIn.session.id)
-						router.push('/about')
-					}
 				}}
 				className="w-full"
 			>
@@ -90,17 +94,19 @@ export function LoginForm() {
 					{...form.register('password')}
 				/>
 
-				<Button type="submit">Login</Button>
+				<FormSubmitButton>Login</FormSubmitButton>
 			</Form>
 			<div>
 				<Card rounded="lg" className="mt-4">
-					<span className="mr-1">Don’t have an account yet ?</span>
-					<Link
-						className="font-medium text-brand-600 hover:text-brand-400"
-						href="/auth/signup"
-					>
-						Join DogeSocial™
-					</Link>
+					<Card.Body>
+						<span className="mr-1">Don’t have an account yet ?</span>
+						<Link
+							className="font-medium text-brand-600 hover:text-brand-400"
+							href="/auth/signup"
+						>
+							Join DogeSocial™
+						</Link>
+					</Card.Body>
 				</Card>
 			</div>
 		</AuthLayout>

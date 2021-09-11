@@ -7,8 +7,21 @@ import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
 import '../styles.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
+
+type NextPageWithLayout = NextPage & {
+	getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout
+}
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 	const client = useApollo(pageProps.initialClientState)
+
+	const getLayout = Component.getLayout ?? ((page) => page)
 
 	return (
 		<ApolloProvider client={client}>
@@ -16,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<DefaultSeo defaultTitle="DogeSocial" titleTemplate="%s | DogeSocial" />
 				<NProgress />
 				<Toaster position="top-right" />
-				<Component {...pageProps} />
+				{getLayout(<Component {...pageProps} />)}
 			</ThemeProvider>
 		</ApolloProvider>
 	)

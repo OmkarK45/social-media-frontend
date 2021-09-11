@@ -1,12 +1,19 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 interface CardFooterProps {
 	children: ReactNode
+	className?: string
 }
 
-export function CardFooter({ children }: CardFooterProps) {
+export function CardFooter({ children, className }: CardFooterProps) {
 	return (
-		<footer className="py-4 px-5 lg:px-6 w-full text-sm text-center bg-gray-50 dark:bg-gray-600">
+		<footer
+			className={clsx(
+				'py-4 px-5 lg:px-6 w-full text-sm bg-gray-100 dark:bg-gray-700 overflow-hidden',
+				className
+			)}
+		>
 			{children}
 		</footer>
 	)

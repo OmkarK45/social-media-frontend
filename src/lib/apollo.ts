@@ -10,6 +10,7 @@ import { relayStylePagination } from '@apollo/client/utilities'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { useMemo } from 'react'
 import { API_URL } from './config'
+import { createUploadLink } from 'apollo-upload-client'
 
 let apolloClient: ApolloClient<any>
 
@@ -34,7 +35,7 @@ export const preloadQuery = async (
 				initialClientState: client.cache.extract(),
 			},
 		}
-	} catch (e) {
+	} catch (e: any) {
 		const notFoundError = e.graphQLErrors.find(
 			(error: Error) => (error as any)?.extensions.code === 404
 		)
@@ -83,10 +84,16 @@ export const createApolloClient = ({
 		if (networkError) console.log(`[Network error]: ${networkError}`)
 	})
 
+	const uploadLink = new createUploadLink({
+		uri: ssrMode ? 'http://localhost:5000/graphql' : API_URL,
+		headers: headers,
+		credentials: 'include',
+	})
+
 	if (!nextClient) {
 		nextClient = new ApolloClient({
 			ssrMode,
-			link: from([errorLink, httpLink]),
+			link: from([errorLink, uploadLink]),
 			cache: new InMemoryCache({
 				typePolicies: {
 					Query: {

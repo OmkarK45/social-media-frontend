@@ -13,4 +13,10 @@ module.exports = {
 		sourceType: 'module',
 	},
 	plugins: ['react', '@typescript-eslint'],
+	rules: {
+		'no-unused-vars': [
+			'warn',
+			{ vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+		],
+	},
 }

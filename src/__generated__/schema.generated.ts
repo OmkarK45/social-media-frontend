@@ -41,7 +41,8 @@ export type CreateCommentInput = {
 
 export type CreatePostInput = {
   caption: Scalars['String'];
-  media: Scalars['FileUpload'];
+  gifLink?: Maybe<Scalars['String']>;
+  media?: Maybe<Scalars['FileUpload']>;
 };
 
 
@@ -53,15 +54,17 @@ export type EditCommentInput = {
 
 export type EditPostInput = {
   caption: Scalars['String'];
+  gifLink?: Maybe<Scalars['String']>;
   id: Scalars['String'];
 };
 
 export type EditProfileInput = {
-  avatar?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['FileUpload']>;
   bio?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
+  coverImage?: Maybe<Scalars['FileUpload']>;
+  firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
-  username: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
 };
 
 
@@ -186,6 +189,7 @@ export type Post = Node & {
   blurHash?: Maybe<Scalars['String']>;
   caption?: Maybe<Scalars['String']>;
   comments: PostCommentsConnection;
+  gifImage?: Maybe<Scalars['String']>;
   hashtags: PostHashtagsConnection;
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
@@ -378,6 +382,7 @@ export type User = Node & {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
   bio?: Maybe<Scalars['String']>;
+  coverImage?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];

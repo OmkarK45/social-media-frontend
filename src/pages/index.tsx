@@ -2,13 +2,12 @@ import { gql, useQuery } from '@apollo/client'
 import { NextPage } from 'next'
 import { LoginForm } from '~/components/Auth/SignIn'
 import { ThemeToggle } from '~/components/ThemeSwitcher'
-import { Button } from '~/components/ui/Button'
-import { Card } from '~/components/ui/Card'
-import { Alert } from '~/components/ui/Alert'
-import Heading from '~/components/ui/Heading'
 import { HealthQuery } from './__generated__/index.generated'
 import { Image as BlurImage } from '~/components/ui/Image'
-
+import { Avatar } from '~/components/ui/Avatar'
+import { Navbar } from '~/components/Common/Navbar'
+import { Link } from '~/components/ui/Link'
+import Image from 'next/image'
 const query = gql`
 	query HealthQuery {
 		health
@@ -18,34 +17,39 @@ const query = gql`
 const Home: NextPage = () => {
 	const { error, loading, data } = useQuery<HealthQuery>(query)
 	return (
-		<div>
-			<ThemeToggle />
-			<div>
-				<BlurImage
-					width="400px"
-					height="400px"
-					blurHash="x6AjhNSXJ:SjE}JP]LJ=$R$9]D$9|#FY,u#*WbAv$TN=sW$AF3E^FHSNJOJV,G$AspwvJiNsJTf6FDj]o4WVs9wf"
-					src="https://res.cloudinary.com/dogecorp/image/upload/v1630858417/dogesocial/v1/images/yca7gfzanqerpzjn4anz.jpg"
+		<>
+			<Navbar />
+			<div className="mt-[75px]">
+				<Image
+					src="https://c.tenor.com/fv-cPw-JouwAAAAC/need-link.gif"
+					alt="GIF"
+					width="100px"
+					height="200px"
 				/>
+				<div className="space-x-2">
+					<Link href="/about">about</Link>
+					<Link href="/account/settings">Account Settings</Link>
+				</div>
+				<p>TODO : constrained layout</p>
+				<ThemeToggle />
+				<div>
+					<BlurImage
+						width="400px"
+						height="400px"
+						blurHash="x6AjhNSXJ:SjE}JP]LJ=$R$9]D$9|#FY,u#*WbAv$TN=sW$AF3E^FHSNJOJV,G$AspwvJiNsJTf6FDj]o4WVs9wf"
+						src="https://res.cloudinary.com/dogecorp/image/upload/v1630858417/dogesocial/v1/images/yca7gfzanqerpzjn4anz.jpg"
+					/>
+				</div>
+				<div>
+					<Avatar
+						rounded
+						url="https://res.cloudinary.com/dogecorp/image/upload/v1630858417/dogesocial/v1/images/yca7gfzanqerpzjn4anz.jpg"
+					/>
+				</div>
+				OK OK {loading && 'Loading'} {data && data.health}
+				<LoginForm />
 			</div>
-			OK OK {loading && 'Loading'} {data && data.health}
-			<div className="space-x-3">
-				<Button variant="solid">Follow</Button>
-				<Button variant="dark">Hello</Button>
-				<Button variant="secondary">Hello</Button>
-				<Button variant="white">Hello</Button>
-				<Button variant="danger">Hello</Button>
-			</div>
-			<Card rounded="lg">
-				<Heading>Hello aaa</Heading>
-				<p className="text-muted">This is muted text</p>
-			</Card>
-			<Alert message="Password is incorrect" status="error" />
-			<Alert message="Password is incorrect" status="success" />
-			<Alert message="Password is incorrect" status="info" />
-			<Alert message="Password is incorrect" status="warning" />
-			<LoginForm />
-		</div>
+		</>
 	)
 }
 

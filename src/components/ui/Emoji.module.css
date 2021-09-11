@@ -1,96 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-@tailwind base;
-@tailwind components;
-
-body {
-	@apply text-gray-900 bg-gray-100 dark:text-gray-100 dark:bg-gray-900 antialiased font-sans;
-	font-feature-settings: 'cv11';
-}
-
-form {
-	margin-block-end: 0;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-	-webkit-text-fill-color: black !important;
-	-webkit-box-shadow: 0 0 0 999px theme('colors.white') inset !important;
-	background-clip: content-box !important;
-}
-
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-	-webkit-text-fill-color: white !important;
-	-webkit-box-shadow: 0 0 0 999px theme('colors.gray.800') inset !important;
-	background-clip: content-box !important;
-}
-
-.text-muted {
-	@apply text-gray-500;
-}
-
-#nprogress {
-	@apply z-50 pointer-events-none;
-}
-#nprogress .bar {
-	@apply bg-brand-500 fixed z-50 top-0 left-0 w-full h-0.5;
-}
-
-/* Image Loading Logic Starts */
-/* Courtesy : https://joebell.co.uk/blog/loading-images-with-the-blur-down-technique */
-.img {
-	--img-blur: 42px;
-	--img-scale: 1.5;
-	--img-transition-duration: 1.2s;
-	display: block;
-	position: relative;
-	overflow: hidden;
-	transform: translateZ(0); /* [1] */
-}
-
-.img__element {
-	font-size: 0; /* [3] */
-	opacity: 0;
-}
-
-/**
- * "Blur Down"
- */
-.img--blur-down .img__element,
-.img--blur-down .img__placeholder {
-	filter: blur(var(--img-blur));
-	transform: scale(var(--img-scale));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.img--blur-down .img__element {
-		transition: var(--img-transition-duration) ease;
-		transition-property: filter, opacity, transform;
-		will-change: filter, transform;
-	}
-}
-
-.img--blur-down.is-loaded .img__element {
-	opacity: 1;
-	transform: scale(1);
-	filter: blur(0);
-}
-
-.infinite-scroll-component {
-	overflow: unset !important;
-}
-.reactGiphySearchbox-componentWrapper {
-	overflow: hidden;
-}
-.reactGiphySearchbox-searchForm-input {
-	border-radius: 0.5rem !important;
-	color: black !important;
-}
-
 .slack {
 	margin: 10px;
 }
@@ -101,7 +8,8 @@ input:-webkit-autofill:active {
 	background: #fff;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
 	color: #2c2d30;
-	font-family: 'Inter', sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Tahoma, Arial,
+		sans-serif;
 	font-size: 0.95rem;
 	line-height: 1rem;
 	width: 360px;
@@ -175,9 +83,7 @@ input:-webkit-autofill:active {
 .slack .interweave-picker__emojis-body {
 	padding: 0;
 }
-.slack .interweave-picker__emojis-list {
-	width: 100% !important;
-}
+
 .slack .interweave-picker__emojis-body::after {
 	display: block;
 	content: '';
@@ -357,5 +263,3 @@ input:-webkit-autofill:active {
 		background-color: #eee;
 	}
 }
-
-@tailwind utilities;

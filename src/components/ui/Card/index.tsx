@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+import { CardBody } from './CardBody'
 import { CardFooter } from './CardFooter'
 
 interface CardProps {
@@ -12,7 +13,6 @@ interface CardProps {
 }
 
 export function Card({
-	noPadding = false,
 	children,
 	container = true,
 	rounded = 'sm',
@@ -22,8 +22,7 @@ export function Card({
 	return (
 		<div
 			className={clsx(
-				'bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 ',
-				noPadding ? 'p-0' : 'px-4 py-3',
+				'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 ',
 				container ? 'mx-auto' : '',
 				rounded && `rounded-${rounded}`,
 				shadow !== 'none' && `shadow-${shadow}`,
@@ -35,4 +34,5 @@ export function Card({
 	)
 }
 
+Card.Body = CardBody
 Card.Footer = CardFooter

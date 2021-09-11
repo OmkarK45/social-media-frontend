@@ -24,7 +24,7 @@ const SignUpSchema = z.object({
 })
 
 export function SignUp() {
-	const [signup, { data, error, loading }] = useMutation<
+	const [signup, { data }] = useMutation<
 		SignUpMutation,
 		SignUpMutationVariables
 	>(
@@ -107,13 +107,15 @@ export function SignUp() {
 			</Form>
 			<div>
 				<Card rounded="lg" className="mt-4">
-					<span className="mr-1">Already have an account ?</span>
-					<Link
-						className="font-medium text-brand-600 hover:text-brand-400"
-						href="/auth/signin"
-					>
-						Log into DogeSocial™
-					</Link>
+					<Card.Body>
+						<span className="mr-1">Already have an account ?</span>
+						<Link
+							className="font-medium text-brand-600 hover:text-brand-400"
+							href="/auth/signin"
+						>
+							Log into DogeSocial™
+						</Link>
+					</Card.Body>
 				</Card>
 			</div>
 		</AuthLayout>
