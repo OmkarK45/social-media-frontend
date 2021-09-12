@@ -3,11 +3,7 @@ import { authenticatedRoute } from '~/utils/redirection'
 import { FeedLayout } from '~/components/Common/Layouts/FeedLayout'
 
 export default function FeedPage() {
-	return (
-		<>
-			<FeedLayout />
-		</>
-	)
+	return <FeedLayout />
 }
 
 /** TODO : eslint*/

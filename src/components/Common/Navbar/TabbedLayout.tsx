@@ -28,33 +28,31 @@ export function TabbedLayout({ navigation }: TabbedLayoutProps) {
 							{navigation.map((item, index) => {
 								const Icon = item.icon
 								return (
-									<>
-										<Tab
-											key={index}
-											className={({ selected }) =>
-												clsx(
-													selected
-														? 'bg-brand-800 text-white dark:bg-brand-700 dark:text-white'
-														: 'text-gray-600 hover:text-white hover:bg-brand-600 dark:hover:bg-brand-500 dark:hover:text-gray-100',
-													'group flex items-center px-3 py-2 text-sm font-medium rounded-md w-full '
-												)
-											}
-										>
-											{({ selected }) => (
-												<span className="truncate flex items-center">
-													<Icon
-														className={clsx(
-															selected
-																? 'text-white'
-																: 'text-gray-400 group-hover:text-white dark:group-hover:text-white',
-															'flex-shrink-0 mr-3 h-6 w-6'
-														)}
-													/>
-													<p>{item.name}</p>
-												</span>
-											)}
-										</Tab>
-									</>
+									<Tab
+										key={index + 10}
+										className={({ selected }) =>
+											clsx(
+												selected
+													? 'bg-brand-800 text-white dark:bg-brand-700 dark:text-white'
+													: 'text-gray-600 hover:text-white hover:bg-brand-600 dark:hover:bg-brand-500 dark:hover:text-gray-100',
+												'group flex items-center px-3 py-2 text-sm font-medium rounded-md w-full '
+											)
+										}
+									>
+										{({ selected }) => (
+											<span className="truncate flex items-center">
+												<Icon
+													className={clsx(
+														selected
+															? 'text-white'
+															: 'text-gray-400 group-hover:text-white dark:group-hover:text-white',
+														'flex-shrink-0 mr-3 h-6 w-6'
+													)}
+												/>
+												<p>{item.name}</p>
+											</span>
+										)}
+									</Tab>
 								)
 							})}
 						</Tab.List>
@@ -63,11 +61,7 @@ export function TabbedLayout({ navigation }: TabbedLayoutProps) {
 			</aside>
 			<Tab.Panels className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
 				{navigation.map((panel, index) => {
-					return (
-						panel.component && (
-							<Tab.Panel key={index}>{panel.component}</Tab.Panel>
-						)
-					)
+					return <Tab.Panel key={index}>{panel.component}</Tab.Panel>
 				})}
 			</Tab.Panels>
 		</Tab.Group>

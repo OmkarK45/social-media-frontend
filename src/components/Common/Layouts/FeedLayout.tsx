@@ -1,13 +1,14 @@
 import React from 'react'
-import { HiOutlineHome } from 'react-icons/hi'
+import { HiOutlineFire, HiOutlineHashtag, HiOutlineHome } from 'react-icons/hi'
 import { Feed } from '~/components/Feed'
+import { Heading } from '~/components/ui/Heading'
 import { RightSidebar } from '../Navbar/RightSidebar'
 import { TabbedLayout } from '../Navbar/TabbedLayout'
 
 export function FeedLayout() {
 	return (
 		<div className="py-10">
-			<div className="max-w-3xl border border-white mx-auto sm:px-6 lg:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">
+			<div className="max-w-3xl border border-white mx-auto sm:px-6 lg:max-w-full xl:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">
 				<div className="lg:col-span-9 lg:grid lg:grid-cols-12 lg:gap-8 border border-red-500">
 					<TabbedLayout
 						isTabbed={true}
@@ -17,10 +18,20 @@ export function FeedLayout() {
 								icon: HiOutlineHome,
 								name: 'Your Feed',
 							},
+							{
+								component: <h1>Popular</h1>,
+								icon: HiOutlineFire,
+								name: 'Popular',
+							},
+							{
+								component: <Heading>Hashtags</Heading>,
+								icon: HiOutlineHashtag,
+								name: 'Trending',
+							},
 						]}
 					/>
 				</div>
-				<div className="lg:col-span-3">
+				<div className="hidden lg:block lg:col-span-3">
 					<RightSidebar />
 				</div>
 			</div>

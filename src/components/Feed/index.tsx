@@ -16,6 +16,7 @@ const FEED_QUERY = gql`
 				node {
 					image
 					id
+					caption
 					user {
 						username
 						firstName
