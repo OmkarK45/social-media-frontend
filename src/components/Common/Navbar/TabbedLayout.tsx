@@ -25,11 +25,12 @@ export function TabbedLayout({ navigation }: TabbedLayoutProps) {
 				>
 					<div className="pb-8 space-y-1">
 						<Tab.List className="space-y-2">
-							{navigation.map((item) => {
+							{navigation.map((item, index) => {
 								const Icon = item.icon
 								return (
 									<>
 										<Tab
+											key={index}
 											className={({ selected }) =>
 												clsx(
 													selected

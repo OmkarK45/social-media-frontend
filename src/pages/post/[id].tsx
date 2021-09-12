@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router'
+import { Interweave } from '~/components/Interweave'
 import { Heading } from '~/components/ui/Heading'
 
 export default function Post() {
 	const router = useRouter()
 	const { id } = router.query
-
 	return (
-		<h1>
+		<div>
 			POST PAGE
 			<Heading size="h4">{id}</Heading>
-		</h1>
+			<Interweave content="😍😍😍😍😍😍 https://sushilburagute.github.io #OK #NOTOK" />
+		</div>
 	)
 }

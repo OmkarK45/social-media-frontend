@@ -95,7 +95,7 @@ export type Mutation = {
   editProfile: User;
   followUser: User;
   logout: ResultResponse;
-  searchUser: SearchResponse;
+  searchUser: MutationSearchUserConnection;
   signIn: AuthResponse;
   signUp: AuthResponse;
   toggleLike: ResultResponse;
@@ -149,7 +149,11 @@ export type MutationFollowUserArgs = {
 
 
 export type MutationSearchUserArgs = {
+  after?: Maybe<Scalars['ID']>;
+  before?: Maybe<Scalars['ID']>;
+  first?: Maybe<Scalars['Int']>;
   keyword: Scalars['String'];
+  last?: Maybe<Scalars['Int']>;
 };
 
 
@@ -170,6 +174,18 @@ export type MutationToggleLikeArgs = {
 
 export type MutationUnfollowUserArgs = {
   input: FollowUserInput;
+};
+
+export type MutationSearchUserConnection = {
+  __typename?: 'MutationSearchUserConnection';
+  edges: Array<Maybe<MutationSearchUserConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type MutationSearchUserConnectionEdge = {
+  __typename?: 'MutationSearchUserConnectionEdge';
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type Node = {
@@ -273,6 +289,7 @@ export type Query = {
   me: User;
   node?: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
+  postsByHashtag: QueryPostsByHashtagConnection;
   seeLikes: QuerySeeLikesConnection;
   seePost: Post;
   seeProfile: ProfileResponse;
@@ -295,6 +312,15 @@ export type QueryNodeArgs = {
 
 export type QueryNodesArgs = {
   ids: Array<Scalars['ID']>;
+};
+
+
+export type QueryPostsByHashtagArgs = {
+  after?: Maybe<Scalars['ID']>;
+  before?: Maybe<Scalars['ID']>;
+  first?: Maybe<Scalars['Int']>;
+  hashtag: Scalars['String'];
+  last?: Maybe<Scalars['Int']>;
 };
 
 
@@ -329,6 +355,18 @@ export type QueryFeedConnection = {
 
 export type QueryFeedConnectionEdge = {
   __typename?: 'QueryFeedConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
+};
+
+export type QueryPostsByHashtagConnection = {
+  __typename?: 'QueryPostsByHashtagConnection';
+  edges: Array<Maybe<QueryPostsByHashtagConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryPostsByHashtagConnectionEdge = {
+  __typename?: 'QueryPostsByHashtagConnectionEdge';
   cursor: Scalars['String'];
   node: Post;
 };

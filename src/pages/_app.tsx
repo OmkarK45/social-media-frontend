@@ -1,3 +1,5 @@
+import { polyfill } from 'interweave-ssr'
+polyfill()
 import type { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import { useApollo } from '../lib/apollo'

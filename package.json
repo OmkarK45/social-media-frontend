@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@apollo/client": "^3.4.10",
+		"@dhaiwat10/react-link-preview": "^1.9.0",
 		"@headlessui/react": "^1.4.0",
 		"@hookform/resolvers": "^2.8.0",
 		"@tailwindcss/aspect-ratio": "^0.2.1",
@@ -24,8 +25,10 @@
 		"emojibase": "^5.2.0",
 		"graphql": "^15.5.1",
 		"interweave": "^12.8.0",
+		"interweave-autolink": "^4.4.3",
 		"interweave-emoji": "^6.0.2",
 		"interweave-emoji-picker": "^6.0.3",
+		"interweave-ssr": "^1.2.1",
 		"next": "11.1.0",
 		"next-iron-session": "^4.2.0",
 		"next-seo": "^4.26.0",

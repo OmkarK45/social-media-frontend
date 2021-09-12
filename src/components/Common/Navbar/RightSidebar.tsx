@@ -14,8 +14,8 @@ const whoToFollow = [
 
 export function RightSidebar() {
 	return (
-		<aside className="hidden xl:block xl:col-span-4">
-			<div className="sticky top-4 space-y-4">
+		<aside className="w-full sticky top-4">
+			<div className=" space-y-4">
 				<section aria-labelledby="who-to-follow-heading">
 					<div className="bg-gray-200 dark:bg-gray-800 rounded-lg shadow">
 						<div className="p-6">
@@ -38,16 +38,16 @@ export function RightSidebar() {
 											<div className="flex-shrink-0">
 												<img
 													className="h-8 w-8 rounded-full"
-													src={user.imageUrl}
+													src="https://github.com/ashwinkhode.png"
 													alt=""
 												/>
 											</div>
 											<div className="min-w-0 flex-1">
 												<p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-													<a href={user.href}>{user.name}</a>
+													<a href={user.href}>Ashwin Khode</a>
 												</p>
 												<p className="text-sm text-gray-500 dark:text-gray-400">
-													<a href={user.href}>{'@' + user.handle}</a>
+													<a href={user.href}>@ashwin4real</a>
 												</p>
 											</div>
 											<div className="flex-shrink-0">

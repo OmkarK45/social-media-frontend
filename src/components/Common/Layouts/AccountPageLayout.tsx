@@ -4,6 +4,7 @@ import {
 	HiOutlineSparkles,
 	HiOutlineUserCircle,
 } from 'react-icons/hi'
+import { Feed } from '~/components/Feed'
 import { EditProfileTab } from '~/components/Profile/EditProfileTab'
 import { PasswordTab } from '~/components/Profile/Password'
 import { Preferences } from '~/components/Profile/Preferences'
