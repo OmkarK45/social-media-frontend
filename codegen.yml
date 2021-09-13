@@ -6,6 +6,8 @@ generates:
     plugins:
       - typescript
     config:
+      avoidOptionals: true
+      maybeValue: T | null
       scalars:
         DateTime: string
   src/:

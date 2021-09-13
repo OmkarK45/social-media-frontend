@@ -1,5 +1,8 @@
 # TODO
 
+- PostCard for single page + comments UI today
+- Later tonight postcard mutations.
+
 - Feedpage layout [x]
 - Edit profile page [x]
 - Security -> change password page [x]

@@ -2,11 +2,9 @@ import { gql, useQuery } from '@apollo/client'
 import { FeedQuery, FeedQueryVariables } from './__generated__/index.generated'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Card } from '../ui/Card'
-import Spinner from '../ui/Spinner'
 import { HiCheckCircle } from 'react-icons/hi'
 import GradientBar from '../ui/GradientBar'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
-import { RightSidebar } from '../Common/Navbar/RightSidebar'
 
 const FEED_QUERY = gql`
 	query FeedQuery($first: Int, $after: ID) {

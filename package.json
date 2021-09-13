@@ -43,6 +43,7 @@
 		"react-hot-toast": "^2.1.1",
 		"react-icons": "^4.2.0",
 		"react-infinite-scroll-component": "^6.1.0",
+		"react-laag": "^2.0.3",
 		"zod": "^3.8.1",
 		"zustand": "^3.5.10"
 	},

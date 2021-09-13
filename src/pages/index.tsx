@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 				<ThemeToggle />
 				<div>
 					<BlurImage
-						width="400px"
+						width="500"
 						height="400px"
 						blurHash="x6AjhNSXJ:SjE}JP]LJ=$R$9]D$9|#FY,u#*WbAv$TN=sW$AF3E^FHSNJOJV,G$AspwvJiNsJTf6FDj]o4WVs9wf"
 						src="https://res.cloudinary.com/dogecorp/image/upload/v1630858417/dogesocial/v1/images/yca7gfzanqerpzjn4anz.jpg"

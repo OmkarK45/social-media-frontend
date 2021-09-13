@@ -17,32 +17,35 @@ export function Image({ blurHash, height, width, src, ...props }: ImageProps) {
 					'img',
 					'img--blur-down',
 
-					isLoaded && 'is-loaded'
+					isLoaded && 'is-loaded',
+					'mx-auto -mb-px'
 				)}
-				style={{
-					['--img-aspect-ratio' as keyof React.CSSProperties]: `${
-						((height as any) / (width as any)) * 100
-					}%`,
-				}}
 			>
 				<BlurhashCanvas
 					hash={blurHash}
 					punch={1}
 					style={{
 						position: 'absolute',
-						inset: 0,
+						right: 0,
+						left: 0,
+						top: 0,
+						bottom: 0,
+						margin: 'auto',
 						width,
 						height,
 					}}
 				/>
-				<NextImage
-					className="img__element"
-					onLoadingComplete={() => setIsLoaded(true)}
-					src={src}
-					height={height}
-					width={width}
-					{...props}
-				/>
+				<div className="flex justify-center">
+					<NextImage
+						alt="TODO"
+						className="img__element"
+						src={src}
+						height={height}
+						width={width}
+						{...props}
+						onLoadingComplete={() => setIsLoaded(true)}
+					/>
+				</div>
 			</div>
 		</>
 	)

@@ -41,8 +41,8 @@ export type CreateCommentInput = {
 
 export type CreatePostInput = {
   caption: Scalars['String'];
-  gifLink?: Maybe<Scalars['String']>;
-  media?: Maybe<Scalars['FileUpload']>;
+  gifLink: Maybe<Scalars['String']>;
+  media: Maybe<Scalars['FileUpload']>;
 };
 
 
@@ -54,17 +54,17 @@ export type EditCommentInput = {
 
 export type EditPostInput = {
   caption: Scalars['String'];
-  gifLink?: Maybe<Scalars['String']>;
+  gifLink: Maybe<Scalars['String']>;
   id: Scalars['String'];
 };
 
 export type EditProfileInput = {
-  avatar?: Maybe<Scalars['FileUpload']>;
-  bio?: Maybe<Scalars['String']>;
-  coverImage?: Maybe<Scalars['FileUpload']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
+  avatar: Maybe<Scalars['FileUpload']>;
+  bio: Maybe<Scalars['String']>;
+  coverImage: Maybe<Scalars['FileUpload']>;
+  firstName: Maybe<Scalars['String']>;
+  lastName: Maybe<Scalars['String']>;
+  username: Maybe<Scalars['String']>;
 };
 
 
@@ -149,11 +149,11 @@ export type MutationFollowUserArgs = {
 
 
 export type MutationSearchUserArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
   keyword: Scalars['String'];
-  last?: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -194,21 +194,21 @@ export type Node = {
 
 export type PageInfo = {
   __typename?: 'PageInfo';
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor: Maybe<Scalars['String']>;
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor: Maybe<Scalars['String']>;
 };
 
 export type Post = Node & {
   __typename?: 'Post';
-  blurHash?: Maybe<Scalars['String']>;
-  caption?: Maybe<Scalars['String']>;
+  blurHash: Maybe<Scalars['String']>;
+  caption: Maybe<Scalars['String']>;
   comments: PostCommentsConnection;
-  gifImage?: Maybe<Scalars['String']>;
+  gifImage: Maybe<Scalars['String']>;
   hashtags: PostHashtagsConnection;
   id: Scalars['ID'];
-  image?: Maybe<Scalars['String']>;
+  image: Maybe<Scalars['String']>;
   isLiked: Scalars['Boolean'];
   isMine: Scalars['Boolean'];
   likedBy: PostLikedByConnection;
@@ -219,26 +219,26 @@ export type Post = Node & {
 
 
 export type PostCommentsArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
 export type PostHashtagsArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
 export type PostLikedByArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 export type PostCommentsConnection = {
@@ -287,7 +287,7 @@ export type Query = {
   feed: QueryFeedConnection;
   health: Scalars['String'];
   me: User;
-  node?: Maybe<Node>;
+  node: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
   postsByHashtag: QueryPostsByHashtagConnection;
   seeLikes: QuerySeeLikesConnection;
@@ -298,10 +298,10 @@ export type Query = {
 
 
 export type QueryFeedArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -316,20 +316,20 @@ export type QueryNodesArgs = {
 
 
 export type QueryPostsByHashtagArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
   hashtag: Scalars['String'];
-  last?: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
 export type QuerySeeLikesArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
   id: Scalars['String'];
-  last?: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -397,7 +397,7 @@ export type SearchResponse = {
 export type Session = {
   __typename?: 'Session';
   createdAt: Scalars['DateTime'];
-  expiresAt?: Maybe<Scalars['DateTime']>;
+  expiresAt: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   updatedAt: Scalars['DateTime'];
   userId: Scalars['ID'];
@@ -418,34 +418,34 @@ export type SignUpInput = {
 
 export type User = Node & {
   __typename?: 'User';
-  avatar?: Maybe<Scalars['String']>;
-  bio?: Maybe<Scalars['String']>;
-  coverImage?: Maybe<Scalars['String']>;
+  avatar: Maybe<Scalars['String']>;
+  bio: Maybe<Scalars['String']>;
+  coverImage: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   followers: UserFollowersConnection;
   following: UserFollowingConnection;
   id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
+  lastName: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
 };
 
 
 export type UserFollowersArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
 export type UserFollowingArgs = {
-  after?: Maybe<Scalars['ID']>;
-  before?: Maybe<Scalars['ID']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 export type UserFollowersConnection = {
