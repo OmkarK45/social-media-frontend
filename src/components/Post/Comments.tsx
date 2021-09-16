@@ -8,6 +8,7 @@ import {
 } from './__generated__/Comments.generated'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import { formatDistance } from 'date-fns'
 
 const people = [
 	{
@@ -52,15 +53,18 @@ interface CommentsProps {
 	postId: string
 }
 
-const COMMENTS_QUERY = gql`
+export const COMMENTS_QUERY = gql`
 	query CommentsQuery($id: String!, $first: Int, $after: ID) {
 		seePost(id: $id) {
+			totalComments
 			comments(first: $first, after: $after) {
 				edges {
 					cursor
 					node {
 						body
 						id
+						createdAt
+						updatedAt
 						user {
 							id
 							avatar
@@ -99,7 +103,7 @@ export function Comments({ postId }: CommentsProps) {
 			<div className="relative">
 				<div className="flow-root h-full ">
 					<div className="py-3 px-4 border-b dark:border-gray-600 border-gray-200">
-						<Heading size="h5">Comments (50)</Heading>
+						<Heading size="h5">Comments ({data.seePost.totalComments})</Heading>
 					</div>
 					<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 						<h1 className="text-muted font-medium text-center">
@@ -107,13 +111,6 @@ export function Comments({ postId }: CommentsProps) {
 							comment!
 						</h1>
 					</div>
-					<pre className="bg-red-400">
-						{JSON.stringify(
-							data.seePost.comments.pageInfo.hasNextPage,
-							null,
-							2
-						)}
-					</pre>
 					<ul
 						role="list"
 						className="divide-y divide-gray-200 dark:divide-gray-600 mb-2"
@@ -133,7 +130,11 @@ export function Comments({ postId }: CommentsProps) {
 							endMessage={<h1>All done</h1>}
 						>
 							{data.seePost.comments.edges.map((edge) => (
-								<li key={edge?.cursor} className="py-4 px-4">
+								<li
+									key={edge?.cursor}
+									className="py-4 px-4 border-b border-gray-300 dark:border-gray-700"
+									id={edge?.node.id}
+								>
 									<div className="flex items-center  space-x-4">
 										<div className="flex-shrink-0">
 											<img
@@ -153,16 +154,18 @@ export function Comments({ postId }: CommentsProps) {
 											</div>
 											<div>
 												<time className="flex-shrink-0 flex-1 whitespace-nowrap text-xs text-gray-500">
-													1d ago
+													{formatDistance(
+														new Date(edge?.node.createdAt!),
+														new Date(),
+														{ addSuffix: true }
+													)}
 												</time>
 											</div>
 										</div>
 									</div>
 									<div className="mt-2">
 										<p className="text-sm dark:text-gray-300 ">
-											I just started a new Tailwind CSS based project and I find
-											it very refreshing. Could you suggest any tools to help me
-											o
+											{edge?.node.body}
 										</p>
 									</div>
 								</li>

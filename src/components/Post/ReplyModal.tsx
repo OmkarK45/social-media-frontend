@@ -24,7 +24,8 @@ interface ReplyModalProps extends FeedPostCardProps {
 export const CREATE_COMMENT_MUTATION = gql`
 	mutation CreateCommentMutation($input: CreateCommentInput!) {
 		createComment(input: $input) {
-			success
+			body
+			id
 		}
 	}
 `
@@ -35,7 +36,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 		CreateCommentMutationVariables
 	>(CREATE_COMMENT_MUTATION, {
 		update: (cache, result) => {
-			if (!result.data?.createComment.success) return
+			if (!result.data?.createComment) return
 
 			cache.modify({
 				id: `Post:${props.id}`,
@@ -111,11 +112,6 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 										input: {
 											body: values.body,
 											postId: props.id,
-										},
-									},
-									optimisticResponse: {
-										createComment: {
-											success: true,
 										},
 									},
 								})

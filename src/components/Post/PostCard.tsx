@@ -13,7 +13,7 @@ import { Card } from '../ui/Card'
 import Form, { useZodForm } from '../ui/Form/Form'
 import { Image } from '../ui/Image'
 import { TextArea } from '../ui/TextArea'
-import { Comments } from './Comments'
+import { Comments, COMMENTS_QUERY } from './Comments'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { CREATE_COMMENT_MUTATION } from './ReplyModal'
 import {
@@ -25,9 +25,8 @@ import {
 	PostQuery,
 	PostQueryVariables,
 } from './__generated__/PostCard.generated'
-import { ProfilePageJsonLd } from 'next-seo'
 import toast from 'react-hot-toast'
-import { format, formatDistance } from 'date-fns'
+import { formatDistance } from 'date-fns'
 import { TOGGLE_LIKE_MUTATION } from './FeedPostCard'
 import {
 	ToggleLikeMutation,
@@ -61,6 +60,8 @@ export const POST_QUERY = gql`
 `
 
 export function PostCard() {
+	const router = useRouter()
+
 	const form = useZodForm({
 		schema: CommentSchema,
 	})
@@ -68,9 +69,9 @@ export function PostCard() {
 	const [createComment] = useMutation<
 		CreateCommentMutation,
 		CreateCommentMutationVariables
-	>(CREATE_COMMENT_MUTATION)
-
-	const router = useRouter()
+	>(CREATE_COMMENT_MUTATION, {
+		refetchQueries: [COMMENTS_QUERY, 'CommentsQuery'],
+	})
 
 	const { data, error, loading } = useQuery<PostQuery, PostQueryVariables>(
 		POST_QUERY,

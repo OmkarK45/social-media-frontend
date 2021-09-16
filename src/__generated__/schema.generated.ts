@@ -41,6 +41,12 @@ export type CreateCommentInput = {
   postId: Scalars['String'];
 };
 
+export type CreateCommentObject = {
+  __typename?: 'CreateCommentObject';
+  body: Scalars['String'];
+  id: Scalars['String'];
+};
+
 export type CreatePostInput = {
   caption: Scalars['String'];
   gifLink: Maybe<Scalars['String']>;
@@ -88,7 +94,7 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: ResultResponse;
-  createComment: ResultResponse;
+  createComment: CreateCommentObject;
   createPost: Post;
   deleteComment: ResultResponse;
   deletePost: ResultResponse;

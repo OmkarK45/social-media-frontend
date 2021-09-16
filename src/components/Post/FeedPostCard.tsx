@@ -18,7 +18,6 @@ import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
-import clsx from 'clsx'
 import { Button } from '../ui/Button'
 
 export interface FeedPostCardProps {

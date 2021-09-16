@@ -6,6 +6,8 @@ const ME_QUERY = gql`
 		me {
 			username
 			firstName
+			id
+			avatar
 		}
 	}
 `

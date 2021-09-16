@@ -5,4 +5,4 @@ export type CreateCommentMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'ResultResponse', success: boolean } };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CreateCommentObject', body: string, id: string } };
