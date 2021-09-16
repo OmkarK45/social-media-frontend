@@ -50,7 +50,7 @@ export function Profile({ username }: ProfileProps) {
 							</div>
 						</div>
 
-						<p className="prose text-gray-200">
+						<p className="prose ">
 							A software engineer specializing in Web technologies & I design
 							things too. <br /> ReactJS | TypeScript | GraphQL Community -
 							@neogcamp ❤

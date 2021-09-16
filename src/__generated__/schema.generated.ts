@@ -29,8 +29,10 @@ export type ChangePasswordInput = {
 export type Comment = {
   __typename?: 'Comment';
   body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['String'];
   isMine: Scalars['Boolean'];
+  updatedAt: Scalars['DateTime'];
   user: User;
 };
 
@@ -205,6 +207,7 @@ export type Post = Node & {
   blurHash: Maybe<Scalars['String']>;
   caption: Maybe<Scalars['String']>;
   comments: PostCommentsConnection;
+  createdAt: Scalars['DateTime'];
   gifImage: Maybe<Scalars['String']>;
   hashtags: PostHashtagsConnection;
   id: Scalars['ID'];
@@ -214,6 +217,7 @@ export type Post = Node & {
   likedBy: PostLikedByConnection;
   likes: Scalars['Int'];
   totalComments: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
   user: User;
 };
 

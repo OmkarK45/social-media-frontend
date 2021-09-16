@@ -5,7 +5,6 @@
 import React from 'react'
 import { UrlProps as BaseUrlProps } from 'interweave-autolink'
 import { Link } from '../ui/Link'
-import { LinkPreview } from '../ui/LinkPreview'
 
 export function Url({ children, href, url }: BaseUrlProps) {
 	let nextUrl = href || url || ''
@@ -15,11 +14,15 @@ export function Url({ children, href, url }: BaseUrlProps) {
 	}
 	// add URL from here to global state. So that we can put the link preview in the bottom
 	return (
-		<div>
-			<Link href={nextUrl} target="_blank" rel="noreferrer noopener">
+		<span className="truncate block">
+			<Link
+				href={nextUrl}
+				target="_blank"
+				rel="noreferrer noopener"
+				className="truncate font-medium dark:text-gray-100 underline focus:outline-none hover:text-opacity-80 focus:ring-2 focus:ring-gray-500"
+			>
 				{children}
 			</Link>
-			<LinkPreview url={nextUrl} />
-		</div>
+		</span>
 	)
 }

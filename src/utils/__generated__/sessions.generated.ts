@@ -5,4 +5,4 @@ export type SessionQueryVariables = Types.Exact<{
 }>;
 
 
-export type SessionQuery = { __typename?: 'Query', sessionById: { __typename?: 'Session', id: string, createdAt: string, updatedAt: string, expiresAt?: Types.Maybe<string> } };
+export type SessionQuery = { __typename?: 'Query', sessionById: { __typename?: 'Session', id: string, createdAt: string, updatedAt: string, expiresAt: Types.Maybe<string> } };

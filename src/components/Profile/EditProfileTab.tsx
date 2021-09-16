@@ -13,7 +13,7 @@ import {
 	EditProfileMutation,
 	EditProfileMutationVariables,
 	EditProfileQuery,
-} from './__generated__/index.generated'
+} from './__generated__/EditProfileTab.generated'
 
 const EditProfileFormSchema = object({
 	username: z
@@ -67,9 +67,7 @@ export const EDIT_PROFILE_MUTATION = gql`
 `
 
 export function EditProfileTab() {
-	const { data, loading } = useQuery<EditProfileQuery>(EDIT_PROFILE_QUERY, {
-		fetchPolicy: 'network-only',
-	})
+	const { data, loading } = useQuery<EditProfileQuery>(EDIT_PROFILE_QUERY)
 
 	const [updateProfile] = useMutation<
 		EditProfileMutation,
@@ -108,12 +106,13 @@ export function EditProfileTab() {
 							values[key],
 						])
 					)
+
 					const input = {
 						...changedValues,
 						avatar: values?.avatar?.[0],
 						coverImage: values?.coverImage?.[0],
 					}
-					console.log(input)
+					console.log(changedValues, input)
 
 					await updateProfile({
 						variables: { input } as EditProfileMutationVariables,

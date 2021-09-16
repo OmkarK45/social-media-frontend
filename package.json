@@ -21,6 +21,7 @@
 		"apollo-upload-client": "^16.0.0",
 		"blurhash": "^1.1.4",
 		"clsx": "^1.1.1",
+		"date-fns": "^2.23.0",
 		"emoji-mart": "^3.0.1",
 		"emojibase": "^5.2.0",
 		"graphql": "^15.5.1",

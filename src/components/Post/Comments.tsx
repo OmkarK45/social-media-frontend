@@ -1,6 +1,13 @@
-import { Button } from '../ui/Button'
+/* eslint-disable @next/next/no-img-element */
 import { Heading } from '../ui/Heading'
-import { TextArea } from '../ui/TextArea'
+import { Card } from '~/components/ui/Card'
+import { gql, useQuery } from '@apollo/client'
+import {
+	CommentsQuery,
+	CommentsQueryVariables,
+} from './__generated__/Comments.generated'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 
 const people = [
 	{
@@ -22,75 +29,148 @@ const people = [
 			'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	},
 	{
-		name: 'Kristin Watson',
-		handle: 'kristinwatson',
+		name: 'Kristin Watson 1',
+		handle: 'kristinwatson 1',
 		imageUrl:
 			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	},
 	{
-		name: 'Kristin Watson',
-		handle: 'kristinwatson',
+		name: 'Kristin Watson 2',
+		handle: 'kristinwatson 2',
 		imageUrl:
 			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	},
 	{
-		name: 'Kristin Watson',
-		handle: 'kristinwatson',
+		name: 'Kristin Watson 4',
+		handle: 'kristinwatson 3',
 		imageUrl:
 			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	},
 ]
 
-export function Comments() {
+interface CommentsProps {
+	postId: string
+}
+
+const COMMENTS_QUERY = gql`
+	query CommentsQuery($id: String!, $first: Int, $after: ID) {
+		seePost(id: $id) {
+			comments(first: $first, after: $after) {
+				edges {
+					cursor
+					node {
+						body
+						id
+						user {
+							id
+							avatar
+							username
+							firstName
+						}
+					}
+				}
+				pageInfo {
+					hasNextPage
+					endCursor
+				}
+			}
+		}
+	}
+`
+
+export function Comments({ postId }: CommentsProps) {
+	const { data, error, loading, fetchMore } = useQuery<
+		CommentsQuery,
+		CommentsQueryVariables
+	>(COMMENTS_QUERY, {
+		variables: { id: postId, first: 2, after: null },
+		notifyOnNetworkStatusChange: true,
+		fetchPolicy: 'cache-first',
+	})
+
+	if (error) {
+		console.log(error.message)
+		return <div>An error occurred</div>
+	}
+	if (!data) return <div>TODO</div>
+
 	return (
-		<div className="bg-gray-800  max-h-[91vh] overflow-y-scroll">
+		<Card className="rounded-lg mb-2">
 			<div className="relative">
 				<div className="flow-root h-full ">
-					<div className="py-3 px-4 border-b border-gray-500">
+					<div className="py-3 px-4 border-b dark:border-gray-600 border-gray-200">
 						<Heading size="h5">Comments (50)</Heading>
 					</div>
-					<ul role="list" className="divide-y divide-gray-600 pb-16 ">
-						{people.map((person) => (
-							<li key={person.handle} className="py-4 px-4">
-								<div className="flex items-center  space-x-4">
-									<div className="flex-shrink-0">
-										<img
-											className="h-10 w-10 rounded-full"
-											src={person.imageUrl}
-											alt=""
-										/>
-									</div>
-									<div className=" flex w-full justify-between">
-										<div className="flex-1 min-w-0">
-											<p className="text-sm font-medium  truncate">
-												{person.name}
-											</p>
-											<p className="text-xs text-gray-500 truncate">
-												{'@' + person.handle}
-											</p>
+					<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
+						<h1 className="text-muted font-medium text-center">
+							There are no comments on this post. <br /> Be the first one to
+							comment!
+						</h1>
+					</div>
+					<pre className="bg-red-400">
+						{JSON.stringify(
+							data.seePost.comments.pageInfo.hasNextPage,
+							null,
+							2
+						)}
+					</pre>
+					<ul
+						role="list"
+						className="divide-y divide-gray-200 dark:divide-gray-600 mb-2"
+					>
+						<InfiniteScroll
+							hasMore={data.seePost.comments.pageInfo.hasNextPage}
+							next={() => {
+								fetchMore({
+									variables: {
+										first: 3,
+										after: data.seePost.comments.pageInfo.endCursor,
+									},
+								})
+							}}
+							dataLength={data.seePost.comments.edges.length}
+							loader={<LoadingFallback />}
+							endMessage={<h1>All done</h1>}
+						>
+							{data.seePost.comments.edges.map((edge) => (
+								<li key={edge?.cursor} className="py-4 px-4">
+									<div className="flex items-center  space-x-4">
+										<div className="flex-shrink-0">
+											<img
+												className="h-10 w-10 rounded-full"
+												src={edge?.node.user.avatar ?? ''}
+												alt=""
+											/>
 										</div>
-										<div>
-											<time className="flex-shrink-0 flex-1 whitespace-nowrap text-xs text-gray-500">
-												1d ago
-											</time>
+										<div className=" flex w-full justify-between">
+											<div className="flex-1 min-w-0">
+												<p className="text-sm font-medium  truncate">
+													{edge?.node.user.firstName}
+												</p>
+												<p className="text-xs text-gray-500 truncate">
+													{'@' + edge?.node.user.username}
+												</p>
+											</div>
+											<div>
+												<time className="flex-shrink-0 flex-1 whitespace-nowrap text-xs text-gray-500">
+													1d ago
+												</time>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div className="mt-2">
-									<p className="text-sm dark:text-gray-300 ">
-										I just started a new Tailwind CSS based project and I find
-										it very refreshing. Could you suggest any tools to help me o
-									</p>
-								</div>
-							</li>
-						))}
+									<div className="mt-2">
+										<p className="text-sm dark:text-gray-300 ">
+											I just started a new Tailwind CSS based project and I find
+											it very refreshing. Could you suggest any tools to help me
+											o
+										</p>
+									</div>
+								</li>
+							))}
+						</InfiniteScroll>
 					</ul>
 				</div>
 			</div>
-			<div className="border border-red-700 mt-2 w-full absolute bottom-0 bg-gray-800 py-4">
-				<input className="py-2 ml-3 mr-2 w-2/3" />
-				<Button>Send</Button>
-			</div>
-		</div>
+		</Card>
 	)
 }

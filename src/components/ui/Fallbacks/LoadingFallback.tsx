@@ -6,7 +6,7 @@ export function LoadingFallback() {
 	return (
 		<Card
 			rounded="lg"
-			className="dark:bg-gray-700 bg-gray-400  overflow-hidden"
+			className="dark:bg-gray-700 bg-gray-200 max-w-2xl overflow-hidden"
 		>
 			<Card.Body noPadding>
 				<GradientBar color="pink" />

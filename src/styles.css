@@ -4,7 +4,7 @@
 
 body {
 	@apply text-gray-900 bg-gray-100 dark:text-gray-100 dark:bg-gray-900 antialiased font-sans;
-	font-feature-settings: 'cv11';
+	font-feature-settings: 'cv11', 'cv04';
 }
 
 form {
@@ -116,6 +116,28 @@ input:-webkit-autofill:active {
 .dark .Container:hover,
 .dark .Container .Image :hover {
 	background-color: theme('colors.gray.900') !important;
+}
+
+@media (orientation: landscape) {
+	::-webkit-scrollbar {
+		width: 10px;
+		background-color: theme('colors.gray.100');
+	}
+
+	.dark ::-webkit-scrollbar {
+		background-color: theme('colors.gray.800');
+	}
+
+	::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: theme('colors.brand.700');
+		border: 2px solid theme('colors.brand.700');
+	}
+
+	::-webkit-scrollbar-track {
+		border-radius: 3px;
+		background-color: transparent;
+	}
 }
 
 @tailwind utilities;

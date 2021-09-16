@@ -7,7 +7,9 @@ import { Image as BlurImage } from '~/components/ui/Image'
 import { Avatar } from '~/components/ui/Avatar'
 import { Navbar } from '~/components/Common/Navbar'
 import { Link } from '~/components/ui/Link'
-import Image from 'next/image'
+import Modal from '~/components/ui/Modal'
+import { useState } from 'react'
+import { Button } from '~/components/ui/Button'
 const query = gql`
 	query HealthQuery {
 		health
@@ -16,22 +18,29 @@ const query = gql`
 
 const Home: NextPage = () => {
 	const { error, loading, data } = useQuery<HealthQuery>(query)
+	const [isOpen, setIsOpen] = useState<boolean>(false)
 	return (
 		<>
 			<Navbar />
 			<div className="mt-[75px]">
-				<Image
-					src="https://c.tenor.com/fv-cPw-JouwAAAAC/need-link.gif"
-					alt="GIF"
-					width="100px"
-					height="200px"
-				/>
 				<div className="space-x-2">
 					<Link href="/about">about</Link>
+					<Link href="/feed">feed</Link>
 					<Link href="/account/settings">Account Settings</Link>
+					<Link href="/post/new">New Post</Link>
+					<Link href="/post/UG9zdDpiNDcyZDVlNS0wMzQyLTQwMDgtYmEzZi0wMDQwMWQ4OTRjOGI=">
+						A post
+					</Link>
+					<Link href="/profile/@omkar_k45">User Profile</Link>
+					<Link href="/feed/testpage">Feed post</Link>
 				</div>
-				<p>TODO : constrained layout</p>
 				<ThemeToggle />
+				<Button onClick={() => setIsOpen(true)}>Open</Button>
+				<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+					<Modal.Content>
+						<button>OK</button>
+					</Modal.Content>
+				</Modal>
 				<div>
 					<BlurImage
 						width="500"

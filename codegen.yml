@@ -19,5 +19,7 @@ generates:
       - typescript-operations
     config:
       omitOperationSuffix: true
+      avoidOptionals: true
+      maybeValue: T | null
       scalars:
         DateTime: string

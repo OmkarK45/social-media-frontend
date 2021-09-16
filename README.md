@@ -1,6 +1,5 @@
 # TODO
 
-- PostCard for single page + comments UI today
 - Later tonight postcard mutations.
 
 - Feedpage layout [x]

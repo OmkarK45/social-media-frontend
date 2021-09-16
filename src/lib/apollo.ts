@@ -99,6 +99,14 @@ export const createApolloClient = ({
 					Query: {
 						fields: {
 							feed: relayStylePagination(),
+							seePost: {
+								merge: true,
+							},
+						},
+					},
+					Post: {
+						fields: {
+							comments: relayStylePagination(),
 						},
 					},
 				},

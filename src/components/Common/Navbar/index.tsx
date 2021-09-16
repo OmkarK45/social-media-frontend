@@ -7,6 +7,7 @@ import GradientBar from '~/components/ui/GradientBar'
 import { Button } from '~/components/ui/Button'
 import { ProfileDropdown } from './ProfileDropdown'
 import { MobileMenu } from './MobileMenu'
+import { ThemeToggle } from '~/components/ThemeSwitcher'
 
 export function Navbar() {
 	return (
@@ -79,6 +80,7 @@ export function Navbar() {
 								</div>
 								<div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
 									{/* Profile dropdown */}
+									<ThemeToggle />
 									<ProfileDropdown />
 
 									<Button size="lg" href="#" className="ml-6 text-sm">
