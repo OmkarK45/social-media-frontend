@@ -1,6 +1,6 @@
 # TODO
 
-- Later tonight postcard mutations.
+- Later tonight postcard mutations. [x]
 
 - Feedpage layout [x]
 - Edit profile page [x]

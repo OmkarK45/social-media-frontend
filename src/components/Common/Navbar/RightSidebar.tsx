@@ -17,7 +17,7 @@ export function RightSidebar() {
 		<aside className="w-full sticky top-4">
 			<div className=" space-y-4">
 				<section aria-labelledby="who-to-follow-heading">
-					<div className="bg-gray-200 dark:bg-gray-800 rounded-lg shadow">
+					<div className="bg-white dark:bg-gray-800 rounded-lg shadow">
 						<div className="p-6">
 							<Heading
 								size="h5"

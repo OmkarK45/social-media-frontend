@@ -26,7 +26,7 @@ const oneOf = (keys: string[]) => (val: any) => {
 	return false
 }
 
-const CreatePostSchema = object({
+export const CreatePostSchema = object({
 	caption: z.string().nonempty('Caption is required.').max(400),
 	media: z.any().optional(),
 	gifLink: z.string().optional(),

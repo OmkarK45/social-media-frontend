@@ -32,6 +32,7 @@ import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
+import { PostDropdown } from './PostDropdown'
 
 export const CommentSchema = z.object({
 	body: z.string().min(1, 'Comment must be atleast 1 character long.'),
@@ -127,7 +128,7 @@ export function PostCard() {
 									<p className=" font-medium ">
 										<a href="#" className="hover:underline">
 											{data.seePost.user.username}
-											<span className="text-muted text-sm">
+											<span className="text-muted ml-1 text-sm">
 												@{data.seePost.user.username}
 											</span>
 										</a>
@@ -141,8 +142,26 @@ export function PostCard() {
 													{ addSuffix: true }
 												)}
 											</time>
+											{data.seePost.updatedAt ? (
+												<time className="text-xs ml-2">
+													(Edited &nbsp;
+													{formatDistance(
+														new Date(data.seePost.updatedAt),
+														new Date(),
+														{ addSuffix: true }
+													)}
+													)
+												</time>
+											) : null}
 										</a>
 									</p>
+								</div>
+								<div className="flex-shrink-0 self-center flex">
+									<PostDropdown
+										id={data.seePost.id}
+										isMine={data.seePost.isMine}
+										caption={data.seePost.caption ?? ''}
+									/>
 								</div>
 							</div>
 						</div>
@@ -164,7 +183,7 @@ export function PostCard() {
 						)}
 					</Card>
 
-					<Card className="py-4 px-4 flex justify-between space-x-8">
+					<Card className="py-2 px-4 flex justify-between space-x-8">
 						<div className="flex space-x-6">
 							<span className="inline-flex">
 								<p className="font-bold">{data.seePost.likes}</p>
@@ -196,7 +215,7 @@ export function PostCard() {
 									) : (
 										<HiOutlineHeart className="h-5 w-5" aria-hidden="true" />
 									)}
-									<span className="font-medium ml-1">Like</span>
+									<span className="ml-1">Like</span>
 									<span className="sr-only">likes</span>{' '}
 								</Button>
 							</span>
@@ -206,7 +225,7 @@ export function PostCard() {
 									<span>
 										<HiOutlineReply className="h-5 w-5" aria-hidden="true" />
 									</span>
-									<span className="font-medium ml-1">Reply</span>
+									<span className="ml-1">Reply</span>
 									<span className="sr-only">Reply</span>
 								</Button>
 							</span>

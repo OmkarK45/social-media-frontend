@@ -1,11 +1,19 @@
 import { Switch } from '@headlessui/react'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
+import { useState, useEffect } from 'react'
+
 /**
  * Guide by https://www.youtube.com/watch?v=1q5oOZE6o4c
  */
 export function ThemeToggle() {
+	const [mounted, setMounted] = useState(false)
+
 	const { systemTheme, theme, setTheme } = useTheme()
+
+	useEffect(() => setMounted(true), [])
+
+	if (!mounted) return null
 
 	function toggleTheme() {
 		const currentTheme = theme === 'system' ? systemTheme : theme

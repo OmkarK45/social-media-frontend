@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import {
 	HiHeart,
-	HiOutlineChat,
 	HiOutlineHeart,
 	HiOutlineReply,
 	HiOutlineShare,
-	HiOutlineThumbUp,
 } from 'react-icons/hi'
 import { Card } from '~/components/ui/Card'
 import { Image } from '~/components/ui/Image'

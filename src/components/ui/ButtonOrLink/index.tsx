@@ -1,3 +1,5 @@
+/*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
+
 import { ComponentPropsWithRef, forwardRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,7 +10,7 @@ interface Styles {
 	className?: string
 }
 
-type ButtonOrLinkProps = ComponentPropsWithRef<'button'> &
+export type ButtonOrLinkProps = ComponentPropsWithRef<'button'> &
 	ComponentPropsWithRef<'a'> &
 	Styles
 
@@ -39,4 +41,5 @@ const ButtonOrLink = forwardRef<HTMLButtonElement & HTMLAnchorElement, Props>(
 	}
 )
 
+ButtonOrLink.displayName = 'ButtonOrLink'
 export default ButtonOrLink

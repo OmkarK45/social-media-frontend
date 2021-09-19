@@ -103,7 +103,6 @@ export type Mutation = {
   editProfile: User;
   followUser: User;
   logout: ResultResponse;
-  searchUser: MutationSearchUserConnection;
   signIn: AuthResponse;
   signUp: AuthResponse;
   toggleLike: ResultResponse;
@@ -156,15 +155,6 @@ export type MutationFollowUserArgs = {
 };
 
 
-export type MutationSearchUserArgs = {
-  after: Maybe<Scalars['ID']>;
-  before: Maybe<Scalars['ID']>;
-  first: Maybe<Scalars['Int']>;
-  keyword: Scalars['String'];
-  last: Maybe<Scalars['Int']>;
-};
-
-
 export type MutationSignInArgs = {
   input: SignInInput;
 };
@@ -182,18 +172,6 @@ export type MutationToggleLikeArgs = {
 
 export type MutationUnfollowUserArgs = {
   input: FollowUserInput;
-};
-
-export type MutationSearchUserConnection = {
-  __typename?: 'MutationSearchUserConnection';
-  edges: Array<Maybe<MutationSearchUserConnectionEdge>>;
-  pageInfo: PageInfo;
-};
-
-export type MutationSearchUserConnectionEdge = {
-  __typename?: 'MutationSearchUserConnectionEdge';
-  cursor: Scalars['String'];
-  node: User;
 };
 
 export type Node = {
@@ -299,7 +277,11 @@ export type Query = {
   me: User;
   node: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
+  popularHashtags: QueryPopularHashtagsConnection;
   postsByHashtag: QueryPostsByHashtagConnection;
+  postsContainingHashtag: QueryPostsContainingHashtagConnection;
+  searchByHashtag: QuerySearchByHashtagConnection;
+  searchUser: QuerySearchUserConnection;
   seeLikes: QuerySeeLikesConnection;
   seePost: Post;
   seeProfile: ProfileResponse;
@@ -325,11 +307,46 @@ export type QueryNodesArgs = {
 };
 
 
+export type QueryPopularHashtagsArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryPostsByHashtagArgs = {
   after: Maybe<Scalars['ID']>;
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
   hashtag: Scalars['String'];
+  last: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPostsContainingHashtagArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  hashtag: Scalars['String'];
+  last: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySearchByHashtagArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  keyword: Scalars['String'];
+  last: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySearchUserArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  keyword: Scalars['String'];
   last: Maybe<Scalars['Int']>;
 };
 
@@ -369,6 +386,18 @@ export type QueryFeedConnectionEdge = {
   node: Post;
 };
 
+export type QueryPopularHashtagsConnection = {
+  __typename?: 'QueryPopularHashtagsConnection';
+  edges: Array<Maybe<QueryPopularHashtagsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryPopularHashtagsConnectionEdge = {
+  __typename?: 'QueryPopularHashtagsConnectionEdge';
+  cursor: Scalars['String'];
+  node: Hashtag;
+};
+
 export type QueryPostsByHashtagConnection = {
   __typename?: 'QueryPostsByHashtagConnection';
   edges: Array<Maybe<QueryPostsByHashtagConnectionEdge>>;
@@ -379,6 +408,42 @@ export type QueryPostsByHashtagConnectionEdge = {
   __typename?: 'QueryPostsByHashtagConnectionEdge';
   cursor: Scalars['String'];
   node: Post;
+};
+
+export type QueryPostsContainingHashtagConnection = {
+  __typename?: 'QueryPostsContainingHashtagConnection';
+  edges: Array<Maybe<QueryPostsContainingHashtagConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryPostsContainingHashtagConnectionEdge = {
+  __typename?: 'QueryPostsContainingHashtagConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
+};
+
+export type QuerySearchByHashtagConnection = {
+  __typename?: 'QuerySearchByHashtagConnection';
+  edges: Array<Maybe<QuerySearchByHashtagConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QuerySearchByHashtagConnectionEdge = {
+  __typename?: 'QuerySearchByHashtagConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
+};
+
+export type QuerySearchUserConnection = {
+  __typename?: 'QuerySearchUserConnection';
+  edges: Array<Maybe<QuerySearchUserConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QuerySearchUserConnectionEdge = {
+  __typename?: 'QuerySearchUserConnectionEdge';
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type QuerySeeLikesConnection = {

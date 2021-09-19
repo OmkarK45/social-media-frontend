@@ -33,6 +33,7 @@ const Home: NextPage = () => {
 					</Link>
 					<Link href="/profile/@omkar_k45">User Profile</Link>
 					<Link href="/feed/testpage">Feed post</Link>
+					<Link href="/search">Search page</Link>
 				</div>
 				<ThemeToggle />
 				<Button onClick={() => setIsOpen(true)}>Open</Button>

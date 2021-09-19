@@ -1,7 +1,7 @@
 import React from 'react'
 import { HiOutlineFire, HiOutlineHashtag, HiOutlineHome } from 'react-icons/hi'
 import { Feed } from '~/components/Feed'
-import { Heading } from '~/components/ui/Heading'
+import { Hashtags } from '~/components/Hashtags/Hashtags'
 import { RightSidebar } from '../Navbar/RightSidebar'
 import { TabbedLayout } from '../Navbar/TabbedLayout'
 
@@ -24,7 +24,7 @@ export function FeedLayout() {
 								name: 'Popular',
 							},
 							{
-								component: <Heading>Hashtags</Heading>,
+								component: <Hashtags />,
 								icon: HiOutlineHashtag,
 								name: 'Trending',
 							},

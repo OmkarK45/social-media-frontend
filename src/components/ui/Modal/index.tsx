@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import ModalHeader from './ModalHeader'
 import ModalContent from './ModalContent'
 import ModalFooter from './ModalFooter'
+import { useContext } from 'react'
 
 export interface Props {
 	isOpen: boolean
@@ -68,3 +69,7 @@ Modal.Content = ModalContent
 Modal.Footer = ModalFooter
 
 export default Modal
+
+export function useModal() {
+	return useContext(ModalContext)
+}

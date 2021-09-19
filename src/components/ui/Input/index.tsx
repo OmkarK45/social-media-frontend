@@ -4,17 +4,21 @@ import { FieldError } from '~/components/ui/Form/Form'
 interface Props extends ComponentProps<'input'> {
 	label: string
 	className?: string
+	noLabel?: boolean
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>(function Input(
-	{ label, type = 'text', className, prefix, ...props },
+	{ label, type = 'text', className, prefix, noLabel, ...props },
 	ref
 ) {
 	return (
 		<label>
-			<span className="block text-sm font-medium dark:text-white mb-2">
-				{label}
-			</span>
+			{!noLabel && (
+				<span className="block text-sm font-medium dark:text-white mb-2">
+					{label}
+				</span>
+			)}
+
 			<div className="flex">
 				{prefix && (
 					<span className="bg-gray-50 dark:bg-gray-700  shadow-sm border border-r-0 dark:border-gray-500 border-gray-300 rounded-l-md px-3 inline-flex items-center text-gray-500 dark:text-gray-100 sm:text-sm">
