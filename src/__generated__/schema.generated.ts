@@ -503,6 +503,7 @@ export type User = Node & {
   following: UserFollowingConnection;
   id: Scalars['ID'];
   lastName: Maybe<Scalars['String']>;
+  stats: UserStatsObject;
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
 };
@@ -545,4 +546,11 @@ export type UserFollowingConnectionEdge = {
   __typename?: 'UserFollowingConnectionEdge';
   cursor: Scalars['String'];
   node: User;
+};
+
+export type UserStatsObject = {
+  __typename?: 'UserStatsObject';
+  followersCount: Scalars['Int'];
+  followingCount: Scalars['Int'];
+  postsCount: Scalars['Int'];
 };

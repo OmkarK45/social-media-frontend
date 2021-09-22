@@ -1,33 +1,83 @@
 /* eslint-disable @next/next/no-img-element */
+import { useQuery, gql } from '@apollo/client'
+import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 import {
 	HiBadgeCheck,
-	HiOfficeBuilding,
 	HiOutlineCalendar,
 	HiOutlineDotsVertical,
 } from 'react-icons/hi'
 import { Button } from '../ui/Button'
+import ButtonOrLink from '../ui/ButtonOrLink'
+import { Menu, MenuItem } from '../ui/Dropdown'
+import {
+	SeeProfileQuery,
+	SeeProfileQueryVariables,
+} from './__generated__/Profile.generated'
 
 interface ProfileProps {
 	username: string
 }
 
+export const PROFILE_QUERY = gql`
+	query SeeProfileQuery($username: String!) {
+		seeProfile(username: $username) {
+			user {
+				id
+				bio
+				avatar
+				username
+				lastName
+				firstName
+				createdAt
+				updatedAt
+				coverImage
+				stats {
+					followersCount
+					followingCount
+					postsCount
+				}
+			}
+		}
+	}
+`
+
 export function Profile({ username }: ProfileProps) {
+	const router = useRouter()
+
+	const { data, loading, error } = useQuery<
+		SeeProfileQuery,
+		SeeProfileQueryVariables
+	>(PROFILE_QUERY, {
+		variables: {
+			username: router.query.username as string,
+		},
+	})
+
+	if (!data) return <div>No data</div>
+
 	return (
 		<div>
 			<div>
-				<img
-					className="h-32 w-full object-cover lg:h-48"
-					src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
-					alt=""
-				/>
-				{/* <div className="h-32 w-full lg:h-48  bg-gradient-to-r from-purple-500 to-pink-500 bg-pink-400"></div> */}
+				{data.seeProfile.user.coverImage ? (
+					<img
+						className="h-32 w-full object-cover lg:h-48"
+						src={data.seeProfile.user.coverImage}
+						alt=""
+					/>
+				) : (
+					<div className="h-32 w-full lg:h-48  bg-gradient-to-r from-purple-500 to-pink-500 bg-pink-400"></div>
+				)}
 			</div>
 			<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
 				<div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
 					<div className="flex">
 						<img
 							className="h-24 w-24 rounded-full ring-4 ring-brand-500 sm:h-32 sm:w-32"
-							src="https://github.com/ashwinkhode.png"
+							src={
+								data.seeProfile.user.avatar ??
+								'https://res.cloudinary.com/dogecorp/image/upload/v1631712846/dogesocial/v1/images/8_ni0eag.svg'
+							}
 							alt=""
 						/>
 					</div>
@@ -37,52 +87,54 @@ export function Profile({ username }: ProfileProps) {
 						<div className="flex justify-between items-center">
 							<div>
 								<h1 className="text-2xl font-bold flex truncate items-center">
-									Ashwin Khode
-									<HiBadgeCheck className="w-6 h-6 ml-2" />
+									{data.seeProfile.user.firstName + ' '}
+									{data.seeProfile.user.lastName !== null
+										? data.seeProfile.user.lastName
+										: ''}
+									<HiBadgeCheck className="w-6 h-6 ml-1 text-brand-700" />
 								</h1>
 								<p className="text-muted text-sm">@{username}</p>
 							</div>
-							<div className=" flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
-								<HiOutlineDotsVertical className="w-5 h-5" />
+							<div className=" flex items-center justify-stretch  sm:flex-row sm:space-y-0 sm:space-x-5">
+								<Menu dropdown={<MenuItem>Report Profile</MenuItem>}>
+									<HiOutlineDotsVertical className="w-5 h-5" />
+								</Menu>
 								<Button size="lg">
 									<span>Follow</span>
 								</Button>
 							</div>
 						</div>
 
-						<p className="prose ">
-							A software engineer specializing in Web technologies & I design
-							things too. <br /> ReactJS | TypeScript | GraphQL Community -
-							@neogcamp ❤
-						</p>
+						{data.seeProfile.user.bio && <p>{data.seeProfile.user.bio}</p>}
+
 						<div>
-							<dl className="mt-6 flex flex-col  sm:mt-1 sm:flex-row sm:flex-wrap">
-								<dt className="sr-only">Company</dt>
-								<dd className="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6">
-									<HiOfficeBuilding
-										className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-										aria-hidden="true"
-									/>
-									XYZ Corp, Inc
-								</dd>
-								<dt className="sr-only">Account status</dt>
+							<dl className="mt-6 flex flex-col sm:mt-1 sm:flex-row sm:flex-wrap">
 								<dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
 									<HiOutlineCalendar
 										className="flex-shrink-0 mr-1.5 h-5 w-5"
 										aria-hidden="true"
 									/>
-									Joined June, 2021
+									Joined{' '}
+									{format(new Date('2021-09-05 10:09:49.975'), 'MMMM, yyyy')}
 								</dd>
 							</dl>
 						</div>
 						<div className="flex space-x-4">
 							<div className="flex">
-								<span className="font-bold mr-2">99</span>
-								<p className="text-muted">Followers</p>
+								<span className="font-bold mr-2">
+									{data.seeProfile.user.stats.followersCount}
+								</span>
+								<ButtonOrLink className="text-muted hover:underline">
+									Followers
+								</ButtonOrLink>
 							</div>
 							<div className="flex">
-								<span className="font-bold mr-2">149</span>
-								<p className="text-muted">Following</p>
+								<span className="font-bold mr-2">
+									{data.seeProfile.user.stats.followingCount}
+								</span>
+								<ButtonOrLink className="text-muted hover:underline">
+									Following
+								</ButtonOrLink>
 							</div>
 						</div>
 					</div>

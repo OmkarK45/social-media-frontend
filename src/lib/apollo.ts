@@ -102,11 +102,20 @@ export const createApolloClient = ({
 							seePost: {
 								merge: true,
 							},
+							'seeProfile.user.followers': {
+								merge: true,
+							},
 						},
 					},
 					Post: {
 						fields: {
 							comments: relayStylePagination(),
+						},
+					},
+					User: {
+						fields: {
+							followers: relayStylePagination(),
+							following: relayStylePagination(),
 						},
 					},
 				},

@@ -10,4 +10,4 @@
 - Sidebar navigation [now]
 - Who to follow
 - Profile Page
--
+- search done

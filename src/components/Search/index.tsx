@@ -1,5 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { Card } from '../ui/Card'
+import { HashtagSearchResult } from './HashtagSearchResult'
+import { UserSearchResult } from './UserSearchResult'
 import {
 	HashtagSearchQuery,
 	HashtagSearchQueryVariables,
@@ -14,6 +17,21 @@ export const SEARCH_FOR_POST_BY_HASHTAG = gql`
 				node {
 					id
 					caption
+					image
+					blurHash
+					gifImage
+					totalComments
+					isMine
+					isLiked
+					createdAt
+					updatedAt
+					user {
+						firstName
+						lastName
+						username
+						avatar
+					}
+					likes
 				}
 			}
 		}
@@ -26,6 +44,10 @@ export const SEARCH_FOR_USERS_BY_KEYWORD = gql`
 			edges {
 				node {
 					id
+					avatar
+					username
+					firstName
+					lastName
 				}
 			}
 		}
@@ -35,16 +57,16 @@ export const SEARCH_FOR_USERS_BY_KEYWORD = gql`
 export function SearchResults() {
 	const router = useRouter()
 
-	const { data } = useQuery<HashtagSearchQuery, HashtagSearchQueryVariables>(
-		SEARCH_FOR_POST_BY_HASHTAG,
-		{
-			variables: {
-				first: 10,
-				keyword: ('#' + router.query.query) as string,
-			},
-			skip: router.query.type !== 'hashtag',
-		}
-	)
+	const { data: HashtagData } = useQuery<
+		HashtagSearchQuery,
+		HashtagSearchQueryVariables
+	>(SEARCH_FOR_POST_BY_HASHTAG, {
+		variables: {
+			first: 10,
+			keyword: ('#' + router.query.query) as string,
+		},
+		skip: router.query.type !== 'hashtag',
+	})
 
 	const { data: UserData } = useQuery<
 		UserSearchQuery,
@@ -58,10 +80,15 @@ export function SearchResults() {
 	})
 
 	return (
-		<div>
-			Search results go here
-			<pre>{JSON.stringify(data, null, 2)}</pre>
-			<pre>{JSON.stringify(UserData, null, 2)}</pre>
+		<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="max-w-3xl mx-auto">
+				<Card className="mt-2">
+					{router.query.type === 'hashtag' && (
+						<HashtagSearchResult data={HashtagData} />
+					)}
+					{router.query.type === 'user' && <UserSearchResult data={UserData} />}
+				</Card>
+			</div>
 		</div>
 	)
 }

@@ -7,7 +7,7 @@ import { CreatePost } from './CreatePost'
 
 export function Create() {
 	return (
-		<Card className="max-w-3xl mx-auto" rounded="lg">
+		<Card className="max-w-3xl mx-auto " rounded="lg">
 			<GradientBar color="pink" />
 			<Card.Body className="mt-4" noPadding>
 				<Heading className="px-3">Upload.</Heading>
