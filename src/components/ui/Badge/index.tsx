@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ReactNode } from 'react'
 
 const BadgeVariants = {
 	gray: 'bg-gray-100 text-gray-600',
@@ -15,7 +16,7 @@ const BadgeVariants = {
 
 interface Props {
 	variant: keyof typeof BadgeVariants
-	children: React.ReactNode
+	children: ReactNode
 }
 
 export function Badge({ children, variant }: Props) {

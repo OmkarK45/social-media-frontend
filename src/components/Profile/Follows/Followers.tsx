@@ -9,6 +9,7 @@ import {
 import { Link } from '~/components/ui/Link'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
+import { FollowButton } from '../FollowButton'
 
 interface FollowersProps {
 	username: string
@@ -27,6 +28,8 @@ const FOLLOWERS_LIST_QUERY = gql`
 							firstName
 							lastName
 							bio
+							isMe
+							isFollowing
 						}
 					}
 					pageInfo {
@@ -49,6 +52,7 @@ export function Followers({ username }: FollowersProps) {
 			after: null,
 			username,
 		},
+		fetchPolicy: 'cache-first',
 	})
 
 	if (!data) {
@@ -98,7 +102,7 @@ export function Followers({ username }: FollowersProps) {
 							return (
 								<li
 									key={edge.cursor}
-									className="py-4 px-5 hover:bg-gray-900 hover:rounded-lg"
+									className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
 								>
 									<div className="flex items-center space-x-4 ">
 										<div className="flex-shrink-0">
@@ -130,9 +134,13 @@ export function Followers({ username }: FollowersProps) {
 											</Link>
 										</div>
 										<div>
-											<Button href="#" variant="dark">
-												Follow
-											</Button>
+											{user.isMe ? null : (
+												<FollowButton
+													isFollowing={user.isFollowing}
+													username={user.username}
+													variant="white"
+												/>
+											)}
 										</div>
 									</div>
 								</li>

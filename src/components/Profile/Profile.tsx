@@ -10,6 +10,8 @@ import {
 import { Button } from '../ui/Button'
 import ButtonOrLink from '../ui/ButtonOrLink'
 import { Menu, MenuItem } from '../ui/Dropdown'
+import { FollowButton } from './FollowButton'
+import { UserPosts } from './UserPosts'
 import {
 	SeeProfileQuery,
 	SeeProfileQueryVariables,
@@ -32,6 +34,8 @@ export const PROFILE_QUERY = gql`
 				createdAt
 				updatedAt
 				coverImage
+				isMe
+				isFollowing
 				stats {
 					followersCount
 					followingCount
@@ -54,15 +58,19 @@ export function Profile({ username }: ProfileProps) {
 		},
 	})
 
+	if (loading) return <div>TODO : LOADING STATE FOR PROFILE</div>
+
 	if (!data) return <div>No data</div>
+
+	const user = data.seeProfile.user
 
 	return (
 		<div>
 			<div>
-				{data.seeProfile.user.coverImage ? (
+				{user.coverImage ? (
 					<img
 						className="h-32 w-full object-cover lg:h-48"
-						src={data.seeProfile.user.coverImage}
+						src={user.coverImage}
 						alt=""
 					/>
 				) : (
@@ -75,7 +83,7 @@ export function Profile({ username }: ProfileProps) {
 						<img
 							className="h-24 w-24 rounded-full ring-4 ring-brand-500 sm:h-32 sm:w-32"
 							src={
-								data.seeProfile.user.avatar ??
+								user.avatar ??
 								'https://res.cloudinary.com/dogecorp/image/upload/v1631712846/dogesocial/v1/images/8_ni0eag.svg'
 							}
 							alt=""
@@ -87,10 +95,8 @@ export function Profile({ username }: ProfileProps) {
 						<div className="flex justify-between items-center">
 							<div>
 								<h1 className="text-2xl font-bold flex truncate items-center">
-									{data.seeProfile.user.firstName + ' '}
-									{data.seeProfile.user.lastName !== null
-										? data.seeProfile.user.lastName
-										: ''}
+									{user.firstName + ' '}
+									{user.lastName !== null ? user.lastName : ''}
 									<HiBadgeCheck className="w-6 h-6 ml-1 text-brand-700" />
 								</h1>
 								<p className="text-muted text-sm">@{username}</p>
@@ -99,13 +105,23 @@ export function Profile({ username }: ProfileProps) {
 								<Menu dropdown={<MenuItem>Report Profile</MenuItem>}>
 									<HiOutlineDotsVertical className="w-5 h-5" />
 								</Menu>
-								<Button size="lg">
-									<span>Follow</span>
-								</Button>
+
+								{user.isMe ? (
+									<Button href={`/account/settings`} size="lg">
+										Edit Profile
+									</Button>
+								) : (
+									<FollowButton
+										isFollowing={user.isFollowing}
+										username={user.username}
+										id={user.id}
+										size="lg"
+									/>
+								)}
 							</div>
 						</div>
 
-						{data.seeProfile.user.bio && <p>{data.seeProfile.user.bio}</p>}
+						{user.bio && <p>{user.bio}</p>}
 
 						<div>
 							<dl className="mt-6 flex flex-col sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -122,23 +138,30 @@ export function Profile({ username }: ProfileProps) {
 						<div className="flex space-x-4">
 							<div className="flex">
 								<span className="font-bold mr-2">
-									{data.seeProfile.user.stats.followersCount}
+									{user.stats.followersCount}
 								</span>
-								<ButtonOrLink className="text-muted hover:underline">
+								<ButtonOrLink
+									href={`/profile/${user.username}/follows?firstName=${user.firstName}&lastName=${user.lastName}&type=followers`}
+									className="text-muted hover:underline"
+								>
 									Followers
 								</ButtonOrLink>
 							</div>
 							<div className="flex">
 								<span className="font-bold mr-2">
-									{data.seeProfile.user.stats.followingCount}
+									{user.stats.followingCount}
 								</span>
-								<ButtonOrLink className="text-muted hover:underline">
+								<ButtonOrLink
+									href={`/profile/${user.username}/follows?firstName=${user.firstName}&lastName=${user.lastName}`}
+									className="text-muted hover:underline"
+								>
 									Following
 								</ButtonOrLink>
 							</div>
 						</div>
 					</div>
 				</div>
+				<UserPosts count={user.stats.postsCount} username={user.username} />
 			</div>
 		</div>
 	)

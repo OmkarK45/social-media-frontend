@@ -11,6 +11,7 @@ import {
 	FollowingListQuery,
 	FollowingListQueryVariables,
 } from './__generated__/Following.generated'
+import { FollowButton } from '../FollowButton'
 
 interface FollowingProps {
 	username: string
@@ -29,6 +30,8 @@ const FOLLOWING_LIST_QUERY = gql`
 							firstName
 							lastName
 							bio
+							isMe
+							isFollowing
 						}
 					}
 					pageInfo {
@@ -51,6 +54,7 @@ export function Following({ username }: FollowingProps) {
 			after: null,
 			username,
 		},
+		fetchPolicy: 'cache-first',
 	})
 
 	if (!data) {
@@ -100,7 +104,7 @@ export function Following({ username }: FollowingProps) {
 							return (
 								<li
 									key={edge.cursor}
-									className="py-4 px-5 hover:bg-gray-900 hover:rounded-lg"
+									className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
 								>
 									<div className="flex items-center space-x-4 ">
 										<div className="flex-shrink-0">
@@ -132,9 +136,13 @@ export function Following({ username }: FollowingProps) {
 											</Link>
 										</div>
 										<div>
-											<Button href="#" variant="dark">
-												Follow
-											</Button>
+											{user.isMe ? null : (
+												<FollowButton
+													variant="white"
+													isFollowing={user.isFollowing}
+													username={user.username}
+												/>
+											)}
 										</div>
 									</div>
 								</li>

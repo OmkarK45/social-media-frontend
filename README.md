@@ -11,3 +11,9 @@
 - Who to follow
 - Profile Page
 - search done
+
+= Profile drop down remaining
+= unified navbar across the application
+= suggest people to follow
+= dedicated hastag page
+= global footer

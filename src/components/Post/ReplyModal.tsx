@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { gql, useMutation } from '@apollo/client'
+import { format } from 'date-fns'
 import toast from 'react-hot-toast'
 
 import { Interweave } from '../Interweave'
@@ -84,8 +85,8 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 							</p>
 							<p className="text-sm text-gray-500">
 								<a href="#" className="hover:underline">
-									<time dateTime="2020-12-09T11:43:00">
-										December 9 at 11:43 AM
+									<time>
+										{format(new Date(props.createdAt), 'MMMM d, hh:mm aaa')}
 									</time>
 								</a>
 							</p>
@@ -103,7 +104,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 					</p>
 				</div>
 				<div className="w-full mt-4">
-					<Card.Body>
+					<Card.Body noPadding>
 						<Form
 							form={form}
 							onSubmit={async (values) => {

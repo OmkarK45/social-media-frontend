@@ -76,6 +76,11 @@ export type EditProfileInput = {
 };
 
 
+export type FollowResponse = {
+  __typename?: 'FollowResponse';
+  ok: Scalars['Boolean'];
+};
+
 export type FollowUserInput = {
   username: Scalars['String'];
 };
@@ -101,12 +106,12 @@ export type Mutation = {
   editComment: ResultResponse;
   editPost: Post;
   editProfile: User;
-  followUser: User;
+  followUser: FollowResponse;
   logout: ResultResponse;
   signIn: AuthResponse;
   signUp: AuthResponse;
   toggleLike: ResultResponse;
-  unfollowUser: User;
+  unfollowUser: FollowResponse;
 };
 
 
@@ -502,7 +507,10 @@ export type User = Node & {
   followers: UserFollowersConnection;
   following: UserFollowingConnection;
   id: Scalars['ID'];
+  isFollowing: Scalars['Boolean'];
+  isMe: Scalars['Boolean'];
   lastName: Maybe<Scalars['String']>;
+  posts: UserPostsConnection;
   stats: UserStatsObject;
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
@@ -522,6 +530,15 @@ export type UserFollowingArgs = {
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
+};
+
+
+export type UserPostsArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  username: Scalars['String'];
 };
 
 export type UserFollowersConnection = {
@@ -546,6 +563,18 @@ export type UserFollowingConnectionEdge = {
   __typename?: 'UserFollowingConnectionEdge';
   cursor: Scalars['String'];
   node: User;
+};
+
+export type UserPostsConnection = {
+  __typename?: 'UserPostsConnection';
+  edges: Array<Maybe<UserPostsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type UserPostsConnectionEdge = {
+  __typename?: 'UserPostsConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
 };
 
 export type UserStatsObject = {

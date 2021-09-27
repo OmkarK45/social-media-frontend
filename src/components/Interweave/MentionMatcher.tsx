@@ -5,7 +5,11 @@ import React from 'react'
 export const MENTION_PATTERN = /\B@(\w+)/
 
 export function Mention(props: any) {
-	return <Link href={`/profile/${props.display}`}>{props.display}</Link>
+	return (
+		<Link href={`/profile/${props.display.replace('@', '')}`}>
+			{props.display}
+		</Link>
+	)
 }
 
 export class MentionMatcher extends Matcher {

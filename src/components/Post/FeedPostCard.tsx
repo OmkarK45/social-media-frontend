@@ -1,23 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
+import { useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
 import {
 	HiHeart,
 	HiOutlineHeart,
 	HiOutlineReply,
 	HiOutlineShare,
 } from 'react-icons/hi'
+import { format } from 'date-fns'
+
 import { Card } from '~/components/ui/Card'
 import { Image } from '~/components/ui/Image'
-import { Link } from '~/components/ui/Link'
 import { Interweave } from '../Interweave'
 import { ReplyModal } from './ReplyModal'
-import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { Button } from '../ui/Button'
 import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
-import { Button } from '../ui/Button'
+import { Link } from '~/components/ui/Link'
 
+import { PostDropdown } from './PostDropdown'
 export interface FeedPostCardProps {
 	id: string
 	createdAt: Date | string
@@ -91,21 +94,34 @@ export function FeedPostCard(props: FeedPostCardProps) {
 							/>
 						</div>
 						<div className="min-w-0 flex-1">
-							<p className="text-sm font-medium ">
-								<a href="#" className="hover:underline">
-									{props.user.firstName + ' ' + props.user.lastName ?? ''}
-									<span className="text-muted text-sm ml-2">
-										@{props.user.username}
-									</span>
-								</a>
-							</p>
+							<Link
+								href={`/profile/${props.user.username}`}
+								className="no-underline"
+							>
+								<p className="text-sm font-medium ">
+									<a href="#" className="hover:underline">
+										{props.user.firstName}{' '}
+										{props.user.lastName ? props.user.lastName : null}
+										<span className="text-muted text-sm ml-2">
+											@{props.user.username}
+										</span>
+									</a>
+								</p>
+							</Link>
 							<p className="text-sm text-gray-500">
 								<a href="#" className="hover:underline">
 									<time dateTime="2020-12-09T11:43:00">
-										December 9 at 11:43 AM
+										{format(new Date(props.createdAt), 'MMMM d, hh:mm aaa')}
 									</time>
 								</a>
 							</p>
+						</div>
+						<div className="flex-shrink-0 self-center flex">
+							<PostDropdown
+								id={props.id}
+								isMine={props.isMine}
+								caption={props.caption ?? ''}
+							/>
 						</div>
 					</div>
 				</div>
@@ -131,11 +147,13 @@ export function FeedPostCard(props: FeedPostCardProps) {
 				</div>
 
 				{/* Caption */}
-				<div className="px-6 mt-4">
+				<div className="px-6 my-3">
 					<p className=" space-y-4 dark:text-gray-300">
 						<Interweave content={props.caption} />
 					</p>
-					<Link href={`/post/${props.id}`}>Read More</Link>
+					<Link href={`/post/${props.id}`} className="mt-1 inline-block">
+						Read More...
+					</Link>
 				</div>
 
 				{/* Post Actions */}

@@ -31,9 +31,10 @@ const Home: NextPage = () => {
 					<Link href="/post/UG9zdDpiNDcyZDVlNS0wMzQyLTQwMDgtYmEzZi0wMDQwMWQ4OTRjOGI=">
 						A post
 					</Link>
-					<Link href="/profile/@omkar_k45">User Profile</Link>
+					<Link href="/profile/edited_brown">User Profile</Link>
 					<Link href="/feed/testpage">Feed post</Link>
 					<Link href="/search">Search page</Link>
+					<Link href="/profile/edited_brown/follows">FOllows</Link>
 				</div>
 				<ThemeToggle />
 				<Button onClick={() => setIsOpen(true)}>Open</Button>

@@ -12,24 +12,28 @@ export function Follows() {
 	const router = useRouter()
 
 	const username = router.query.username as string
-
+	const firstName = router.query.firstName as string
+	const lastName = router.query.lastName as string
 	console.log(username)
 
 	return (
 		<div className="max-w-3xl mx-auto max-h-screen ">
 			<Card rounded="lg">
-				<Card.Body className="flex space-x-4 items-center sticky top-0 z-10 dark:bg-gray-800">
+				<Card.Body className="flex space-x-4 items-center sticky top-0 z-10 bg-white dark:bg-gray-800">
 					<div>
-						<Link href={'/profile/edited_brown'}>← Back</Link>
+						<Link href={`/profile/${username}`}>← Back</Link>
 					</div>
 					<div>
-						<Heading size="h4">Omkar Kulkarni</Heading>
-						<p className="text-muted">@edited_brown</p>
+						<Heading size="h4">{firstName + ' ' + lastName}</Heading>
+						<p className="text-muted">@{username}</p>
 					</div>
 				</Card.Body>
 
-				<Tab.Group>
-					<Card.Body className="sticky top-20 dark:bg-gray-800 z-10" noPadding>
+				<Tab.Group defaultIndex={router.query.type === 'followers' ? 1 : 0}>
+					<Card.Body
+						className="sticky top-20 bg-white dark:bg-gray-800 z-10"
+						noPadding
+					>
 						<Tab.List
 							className="-mb-px flex border-b border-gray-200 "
 							aria-label="Tabs"
@@ -62,10 +66,10 @@ export function Follows() {
 					</Card.Body>
 					<Tab.Panels>
 						<Tab.Panel>
-							<Followers username={username} />
+							<Following username={username} />
 						</Tab.Panel>
 						<Tab.Panel>
-							<Following username={username} />
+							<Followers username={username} />
 						</Tab.Panel>
 					</Tab.Panels>
 				</Tab.Group>

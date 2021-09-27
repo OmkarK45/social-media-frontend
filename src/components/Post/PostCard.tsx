@@ -103,6 +103,10 @@ export function PostCard() {
 						}
 						return prev + 1
 					},
+					updatedAt: () => {
+						console.log('test')
+						return new Date().toISOString()
+					},
 				},
 			})
 		},
@@ -120,7 +124,7 @@ export function PostCard() {
 								<div className="flex-shrink-0">
 									<img
 										className="h-10 w-10 rounded-full"
-										src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+										src={data.seePost.user.avatar!}
 										alt=""
 									/>
 								</div>
@@ -144,7 +148,7 @@ export function PostCard() {
 											</time>
 											{data.seePost.updatedAt ? (
 												<time className="text-xs ml-2">
-													(Edited &nbsp;
+													(Edited:
 													{formatDistance(
 														new Date(data.seePost.updatedAt),
 														new Date(),

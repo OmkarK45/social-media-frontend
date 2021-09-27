@@ -35,13 +35,13 @@ export function Navbar() {
 							<div className="mx-auto max-w-7xl relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
 								<div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
 									<div className="flex-shrink-0 flex items-center">
-										<a href="#">
+										<Link href="/">
 											<img
 												className="block h-8 w-auto"
 												src="https://tailwindui.com/img/logos/workflow-mark.svg?color=pink&shade=600"
 												alt="Workflow"
 											/>
-										</a>
+										</Link>
 									</div>
 								</div>
 								<div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
@@ -65,7 +65,10 @@ export function Navbar() {
 									<ThemeToggle />
 									<ProfileDropdown />
 
-									<Link href={`/post/new`} className="ml-6 text-sm">
+									<Link
+										href={`/post/new`}
+										className="ml-6 text-sm no-underline"
+									>
 										<Button size="lg">New Post</Button>
 									</Link>
 								</div>

@@ -57,8 +57,7 @@ export function Interweave({
 			emojiSource={emojiSource}
 			newWindow
 			hashtagUrl={(hashtag: string) => `/hashtags/${hashtag}`}
-			display={(display) => {
-				console.log('HANDLE ', display)
+			display={(display: string) => {
 				return `/profile/${display}`
 			}}
 		/>

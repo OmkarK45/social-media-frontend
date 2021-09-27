@@ -105,6 +105,7 @@ export const createApolloClient = ({
 							'seeProfile.user.followers': {
 								merge: true,
 							},
+							'seeProfile.user.posts': relayStylePagination(),
 						},
 					},
 					Post: {
@@ -116,6 +117,7 @@ export const createApolloClient = ({
 						fields: {
 							followers: relayStylePagination(),
 							following: relayStylePagination(),
+							posts: relayStylePagination(),
 						},
 					},
 				},
