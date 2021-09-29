@@ -1,5 +1,7 @@
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { ReactElement } from 'react'
+import { Navbar } from '~/components/Common/Navbar'
 import { Profile, PROFILE_QUERY } from '~/components/Profile/Profile'
 import { preloadQuery } from '~/lib/apollo'
 
@@ -18,4 +20,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			username: ctx.query.username,
 		},
 	})
+}
+
+ProfilePage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<>
+			<Navbar />
+			{page}
+		</>
+	)
 }

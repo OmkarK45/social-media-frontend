@@ -14,7 +14,7 @@ const whoToFollow = [
 
 export function RightSidebar() {
 	return (
-		<aside className="w-full sticky top-4">
+		<aside className="w-full sticky top-20">
 			<div className=" space-y-4">
 				<section aria-labelledby="who-to-follow-heading">
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow">

@@ -1,6 +1,8 @@
 import { GetServerSideProps } from 'next'
 import { authenticatedRoute } from '~/utils/redirection'
 import { FeedLayout } from '~/components/Common/Layouts/FeedLayout'
+import { Navbar } from '~/components/Common/Navbar'
+import { ReactElement } from 'react'
 
 export default function FeedPage() {
 	return <FeedLayout />
@@ -9,4 +11,11 @@ export default function FeedPage() {
 /** TODO : eslint*/
 export const getServerSideProps: GetServerSideProps = authenticatedRoute
 
-// TODO : getstaticprops for initial data
+FeedPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<>
+			<Navbar />
+			{page}
+		</>
+	)
+}

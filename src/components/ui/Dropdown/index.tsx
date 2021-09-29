@@ -1,4 +1,3 @@
-import { IconType } from 'react-icons'
 import type { Props as ButtonOrLinkProps } from '../ButtonOrLink'
 import ButtonOrLink from '../ButtonOrLink'
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react'
@@ -47,6 +46,9 @@ type Props<T extends ElementType> = ComponentProps<T> & {
 	dropdown?: ReactNode
 	className?: string
 	children?: ReactNode
+	position?: 'left' | 'right'
+	contentWidth?: boolean
+	dropdownClassName?: string
 }
 
 export function Menu<TTag extends ElementType<any>>({
@@ -54,6 +56,7 @@ export function Menu<TTag extends ElementType<any>>({
 	dropdown,
 	children,
 	className,
+	dropdownClassName,
 	...props
 }: Props<TTag>) {
 	return (
@@ -61,7 +64,11 @@ export function Menu<TTag extends ElementType<any>>({
 			<HeadlessMenu>
 				{({ open }) => (
 					<>
-						<HeadlessMenu.Button className={className} {...props}>
+						<HeadlessMenu.Button
+							as={as}
+							className={clsx('focus:outline-none', className)}
+							{...props}
+						>
 							{children}
 						</HeadlessMenu.Button>
 
@@ -75,7 +82,13 @@ export function Menu<TTag extends ElementType<any>>({
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<HeadlessMenu.Items className="z-10 overflow-hidden origin-top-right absolute right-5  w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+							<HeadlessMenu.Items
+								static
+								className={clsx(
+									'z-10 overflow-hidden origin-top-right absolute right-5 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
+									dropdownClassName
+								)}
+							>
 								{dropdown}
 							</HeadlessMenu.Items>
 						</Transition>

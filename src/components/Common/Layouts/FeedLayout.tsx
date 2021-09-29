@@ -7,9 +7,9 @@ import { TabbedLayout } from '../Navbar/TabbedLayout'
 
 export function FeedLayout() {
 	return (
-		<div className="py-10">
-			<div className="max-w-3xl border border-white mx-auto sm:px-6 lg:max-w-full xl:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">
-				<div className="lg:col-span-9 lg:grid lg:grid-cols-12 lg:gap-8 border border-red-500">
+		<div className="py-20">
+			<div className="max-w-3xl  mx-auto sm:px-6 lg:max-w-full xl:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">
+				<div className="lg:col-span-9 lg:grid lg:grid-cols-12 lg:gap-8 ">
 					<TabbedLayout
 						isTabbed={true}
 						navigation={[

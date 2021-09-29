@@ -73,7 +73,7 @@ export function UserPosts({
 	return (
 		<Tab.Group>
 			<Card.Body
-				className="mt-5 max-w-2xl z-10 sticky top-0  bg-white dark:bg-gray-800 rounded-md overflow-hidden"
+				className="mt-5 max-w-2xl   z-10 sticky top-16  bg-white dark:bg-gray-800 rounded-md overflow-hidden"
 				noPadding
 			>
 				<Tab.List
@@ -97,33 +97,37 @@ export function UserPosts({
 				</Tab.List>
 			</Card.Body>
 			<Tab.Panels>
-				<Tab.Panel className="flex">
-					<InfiniteScroll
-						hasMore={data.seeProfile.user.posts.pageInfo.hasNextPage}
-						next={() => {
-							fetchMore({
-								variables: {
-									first: 10,
-									after: data.seeProfile.user.posts.pageInfo.endCursor,
-									username,
-								},
-							})
-						}}
-						dataLength={data.seeProfile.user.posts.edges.length}
-						loader={<LoadingFallback />}
-						endMessage={<>ALL DONE</>}
-					>
-						{data.seeProfile.user.posts.edges.map((edge) => {
-							const data = edge?.node
-							if (data) {
-								return (
-									<div key={edge.node.id}>
-										<FeedPostCard {...data} />
-									</div>
-								)
-							}
-						})}
-					</InfiniteScroll>
+				<Tab.Panel className="max-w-2xl">
+					<main className="lg:col-span-7 xl:col-span-6 lg:grid lg:grid-cols-12 lg:gap-3">
+						<div className=" lg:col-span-12 ">
+							<InfiniteScroll
+								hasMore={data.seeProfile.user.posts.pageInfo.hasNextPage}
+								next={() => {
+									fetchMore({
+										variables: {
+											first: 10,
+											after: data.seeProfile.user.posts.pageInfo.endCursor,
+											username,
+										},
+									})
+								}}
+								dataLength={data.seeProfile.user.posts.edges.length}
+								loader={<LoadingFallback />}
+								endMessage={<>ALL DONE</>}
+							>
+								{data.seeProfile.user.posts.edges.map((edge) => {
+									const data = edge?.node
+									if (data) {
+										return (
+											<div key={edge.node.id}>
+												<FeedPostCard {...data} />
+											</div>
+										)
+									}
+								})}
+							</InfiniteScroll>
+						</div>
+					</main>
 				</Tab.Panel>
 			</Tab.Panels>
 		</Tab.Group>

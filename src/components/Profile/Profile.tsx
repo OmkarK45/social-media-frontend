@@ -65,7 +65,7 @@ export function Profile({ username }: ProfileProps) {
 	const user = data.seeProfile.user
 
 	return (
-		<div>
+		<div className="py-16">
 			<div>
 				{user.coverImage ? (
 					<img

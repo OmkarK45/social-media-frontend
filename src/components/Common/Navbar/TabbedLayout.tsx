@@ -21,7 +21,7 @@ export function TabbedLayout({ navigation }: TabbedLayoutProps) {
 			<aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
 				<nav
 					aria-label="Sidebar"
-					className="sticky top-4 divide-y divide-gray-300"
+					className="sticky top-20 divide-y divide-gray-300"
 				>
 					<div className="pb-8 space-y-1">
 						<Tab.List className="space-y-2">

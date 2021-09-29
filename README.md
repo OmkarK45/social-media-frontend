@@ -12,7 +12,7 @@
 - Profile Page
 - search done
 
-= Profile drop down remaining
+= Profile drop down remaining [now]
 = unified navbar across the application
 = suggest people to follow
 = dedicated hastag page
