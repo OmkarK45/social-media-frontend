@@ -21,6 +21,8 @@ import {
 import { Link } from '~/components/ui/Link'
 
 import { PostDropdown } from './PostDropdown'
+import { Tooltip } from '../ProfilePopover/Tooltip'
+import { UserProfilePopover } from '../ProfilePopover'
 export interface FeedPostCardProps {
 	id: string
 	createdAt: Date | string
@@ -42,7 +44,6 @@ export interface FeedPostCardProps {
 	isLiked: boolean
 }
 
-// TODO : keep these in one file
 export const TOGGLE_LIKE_MUTATION = gql`
 	mutation ToggleLikeMutation($id: String!) {
 		toggleLike(id: $id) {
@@ -99,13 +100,11 @@ export function FeedPostCard(props: FeedPostCardProps) {
 								className="no-underline"
 							>
 								<p className="text-sm font-medium ">
-									<a href="#" className="hover:underline">
-										{props.user.firstName}{' '}
-										{props.user.lastName ? props.user.lastName : null}
-										<span className="text-muted text-sm ml-2">
-											@{props.user.username}
-										</span>
-									</a>
+									{props.user.firstName}{' '}
+									{props.user.lastName ? props.user.lastName : null}
+									<span className="text-muted text-sm ml-2">
+										@{props.user.username}
+									</span>
 								</p>
 							</Link>
 							<p className="text-sm text-gray-500">
@@ -133,29 +132,34 @@ export function FeedPostCard(props: FeedPostCardProps) {
 						src="https://media4.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif?cid=621ab156bo1wrbfwp11t84w3nan2wxi78cqd03ia4ijvp3iu&rid=giphy.gif&ct=g"
 					/>
 				</div> */}
+				<Link
+					href={`/post/${props.id}`}
+					className="mt-1 inline-block no-underline font-normal outline-none focus:outline-none focus:ring-0"
+				>
+					{/* Image */}
+					<div className="mx-auto w-11/12 rounded-lg overflow-hidden">
+						<Image
+							alt="TODO"
+							width="700px"
+							height="350px"
+							objectFit="cover"
+							blurHash="UG5##AkCROf6.Aj[Riay%hoLV@ayx^jZV@ay"
+							src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
+						/>
+					</div>
 
-				{/* Image */}
-				<div className="mx-auto w-11/12 rounded-lg overflow-hidden">
-					<Image
-						alt="TODO"
-						width="700px"
-						height="350px"
-						objectFit="cover"
-						blurHash="UG5##AkCROf6.Aj[Riay%hoLV@ayx^jZV@ay"
-						src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
-					/>
-				</div>
+					{/* Caption */}
+					{/* <div>
+					<Tooltip content={<UserProfilePopover />}>
+						<Link href="#">@sushil_buragute</Link>
+					</Tooltip> */}
 
-				{/* Caption */}
-				<div className="px-6 my-3">
-					<p className=" space-y-4 dark:text-gray-300">
-						<Interweave content={props.caption} />
-					</p>
-					<Link href={`/post/${props.id}`} className="mt-1 inline-block">
-						Read More...
-					</Link>
-				</div>
-
+					<div className="px-6 my-3">
+						<p className=" space-y-4 dark:text-gray-300">
+							<Interweave content={props.caption} />
+						</p>
+					</div>
+				</Link>
 				{/* Post Actions */}
 				<div className="py-4 px-6 flex justify-between space-x-8">
 					<div className="flex space-x-6">

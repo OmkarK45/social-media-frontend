@@ -10,6 +10,8 @@ import {
 import { Button } from '../ui/Button'
 import ButtonOrLink from '../ui/ButtonOrLink'
 import { Menu, MenuItem } from '../ui/Dropdown'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { FollowButton } from './FollowButton'
 import { UserPosts } from './UserPosts'
 import {
@@ -58,9 +60,15 @@ export function Profile({ username }: ProfileProps) {
 		},
 	})
 
-	if (loading) return <div>TODO : LOADING STATE FOR PROFILE</div>
+	if (error)
+		return (
+			<ErrorFallback
+				action={() => router.reload()}
+				message="Failed to load information. Try reloading."
+			/>
+		)
 
-	if (!data) return <div>No data</div>
+	if (!data || loading) return <LoadingFallback />
 
 	const user = data.seeProfile.user
 

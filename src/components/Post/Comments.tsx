@@ -9,45 +9,8 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { formatDistance } from 'date-fns'
-
-const people = [
-	{
-		name: 'Leonard Krasner',
-		handle: 'leonardkrasner',
-		imageUrl:
-			'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-	{
-		name: 'Floyd Miles',
-		handle: 'floydmiles',
-		imageUrl:
-			'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-	{
-		name: 'Emily Selman',
-		handle: 'emilyselman',
-		imageUrl:
-			'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-	{
-		name: 'Kristin Watson 1',
-		handle: 'kristinwatson 1',
-		imageUrl:
-			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-	{
-		name: 'Kristin Watson 2',
-		handle: 'kristinwatson 2',
-		imageUrl:
-			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-	{
-		name: 'Kristin Watson 4',
-		handle: 'kristinwatson 3',
-		imageUrl:
-			'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-	},
-]
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 interface CommentsProps {
 	postId: string
@@ -83,7 +46,7 @@ export const COMMENTS_QUERY = gql`
 `
 
 export function Comments({ postId }: CommentsProps) {
-	const { data, error, loading, fetchMore } = useQuery<
+	const { data, error, fetchMore } = useQuery<
 		CommentsQuery,
 		CommentsQueryVariables
 	>(COMMENTS_QUERY, {
@@ -93,20 +56,28 @@ export function Comments({ postId }: CommentsProps) {
 	})
 
 	if (error) {
-		console.log(error.message)
-		return <div>An error occurred</div>
+		return (
+			<ErrorFallback
+				icon={
+					<HiOutlineExclamationCircle className="h-12 w-12 text-gray-500" />
+				}
+				noAction
+				message="Failed to load comments for this post."
+			/>
+		)
 	}
-	if (!data) return <div>TODO</div>
 
 	return (
 		<Card className="rounded-lg mb-2">
 			<div className="relative">
 				<div className="flow-root h-full ">
 					<div className="py-3 px-4 border-b dark:border-gray-600 border-gray-200">
-						<Heading size="h5">Comments ({data.seePost.totalComments})</Heading>
+						<Heading size="h5">
+							Comments ({data?.seePost.totalComments})
+						</Heading>
 					</div>
 
-					{data.seePost.comments.edges.length === 0 ? (
+					{!data || data.seePost.comments.edges.length === 0 ? (
 						<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 							<h1 className="text-muted font-medium text-center">
 								There are no comments on this post. <br /> Be the first one to

@@ -81,8 +81,8 @@ export function SearchResults() {
 
 	return (
 		<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div className="max-w-3xl mx-auto">
-				<Card className="mt-2">
+			<div className="max-w-3xl mx-auto overflow-hidden">
+				<Card className="mt-2 overflow-hidden" rounded="lg">
 					{router.query.type === 'hashtag' && (
 						<HashtagSearchResult data={HashtagData} />
 					)}

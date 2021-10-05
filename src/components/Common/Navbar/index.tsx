@@ -2,7 +2,7 @@ import { Popover } from '@headlessui/react'
 import { HiX, HiMenu } from 'react-icons/hi'
 import clsx from 'clsx'
 
-import GradientBar from '~/components/ui/GradientBar'
+import { GradientBar } from '~/components/ui/GradientBar'
 import { Button } from '~/components/ui/Button'
 import { ThemeToggle } from '~/components/ThemeSwitcher'
 import { Link } from '~/components/ui/Link'

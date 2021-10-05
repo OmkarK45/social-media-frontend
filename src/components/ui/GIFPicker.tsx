@@ -20,7 +20,7 @@ export function GIFPicker({ className, onGIFPick, disabled }: GIFPickerProps) {
 							disabled={disabled}
 							className={clsx(
 								'rounded-full group hover:bg-brand-400 p-1',
-								disabled && 'bg-gray-700 cursor-not-allowed'
+								disabled && 'bg-gray-200 dark:bg-gray-700 cursor-not-allowed'
 							)}
 						>
 							<AiOutlineGif className="w-7 h-7 text-brand-500 group-hover:text-brand-100" />
@@ -38,7 +38,7 @@ export function GIFPicker({ className, onGIFPick, disabled }: GIFPickerProps) {
 								<div className="overflow-hidden shadow-lg">
 									<ReactGiphySearchbox
 										apiKey="OlrXcjSFLlBV6djyQinQv7gx0L8Gsumr"
-										onSelect={(item) => onGIFPick(item)}
+										onSelect={(item: any) => onGIFPick(item)}
 										masonryConfig={[
 											{ columns: 3, imageWidth: 110, gutter: 5 },
 											{ mq: '700px', columns: 3, imageWidth: 120, gutter: 5 },

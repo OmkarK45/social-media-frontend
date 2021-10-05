@@ -1,5 +1,5 @@
 import { Card } from '../Card'
-import GradientBar from '../GradientBar'
+import { GradientBar } from '../GradientBar'
 import Spinner from '../Spinner'
 
 export function LoadingFallback() {

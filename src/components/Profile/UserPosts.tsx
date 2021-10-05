@@ -11,6 +11,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { Badge } from '../ui/Badge'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
 const USER_POSTS_QUERY = gql`
 	query UserPostsQuery($username: String!, $first: Int!, $after: ID) {
@@ -66,7 +67,13 @@ export function UserPosts({
 		},
 	})
 
-	if (!data) return <div>TODO : No data</div>
+	if (!data)
+		return (
+			<ErrorFallback
+				action={() => {}}
+				message={`${username} have no posts yet.`}
+			/>
+		)
 
 	if (error) return <div>Something failed.</div>
 

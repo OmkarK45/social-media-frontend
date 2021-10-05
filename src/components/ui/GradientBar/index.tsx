@@ -16,11 +16,7 @@ type Props = {
 	className?: string
 }
 
-export default function GradientBar({
-	color = 'blue',
-	size = 'md',
-	className,
-}: Props) {
+export function GradientBar({ color = 'blue', size = 'md', className }: Props) {
 	return (
 		<div
 			className={clsx(

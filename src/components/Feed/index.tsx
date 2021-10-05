@@ -1,11 +1,14 @@
 import { gql, useQuery } from '@apollo/client'
-import { FeedQuery, FeedQueryVariables } from './__generated__/index.generated'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import { Card } from '../ui/Card'
 import { HiCheckCircle } from 'react-icons/hi'
-import GradientBar from '../ui/GradientBar'
-import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import InfiniteScroll from 'react-infinite-scroll-component'
+
+import { FeedQuery, FeedQueryVariables } from './__generated__/index.generated'
+
+import { Card } from '~/components/ui/Card'
+import { GradientBar } from '~/components/ui/GradientBar'
+import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
+import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 
 const FEED_QUERY = gql`
 	query FeedQuery($first: Int, $after: ID) {
@@ -51,10 +54,14 @@ export function Feed() {
 	)
 
 	if (error) {
-		console.log(error.message)
-		return <div>An error occurred</div>
+		return (
+			<ErrorFallback
+				action={() => {}}
+				message="Failed to fetch Feed for you. Try reloading."
+			/>
+		)
 	}
-	if (!data) return <div>TODO</div>
+	if (!data) return <LoadingFallback />
 
 	return (
 		<main className="lg:col-span-7 xl:col-span-6 lg:grid lg:grid-cols-12 lg:gap-3">

@@ -1,4 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { gql, useMutation, useQuery } from '@apollo/client'
+import { useRouter } from 'next/router'
+import { formatDistance } from 'date-fns'
+import toast from 'react-hot-toast'
 import {
 	HiHeart,
 	HiOutlineHeart,
@@ -6,6 +10,7 @@ import {
 	HiOutlineShare,
 } from 'react-icons/hi'
 import { z } from 'zod'
+import NextImage from 'next/image'
 
 import { Interweave } from '../Interweave'
 import { Button } from '../ui/Button'
@@ -13,26 +18,28 @@ import { Card } from '../ui/Card'
 import Form, { useZodForm } from '../ui/Form/Form'
 import { Image } from '../ui/Image'
 import { TextArea } from '../ui/TextArea'
+
 import { Comments, COMMENTS_QUERY } from './Comments'
-import { gql, useMutation, useQuery } from '@apollo/client'
 import { CREATE_COMMENT_MUTATION } from './ReplyModal'
-import {
-	CreateCommentMutation,
-	CreateCommentMutationVariables,
-} from './__generated__/ReplyModal.generated'
-import { useRouter } from 'next/router'
+import { PostDropdown } from './PostDropdown'
+import { TOGGLE_LIKE_MUTATION } from './FeedPostCard'
+
 import {
 	PostQuery,
 	PostQueryVariables,
 } from './__generated__/PostCard.generated'
-import toast from 'react-hot-toast'
-import { formatDistance } from 'date-fns'
-import { TOGGLE_LIKE_MUTATION } from './FeedPostCard'
+import {
+	CreateCommentMutation,
+	CreateCommentMutationVariables,
+} from './__generated__/ReplyModal.generated'
 import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
-import { PostDropdown } from './PostDropdown'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import Modal from '../ui/Modal'
+import { useState } from 'react'
 
 export const CommentSchema = z.object({
 	body: z.string().min(1, 'Comment must be atleast 1 character long.'),
@@ -61,6 +68,8 @@ export const POST_QUERY = gql`
 `
 
 export function PostCard() {
+	const [imageModal, setImageModal] = useState<boolean>(false)
+
 	const router = useRouter()
 
 	const form = useZodForm({
@@ -112,7 +121,23 @@ export function PostCard() {
 		},
 	})
 
-	if (!data) return <div>TODO: No data</div>
+	if (loading) return <LoadingFallback />
+
+	if (error)
+		return (
+			<ErrorFallback
+				action={() => window.location.reload()}
+				message="Failed to load post for you. It may be deleted or unavailable at this point."
+			/>
+		)
+
+	if (!data)
+		return (
+			<ErrorFallback
+				action={() => window.location.reload()}
+				message="Failed to load post. Please try reloading"
+			/>
+		)
 
 	return (
 		<div className="max-w-2xl mx-auto flex flex-wrap space-y-4">
@@ -177,6 +202,7 @@ export function PostCard() {
 						{data.seePost.image && (
 							<div className="mx-auto">
 								<Image
+									onClick={() => setImageModal(true)}
 									alt="TODO"
 									width="700px"
 									height="500px"
@@ -185,6 +211,34 @@ export function PostCard() {
 								/>
 							</div>
 						)}
+						<Modal
+							className="sm:max-w-7xl p-0 m-0 "
+							isOpen={imageModal}
+							onClose={() => setImageModal(false)}
+						>
+							<Modal.Content>
+								<div
+									style={{
+										height: '80vh',
+										width: '100%',
+									}}
+								>
+									<NextImage
+										layout="fill"
+										objectFit="contain"
+										src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
+									/>
+								</div>
+							</Modal.Content>
+							{/* hack for focusable element */}
+							<Button
+								variant="dark"
+								className="absolute inset-x-auto top-4 "
+								onClick={() => setImageModal(false)}
+							>
+								Close
+							</Button>
+						</Modal>
 					</Card>
 
 					<Card className="py-2 px-4 flex justify-between space-x-8">

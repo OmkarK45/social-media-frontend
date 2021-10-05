@@ -56,10 +56,10 @@ export function Followers({ username }: FollowersProps) {
 	})
 
 	if (!data) {
-		return <div>No data for {username}</div>
+		return <LoadingFallback />
 	}
 
-	if (data?.seeProfile.user.followers.edges.length === 0)
+	if (data.seeProfile.user.followers.edges.length === 0)
 		return (
 			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 				<h1 className="text-muted font-medium text-center">

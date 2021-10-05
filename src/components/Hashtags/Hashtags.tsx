@@ -5,6 +5,8 @@ import {
 	PopularHashtagsQuery,
 	PopularHashtagsQueryVariables,
 } from './__generated__/Hashtags.generated'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
 const HASHTAGS_QUERY = gql`
 	query PopularHashtagsQuery($first: Int!, $after: ID) {
@@ -37,9 +39,10 @@ export function Hashtags() {
 
 	if (!data) return <h1>No Data</h1>
 
-	if (loading) return <h1>Loading</h1>
+	if (loading) return <LoadingFallback />
 
-	if (error) return <h1>{error.message}</h1>
+	if (error)
+		return <ErrorFallback noAction message="Failed to load hashtags." />
 
 	return (
 		<Card>

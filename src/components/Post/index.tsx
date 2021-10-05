@@ -1,13 +1,13 @@
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 import { Card } from '../ui/Card'
-import GradientBar from '../ui/GradientBar'
+import { GradientBar } from '../ui/GradientBar'
 import { Heading } from '../ui/Heading'
 import { CreatePost } from './CreatePost'
 
 export function Create() {
 	return (
-		<Card className="max-w-3xl mx-auto " rounded="lg">
+		<Card className="max-w-3xl mx-auto my-20 overflow-hidden" rounded="lg">
 			<GradientBar color="pink" />
 			<Card.Body className="mt-4" noPadding>
 				<Heading className="px-3">Upload.</Heading>

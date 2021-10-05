@@ -87,11 +87,13 @@ export function CreatePost() {
 			>
 				<Card.Body className="space-y-5">
 					<div className="relative">
-						<TextArea
-							label="Caption"
-							placeholder="Include body for your post."
-							{...form.register('caption')}
-						/>
+						<div>
+							<TextArea
+								label="Caption"
+								placeholder="Include body for your post."
+								{...form.register('caption')}
+							/>
+						</div>
 						<div className="absolute bottom-3 left-3 flex space-x-3">
 							<EmojiPicker onEmojiPick={handleEmojiPick} />
 							<GIFPicker

@@ -1,8 +1,7 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Image from 'next/image'
 
-import { Button } from '~/components/ui/Button'
 import { Link } from '~/components/ui/Link'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import Spinner from '~/components/ui/Spinner'
@@ -58,10 +57,10 @@ export function Following({ username }: FollowingProps) {
 	})
 
 	if (!data) {
-		return <div>No data for {username}</div>
+		return <LoadingFallback />
 	}
 
-	if (data?.seeProfile.user.following.edges.length === 0)
+	if (data.seeProfile.user.following.edges.length === 0)
 		return (
 			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 				<h1 className="text-muted font-medium text-center">

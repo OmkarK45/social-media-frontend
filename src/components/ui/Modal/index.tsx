@@ -4,18 +4,20 @@ import ModalHeader from './ModalHeader'
 import ModalContent from './ModalContent'
 import ModalFooter from './ModalFooter'
 import { useContext } from 'react'
+import clsx from 'clsx'
 
 export interface Props {
 	isOpen: boolean
 	onClose: () => void
 	children: ReactNode
+	className?: string
 }
 
 interface ModalContextType extends Omit<Props, 'children'> {}
 
 export const ModalContext = createContext<ModalContextType | null>(null)
 
-const Modal = ({ isOpen, onClose, children }: Props) => {
+const Modal = ({ isOpen, onClose, children, className }: Props) => {
 	return (
 		<ModalContext.Provider value={{ isOpen, onClose }}>
 			<Transition.Root show={isOpen} as={Fragment}>
@@ -53,7 +55,12 @@ const Modal = ({ isOpen, onClose, children }: Props) => {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-125"
 						>
-							<div className="inline-block w-full bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 lg:align-top sm:max-w-lg sm:w-full sm:p-6">
+							<div
+								className={clsx(
+									'inline-block w-full bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 lg:align-top sm:max-w-lg sm:w-full sm:p-6',
+									className
+								)}
+							>
 								{children}
 							</div>
 						</Transition.Child>
