@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from '~/components/ui/Card'
 import { Heading } from '~/components/ui/Heading'
+import { Footer } from '../Common/Footer'
 
 interface Props {
 	title: string
@@ -10,7 +11,7 @@ interface Props {
 
 export function AuthLayout({ title, subtitle, children }: Props) {
 	return (
-		<main className="flex flex-col justify-center mx-auto w-full max-w-xl min-h-screen">
+		<main className="flex flex-col justify-center mx-auto w-full max-w-xl min-h-screen py-10">
 			<div className="mb-8 text-center">
 				<div className="inline-flex items-center mb-1 space-x-3">
 					<svg
@@ -34,7 +35,7 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 					<div>{children}</div>
 				</Card.Body>
 			</Card>
-			<p className="text-center text-muted">Footer TODO</p>
+			<Footer />
 		</main>
 	)
 }

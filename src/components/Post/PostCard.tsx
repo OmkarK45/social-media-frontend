@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { formatDistance } from 'date-fns'
+import { format, formatDistance } from 'date-fns'
 import toast from 'react-hot-toast'
 import {
 	HiHeart,
@@ -165,23 +165,18 @@ export function PostCard() {
 									<p className="text-sm text-muted">
 										<a href="#" className="hover:underline">
 											<time>
+												{format(
+													new Date(data.seePost.createdAt),
+													'MMMM d, hh:mm aaa'
+												)}{' '}
+												(
 												{formatDistance(
 													new Date(data.seePost.createdAt),
 													new Date(),
 													{ addSuffix: true }
 												)}
+												)
 											</time>
-											{data.seePost.updatedAt ? (
-												<time className="text-xs ml-2">
-													(Edited:
-													{formatDistance(
-														new Date(data.seePost.updatedAt),
-														new Date(),
-														{ addSuffix: true }
-													)}
-													)
-												</time>
-											) : null}
 										</a>
 									</p>
 								</div>
@@ -195,24 +190,23 @@ export function PostCard() {
 							</div>
 						</div>
 
-						<div className="px-4 py-3  ">
+						<div className="px-4 pb-4">
 							<Interweave content={data.seePost.caption} />
 						</div>
 
-						{data.seePost.image && (
-							<div className="mx-auto">
-								<Image
+						{data.seePost.image && data.seePost.blurHash && (
+							<div className="unset-img full-bleed">
+								<NextImage
+									className="custom-img"
 									onClick={() => setImageModal(true)}
 									alt="TODO"
-									width="700px"
-									height="500px"
-									blurHash="UG5##AkCROf6.Aj[Riay%hoLV@ayx^jZV@ay"
-									src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
+									layout="fill"
+									src={data.seePost.image}
 								/>
 							</div>
 						)}
 						<Modal
-							className="sm:max-w-7xl p-0 m-0 "
+							className="sm:max-w-7xl p-0 m-0"
 							isOpen={imageModal}
 							onClose={() => setImageModal(false)}
 						>
@@ -226,7 +220,7 @@ export function PostCard() {
 									<NextImage
 										layout="fill"
 										objectFit="contain"
-										src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
+										src={data.seePost.image!}
 									/>
 								</div>
 							</Modal.Content>
@@ -245,11 +239,11 @@ export function PostCard() {
 						<div className="flex space-x-6">
 							<span className="inline-flex">
 								<p className="font-bold">{data.seePost.likes}</p>
-								<p className="font-medium ml-1 ">Likes</p>{' '}
+								<p className="text-muted ml-1 ">Likes</p>{' '}
 							</span>
 							<span className="inline-flex">
 								<p className="font-bold">{data.seePost.totalComments}</p>
-								<p className="font-medium ml-1 ">Comments</p>{' '}
+								<p className="text-muted ml-1 ">Comments</p>{' '}
 							</span>
 						</div>
 					</Card>

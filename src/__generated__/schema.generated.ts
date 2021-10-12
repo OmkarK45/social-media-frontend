@@ -291,6 +291,7 @@ export type Query = {
   seePost: Post;
   seeProfile: ProfileResponse;
   sessionById: Session;
+  whoToFollow: QueryWhoToFollowConnection;
 };
 
 
@@ -379,6 +380,14 @@ export type QuerySessionByIdArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryWhoToFollowArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+};
+
 export type QueryFeedConnection = {
   __typename?: 'QueryFeedConnection';
   edges: Array<Maybe<QueryFeedConnectionEdge>>;
@@ -459,6 +468,18 @@ export type QuerySeeLikesConnection = {
 
 export type QuerySeeLikesConnectionEdge = {
   __typename?: 'QuerySeeLikesConnectionEdge';
+  cursor: Scalars['String'];
+  node: User;
+};
+
+export type QueryWhoToFollowConnection = {
+  __typename?: 'QueryWhoToFollowConnection';
+  edges: Array<Maybe<QueryWhoToFollowConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryWhoToFollowConnectionEdge = {
+  __typename?: 'QueryWhoToFollowConnectionEdge';
   cursor: Scalars['String'];
   node: User;
 };

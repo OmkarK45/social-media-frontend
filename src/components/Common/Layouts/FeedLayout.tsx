@@ -19,7 +19,7 @@ export function FeedLayout() {
 								name: 'Your Feed',
 							},
 							{
-								component: <h1>Popular</h1>,
+								component: <h1>Feature under construction 🚧</h1>,
 								icon: HiOutlineFire,
 								name: 'Popular',
 							},

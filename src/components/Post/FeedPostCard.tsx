@@ -19,8 +19,8 @@ import {
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
 import { Link } from '~/components/ui/Link'
-
 import { PostDropdown } from './PostDropdown'
+import NextImage from 'next/image'
 import { Tooltip } from '../ProfilePopover/Tooltip'
 import { UserProfilePopover } from '../ProfilePopover'
 export interface FeedPostCardProps {
@@ -134,19 +134,19 @@ export function FeedPostCard(props: FeedPostCardProps) {
 				</div> */}
 				<Link
 					href={`/post/${props.id}`}
-					className="mt-1 inline-block no-underline font-normal outline-none focus:outline-none focus:ring-0"
+					className="mt-1 block no-underline font-normal outline-none focus:outline-none focus:ring-0"
 				>
 					{/* Image */}
-					<div className="mx-auto w-11/12 rounded-lg overflow-hidden">
-						<Image
-							alt="TODO"
-							width="700px"
-							height="350px"
-							objectFit="cover"
-							blurHash="UG5##AkCROf6.Aj[Riay%hoLV@ayx^jZV@ay"
-							src="http://res.cloudinary.com/dogecorp/image/upload/v1631192257/dogesocial/v1/images/e7jpyiortr4aljxpatnv.jpg"
-						/>
-					</div>
+					{props.image && (
+						<div className="mx-auto w-11/12 rounded-lg overflow-hidden unset-img full-bleed">
+							<NextImage
+								className="custom-img"
+								alt="TODO"
+								layout="fill"
+								src={props.image}
+							/>
+						</div>
+					)}
 
 					{/* Caption */}
 					{/* <div>
@@ -154,7 +154,7 @@ export function FeedPostCard(props: FeedPostCardProps) {
 						<Link href="#">@sushil_buragute</Link>
 					</Tooltip> */}
 
-					<div className="px-6 my-3">
+					<div className="px-6 my-2">
 						<p className=" space-y-4 dark:text-gray-300">
 							<Interweave content={props.caption} />
 						</p>

@@ -6,6 +6,7 @@ export const MENTION_PATTERN = /\B@(\w+)/
 
 export function Mention(props: any) {
 	return (
+		// TODO : change this to button with onclick to avoid potential a tag nesting
 		<Link href={`/profile/${props.display.replace('@', '')}`}>
 			{props.display}
 		</Link>

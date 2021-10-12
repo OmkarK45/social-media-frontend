@@ -1,5 +1,6 @@
 import { HiPlus } from 'react-icons/hi'
 import { Heading } from '~/components/ui/Heading'
+import { Footer } from '../Footer'
 
 const whoToFollow = [
 	{
@@ -78,6 +79,7 @@ export function RightSidebar() {
 					</div>
 				</section>
 			</div>
+			<Footer />
 		</aside>
 	)
 }
