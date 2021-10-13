@@ -1,30 +1,56 @@
-import { HiFlag, HiOutlineDotsVertical, HiPencil } from 'react-icons/hi'
+import {
+	HiFlag,
+	HiOutlineDotsVertical,
+	HiOutlineTrash,
+	HiPencil,
+} from 'react-icons/hi'
 import { useState } from 'react'
 import { Menu, MenuItem } from '../ui/Dropdown'
 import { EditPost } from './EditPostModal'
+import { DeletePostModal } from './DeletePostModal'
 
 interface Props {
 	id: string
 	caption: string
 	isMine: boolean
+	gifLink: string
 }
 
-export function PostDropdown({ id, caption, isMine }: Props) {
-	const [isOpen, setIsOpen] = useState<boolean>(false)
+export function PostDropdown({ id, caption, isMine, gifLink }: Props) {
+	const [editPostModal, setEditPostModal] = useState<boolean>(false)
+	const [deletePostModal, setDeletePostModal] = useState<boolean>(false)
 	return (
 		<>
 			<EditPost
 				id={id}
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
+				isOpen={editPostModal}
+				onClose={() => setEditPostModal(false)}
 				caption={caption}
+				gifLink={gifLink}
+			/>
+			<DeletePostModal
+				isOpen={deletePostModal}
+				onClose={() => setDeletePostModal(false)}
+				id={id}
 			/>
 			<Menu
 				dropdown={
 					<>
 						{isMine && (
-							<MenuItem icon={<HiPencil />} onClick={() => setIsOpen(true)}>
+							<MenuItem
+								icon={<HiPencil />}
+								onClick={() => setEditPostModal(true)}
+							>
 								Edit
+							</MenuItem>
+						)}
+
+						{isMine && (
+							<MenuItem
+								onClick={() => setDeletePostModal(true)}
+								icon={<HiOutlineTrash />}
+							>
+								Delete Post
 							</MenuItem>
 						)}
 

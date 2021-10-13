@@ -120,6 +120,7 @@ export function FeedPostCard(props: FeedPostCardProps) {
 								id={props.id}
 								isMine={props.isMine}
 								caption={props.caption ?? ''}
+								gifLink={props.gifImage ?? ''}
 							/>
 						</div>
 					</div>

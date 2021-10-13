@@ -55,7 +55,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 	})
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
+		<Modal isOpen={isOpen} onClose={onClose} className="sm:max-w-lg">
 			<Modal.Header dismiss>
 				<Heading size="h4" className="-mt-2 mb-3">
 					Reply

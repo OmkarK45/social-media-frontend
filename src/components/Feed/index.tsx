@@ -65,7 +65,7 @@ export function Feed() {
 
 	return (
 		<main className="lg:col-span-7 xl:col-span-6 lg:grid lg:grid-cols-12 lg:gap-3">
-			<div className=" px-4 lg:col-span-12 -mt-3">
+			<div className="px-4 lg:col-span-12 -mt-3">
 				<InfiniteScroll
 					hasMore={data.feed.pageInfo.hasNextPage}
 					next={() => {

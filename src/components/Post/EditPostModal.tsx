@@ -19,6 +19,7 @@ interface Props {
 	onClose: () => void
 	id: string
 	caption: string
+	gifLink: string
 }
 
 const EDIT_POST_MUTATION = gql`
@@ -30,7 +31,7 @@ const EDIT_POST_MUTATION = gql`
 	}
 `
 
-export function EditPost({ isOpen, onClose, id, caption }: Props) {
+export function EditPost({ isOpen, onClose, id, caption, gifLink }: Props) {
 	const [editPost] = useMutation<EditPostMutation, EditPostMutationVariables>(
 		EDIT_POST_MUTATION
 	)
@@ -46,7 +47,7 @@ export function EditPost({ isOpen, onClose, id, caption }: Props) {
 	}, [form])
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
+		<Modal isOpen={isOpen} onClose={onClose} className="sm:max-w-lg">
 			<Modal.Header dismiss>
 				<Heading size="h4">Edit Post</Heading>
 				<p className="text-sm text-muted">
@@ -59,7 +60,7 @@ export function EditPost({ isOpen, onClose, id, caption }: Props) {
 					onSubmit={async (values) => {
 						await editPost({
 							variables: {
-								input: { caption: values.caption, id },
+								input: { caption: values.caption, id, gifLink },
 							},
 						})
 						onClose()

@@ -1,6 +1,16 @@
-import { HiPlus } from 'react-icons/hi'
+import { gql, useQuery } from '@apollo/client'
+import { HiOutlineCubeTransparent } from 'react-icons/hi'
+import { FollowButton } from '~/components/Profile/FollowButton'
+import { Card } from '~/components/ui/Card'
+import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { Heading } from '~/components/ui/Heading'
+import { Link } from '~/components/ui/Link'
 import { Footer } from '../Footer'
+import {
+	WhoToFollowQuery,
+	WhoToFollowQueryVariables,
+} from './__generated__/RightSidebar.generated'
 
 const whoToFollow = [
 	{
@@ -13,7 +23,76 @@ const whoToFollow = [
 	// More people...
 ]
 
+const WHO_TO_FOLLOW_QUERY = gql`
+	query WhoToFollowQuery($first: Int!, $after: ID) {
+		whoToFollow(first: $first, after: $after) {
+			edges {
+				node {
+					id
+					avatar
+					username
+					firstName
+					lastName
+					isFollowing
+				}
+			}
+			pageInfo {
+				hasNextPage
+				endCursor
+			}
+		}
+	}
+`
+
 export function RightSidebar() {
+	const { data, loading, error, refetch } = useQuery<
+		WhoToFollowQuery,
+		WhoToFollowQueryVariables
+	>(WHO_TO_FOLLOW_QUERY, {
+		variables: {
+			first: 4,
+			after: null,
+		},
+	})
+
+	function refetchQuery() {
+		return refetch({
+			after: null,
+			first: 4,
+		})
+	}
+
+	if (error || !data) {
+		return (
+			<aside className="w-full sticky top-20">
+				<ErrorFallback
+					message="Failed to load suggestions."
+					action={refetchQuery}
+					buttonText="Retry"
+				/>
+			</aside>
+		)
+	}
+
+	if (loading) return <LoadingFallback />
+
+	if (data.whoToFollow.edges.length === 0) {
+		return (
+			<>
+				<Card rounded="lg" className="sticky top-20">
+					<ErrorFallback
+						message="No user suggestions for now. :)"
+						noAction
+						icon={
+							<HiOutlineCubeTransparent className="h-12 w-12 text-gray-500" />
+						}
+					/>
+				</Card>
+				<Footer />
+			</>
+		)
+	}
+
 	return (
 		<aside className="w-full sticky top-20">
 			<div className=" space-y-4">
@@ -31,40 +110,44 @@ export function RightSidebar() {
 									role="list"
 									className="-my-4 divide-y divide-gray-200 dark:divide-gray-700"
 								>
-									{whoToFollow.map((user) => (
-										<li
-											key={user.handle}
-											className="flex items-center py-4 space-x-3"
-										>
-											<div className="flex-shrink-0">
-												<img
-													className="h-8 w-8 rounded-full"
-													src="https://github.com/ashwinkhode.png"
-													alt=""
-												/>
-											</div>
-											<div className="min-w-0 flex-1">
-												<p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-													<a href={user.href}>Ashwin Khode</a>
-												</p>
-												<p className="text-sm text-gray-500 dark:text-gray-400">
-													<a href={user.href}>@ashwin4real</a>
-												</p>
-											</div>
-											<div className="flex-shrink-0">
-												<button
-													type="button"
-													className="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-rose-700 hover:bg-rose-100"
-												>
-													<HiPlus
-														className="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
-														aria-hidden="true"
+									{data.whoToFollow.edges.map((edge) => {
+										const user = edge?.node
+										return (
+											<li
+												key={user?.id}
+												className="flex items-center py-4 space-x-3"
+											>
+												<div className="flex-shrink-0">
+													<img
+														className="h-8 w-8 rounded-full"
+														src={user?.avatar!}
+														alt=""
 													/>
-													<span>Follow</span>
-												</button>
-											</div>
-										</li>
-									))}
+												</div>
+												<div className="min-w-0 flex-1">
+													<p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+														<Link
+															className="no-underline"
+															href={`/profile/${user?.username}`}
+														>
+															{user?.firstName + ' '}
+															{user?.lastName ? user?.lastName : null}
+														</Link>
+													</p>
+													<p className="text-sm text-gray-500 dark:text-gray-400">
+														<a href={user?.username}>@{user?.username}</a>
+													</p>
+												</div>
+												<div className="flex-shrink-0">
+													<FollowButton
+														variant="dark"
+														isFollowing={user?.isFollowing!}
+														username={user?.username!}
+													/>
+												</div>
+											</li>
+										)
+									})}
 								</ul>
 							</div>
 							<div className="mt-6">

@@ -1,3 +1,5 @@
+import { FeedbackFish } from '@feedback-fish/react'
+
 export function Footer() {
 	return (
 		<div className="mt-2 text-center text-sm text-muted">
@@ -29,6 +31,11 @@ export function Footer() {
 					>
 						GitHub
 					</a>
+				</div>
+				<div>
+					<FeedbackFish projectId="50ebf01f9a3ed3">
+						<p className="cursor-pointer">Feedback</p>
+					</FeedbackFish>
 				</div>
 			</div>
 		</div>
