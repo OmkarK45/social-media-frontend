@@ -29,9 +29,13 @@ export function DeletePostModal({ isOpen, onClose, id }: Props) {
 	const [deletePost, { loading, data, error }] = useMutation<
 		DeletePostMutation,
 		DeletePostMutationVariables
-	>(DELETE_POST_MUTATION)
-
-	const router = useRouter()
+	>(DELETE_POST_MUTATION, {
+		update: (cache) => {
+			const normalizedId = cache.identify({ id, __typename: 'Post' })
+			cache.evict({ id: normalizedId })
+			cache.gc()
+		},
+	})
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} className="sm:max-w-lg">
@@ -48,9 +52,8 @@ export function DeletePostModal({ isOpen, onClose, id }: Props) {
 						onClick={async () => {
 							const response = await deletePost({ variables: { id } })
 							if (response.data?.deletePost.success) {
-								toast('POST HAS BEEN DELETED')
 								onClose()
-								router.push('/feed')
+								toast('POST HAS BEEN DELETED')
 							}
 						}}
 						size="lg"
