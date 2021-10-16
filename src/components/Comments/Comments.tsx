@@ -11,6 +11,7 @@ import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { formatDistance } from 'date-fns'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
+import { CommentDropdown } from './CommentDropdown'
 
 interface CommentsProps {
 	postId: string
@@ -28,6 +29,7 @@ export const COMMENTS_QUERY = gql`
 						id
 						createdAt
 						updatedAt
+						isMine
 						user {
 							id
 							avatar
@@ -101,7 +103,6 @@ export function Comments({ postId }: CommentsProps) {
 								}}
 								dataLength={data.seePost.comments.edges.length}
 								loader={<LoadingFallback />}
-								endMessage={<h1>All done</h1>}
 							>
 								{data.seePost.comments.edges.map((edge) => (
 									<li
@@ -126,7 +127,7 @@ export function Comments({ postId }: CommentsProps) {
 														{'@' + edge?.node.user.username}
 													</p>
 												</div>
-												<div>
+												<div className="flex space-x-3 ">
 													<time className="flex-shrink-0 flex-1 whitespace-nowrap text-xs text-gray-500">
 														{formatDistance(
 															new Date(edge?.node.createdAt!),
@@ -134,6 +135,15 @@ export function Comments({ postId }: CommentsProps) {
 															{ addSuffix: true }
 														)}
 													</time>
+
+													<div>
+														<CommentDropdown
+															body={edge?.node.body!}
+															id={edge?.node.id!}
+															isMine={edge?.node.isMine!}
+															postId={postId}
+														/>
+													</div>
 												</div>
 											</div>
 										</div>

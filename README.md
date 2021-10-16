@@ -20,3 +20,4 @@
 = better handling of unauth state
 
 - FEEDPOST CARD IMAGE NEEDS A MODAL TOO
+  NOTIFICATIONS - Liked, commented, etc

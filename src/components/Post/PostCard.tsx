@@ -16,10 +16,9 @@ import { Interweave } from '../Interweave'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import Form, { useZodForm } from '../ui/Form/Form'
-import { Image } from '../ui/Image'
 import { TextArea } from '../ui/TextArea'
 
-import { Comments, COMMENTS_QUERY } from './Comments'
+import { Comments, COMMENTS_QUERY } from '../Comments/Comments'
 import { CREATE_COMMENT_MUTATION } from './ReplyModal'
 import { PostDropdown } from './PostDropdown'
 import { TOGGLE_LIKE_MUTATION } from './FeedPostCard'
@@ -185,6 +184,7 @@ export function PostCard() {
 										id={data.seePost.id}
 										isMine={data.seePost.isMine}
 										caption={data.seePost.caption ?? ''}
+										gifLink={data.seePost.gifImage ?? ''}
 									/>
 								</div>
 							</div>
