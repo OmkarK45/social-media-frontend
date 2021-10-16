@@ -23,7 +23,7 @@ const whoToFollow = [
 	// More people...
 ]
 
-const WHO_TO_FOLLOW_QUERY = gql`
+export const WHO_TO_FOLLOW_QUERY = gql`
 	query WhoToFollowQuery($first: Int!, $after: ID) {
 		whoToFollow(first: $first, after: $after) {
 			edges {
@@ -55,19 +55,17 @@ export function RightSidebar() {
 		},
 	})
 
-	function refetchQuery() {
-		return refetch({
-			after: null,
-			first: 4,
-		})
-	}
-
 	if (error || !data) {
 		return (
 			<aside className="w-full sticky top-20">
 				<ErrorFallback
 					message="Failed to load suggestions."
-					action={refetchQuery}
+					action={() =>
+						refetch({
+							after: null,
+							first: 4,
+						})
+					}
 					buttonText="Retry"
 				/>
 			</aside>

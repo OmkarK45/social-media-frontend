@@ -9,6 +9,8 @@ import { GradientBar } from '~/components/ui/GradientBar'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
+import { RightSidebar } from '../Common/Navbar/RightSidebar'
+import { WhoToFollow } from './WhoToFollow'
 
 const FEED_QUERY = gql`
 	query FeedQuery($first: Int, $after: ID) {
@@ -48,8 +50,9 @@ export function Feed() {
 		FEED_QUERY,
 		{
 			variables: { first: 5, after: null },
-			notifyOnNetworkStatusChange: true,
+			// notifyOnNetworkStatusChange: true,
 			fetchPolicy: 'cache-first',
+			nextFetchPolicy: 'cache-first',
 		}
 	)
 
@@ -80,12 +83,14 @@ export function Feed() {
 					loader={<LoadingFallback />}
 					endMessage={<EndMessage />}
 				>
-					{data?.feed.edges.map((edge) => {
+					{/* TODO : Better empty state here */}
+					{data?.feed.edges.map((edge, index) => {
 						const data = edge?.node
 						if (data) {
 							return (
 								<div key={edge?.cursor}>
 									<FeedPostCard {...data} />
+									{index === 5 || index === 10 ? <WhoToFollow /> : null}
 								</div>
 							)
 						}

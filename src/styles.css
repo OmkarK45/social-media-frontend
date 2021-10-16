@@ -153,5 +153,8 @@ input:-webkit-autofill:active {
 .unset-img > div {
 	position: unset !important;
 }
+.who-to-follow::-webkit-scrollbar {
+	display: none;
+}
 
 @tailwind utilities;

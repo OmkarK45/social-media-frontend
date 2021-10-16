@@ -27,7 +27,9 @@ export const emojiMatcher = new EmojiMatcher('emoji', emojiOptions)
 
 export const hashTagMatcher = new HashtagMatcher('hashtag', {}, (args) => {
 	return (
-		<Link href={`/hashtags/${args.hashtag.split('#')[1]}`}>{args.hashtag}</Link>
+		<Link href={`/search/?query=${args.hashtag.split('#')[1]}&type=hashtag`}>
+			{args.hashtag}
+		</Link>
 	)
 })
 

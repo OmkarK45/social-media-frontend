@@ -32,7 +32,7 @@ export function MenuItem({
 					)}
 				>
 					<span className={clsx('flex items-center', className)}>
-						{icon && <div className="mr-2">{Icon}</div>}
+						{icon && <div className="mr-2 text-lg text-gray-700">{Icon}</div>}
 						{children}
 					</span>
 				</ButtonOrLink>

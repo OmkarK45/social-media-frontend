@@ -1,8 +1,8 @@
 import {
-	HiFlag,
 	HiOutlineDotsVertical,
+	HiOutlineFlag,
+	HiOutlinePencil,
 	HiOutlineTrash,
-	HiPencil,
 } from 'react-icons/hi'
 import { useState } from 'react'
 import { Menu, MenuItem } from '../ui/Dropdown'
@@ -38,7 +38,7 @@ export function PostDropdown({ id, caption, isMine, gifLink }: Props) {
 					<>
 						{isMine && (
 							<MenuItem
-								icon={<HiPencil />}
+								icon={<HiOutlinePencil />}
 								onClick={() => setEditPostModal(true)}
 							>
 								Edit
@@ -54,7 +54,7 @@ export function PostDropdown({ id, caption, isMine, gifLink }: Props) {
 							</MenuItem>
 						)}
 
-						<MenuItem icon={<HiFlag />}>Report Post</MenuItem>
+						<MenuItem icon={<HiOutlineFlag />}>Report Post</MenuItem>
 					</>
 				}
 			>

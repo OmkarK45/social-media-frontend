@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import {
-	HiFlag,
 	HiOutlineDotsVertical,
+	HiOutlineFlag,
+	HiOutlinePencil,
 	HiOutlineTrash,
-	HiPencil,
 } from 'react-icons/hi'
 import { Menu, MenuItem } from '../ui/Dropdown'
 import { DeleteCommentModal } from './DeleteCommentModal'
@@ -40,7 +40,7 @@ export function CommentDropdown({ id, isMine, postId, body }: Props) {
 					<>
 						{isMine && (
 							<MenuItem
-								icon={<HiPencil />}
+								icon={<HiOutlinePencil />}
 								onClick={() => setEditCommentModal(true)}
 							>
 								Edit Comment
@@ -55,7 +55,7 @@ export function CommentDropdown({ id, isMine, postId, body }: Props) {
 							</MenuItem>
 						)}
 
-						<MenuItem icon={<HiFlag />}>Report Comment</MenuItem>
+						<MenuItem icon={<HiOutlineFlag />}>Report Comment</MenuItem>
 					</>
 				}
 			>

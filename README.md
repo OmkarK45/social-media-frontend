@@ -7,17 +7,19 @@
 - Security -> change password page [x]
 - Settings -> Dark or Light mode preference [x]
 - Account settings page [x]
-- Sidebar navigation [now]
-- Who to follow [pending]
-- Profile Page [done]
-- search done [done]
+- Sidebar navigation [x]
+- Who to follow [x]
+- Profile Page [x]
+- search done [x]
 
-= Profile drop down remaining [now]
-= unified navbar across the application [done]
-= suggest people to follow
-= dedicated hastag page
+= Profile drop down remaining [x]
+= unified navbar across the application [x]
+= suggest people to follow [x]
+= dedicated hastag page [pending/incomplete]
 = global footer [done for now]
-= better handling of unauth state
+= better handling of unauth state [pending]
 
-- FEEDPOST CARD IMAGE NEEDS A MODAL TOO
+who to follow for mobile
+
+- FEEDPOST CARD IMAGE NEEDS A MODAL TOO [x]
   NOTIFICATIONS - Liked, commented, etc

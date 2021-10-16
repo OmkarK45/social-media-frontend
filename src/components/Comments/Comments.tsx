@@ -12,6 +12,7 @@ import { formatDistance } from 'date-fns'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { CommentDropdown } from './CommentDropdown'
+import { Badge } from '../ui/Badge'
 
 interface CommentsProps {
 	postId: string
@@ -120,9 +121,16 @@ export function Comments({ postId }: CommentsProps) {
 											</div>
 											<div className=" flex w-full justify-between">
 												<div className="flex-1 min-w-0">
-													<p className="text-sm font-medium  truncate">
-														{edge?.node.user.firstName}
-													</p>
+													<div className="flex space-x-1">
+														<p className="text-sm font-medium  truncate">
+															{edge?.node.user.firstName}
+														</p>
+														{edge?.node.isMine ? (
+															<Badge size="sm" variant="pink">
+																You
+															</Badge>
+														) : null}
+													</div>
 													<p className="text-xs text-gray-500 truncate">
 														{'@' + edge?.node.user.username}
 													</p>

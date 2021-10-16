@@ -14,17 +14,23 @@ const BadgeVariants = {
 	yellow: 'text-yellow-800 bg-yellow-300',
 }
 
+const BadgeSizes = {
+	sm: 'px-2 py-0.5 text-xs',
+	md: 'px-2 py-1',
+}
 interface Props {
 	variant: keyof typeof BadgeVariants
+	size?: keyof typeof BadgeSizes
 	children: ReactNode
 }
 
-export function Badge({ children, variant }: Props) {
+export function Badge({ children, variant, size = 'md' }: Props) {
 	return (
 		<span
 			className={clsx(
-				'font-semibold inline-flex px-2 py-1 leading-4 text-sm rounded-full',
-				BadgeVariants[variant]
+				'font-semibold inline-flex leading-4 text-sm rounded-full',
+				BadgeVariants[variant],
+				size ? BadgeSizes[size] : BadgeSizes['md']
 			)}
 		>
 			{children}

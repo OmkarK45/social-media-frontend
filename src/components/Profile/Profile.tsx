@@ -2,6 +2,7 @@
 import { useQuery, gql } from '@apollo/client'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
+import { useReducer } from 'react'
 import {
 	HiBadgeCheck,
 	HiOutlineCalendar,
