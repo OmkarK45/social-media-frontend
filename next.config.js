@@ -3,6 +3,11 @@
  **/
 module.exports = {
 	images: {
-		domains: ['res.cloudinary.com', 'c.tenor.com', 'giphy.com'],
+		domains: [
+			'res.cloudinary.com',
+			'c.tenor.com',
+			'giphy.com',
+			'images.unsplash.com',
+		],
 	},
 }

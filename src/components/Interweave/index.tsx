@@ -4,7 +4,7 @@ import BaseInterwave, {
 } from 'interweave'
 import { HashtagMatcher, UrlMatcher } from 'interweave-autolink'
 import { EmojiMatcher, useEmojiData } from 'interweave-emoji'
-import { Link } from '../ui/Link'
+import { useRouter } from 'next/router'
 import { MentionMatcher } from './MentionMatcher'
 import { Url } from './UrlFactory'
 
@@ -26,10 +26,16 @@ export const urlMatcher = new UrlMatcher(
 export const emojiMatcher = new EmojiMatcher('emoji', emojiOptions)
 
 export const hashTagMatcher = new HashtagMatcher('hashtag', {}, (args) => {
+	const router = useRouter()
+
+	function handleOnClick() {
+		router.push(`/search/?query=${args.hashtag.split('#')[1]}&type=hashtag`)
+	}
+
 	return (
-		<Link href={`/search/?query=${args.hashtag.split('#')[1]}&type=hashtag`}>
+		<button className="font-medium underline" onClick={handleOnClick}>
 			{args.hashtag}
-		</Link>
+		</button>
 	)
 })
 

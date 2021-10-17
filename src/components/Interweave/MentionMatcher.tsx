@@ -1,20 +1,24 @@
-import { Matcher, MatchResponse } from 'interweave'
-import { Link } from '../ui/Link'
 import React from 'react'
+import { Matcher, MatchResponse } from 'interweave'
+import { useRouter } from 'next/router'
 
 export const MENTION_PATTERN = /\B@(\w+)/
 
 export function Mention(props: any) {
+	const router = useRouter()
+
+	function handleOnClick() {
+		router.push(`/profile/${props.display.replace('@', '')}`)
+	}
 	return (
-		// TODO : change this to button with onclick to avoid potential a tag nesting
-		<Link href={`/profile/${props.display.replace('@', '')}`}>
+		<button className="font-medium underline" onClick={handleOnClick}>
 			{props.display}
-		</Link>
+		</button>
 	)
 }
 
 export class MentionMatcher extends Matcher {
-	replaceWith(match: string, props) {
+	replaceWith(match: string, props: any) {
 		return React.createElement(Mention, props, match)
 	}
 
