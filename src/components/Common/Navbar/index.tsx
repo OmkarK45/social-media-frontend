@@ -74,7 +74,7 @@ export function Navbar() {
 								{!user ? (
 									<Spinner className="w-5 h-5" />
 								) : (
-									<ProfileDropdown avatarSrc={user.avatar!} />
+									<ProfileDropdown user={user} />
 								)}
 
 								<Link href={`/post/new`} className="ml-6 text-sm no-underline">

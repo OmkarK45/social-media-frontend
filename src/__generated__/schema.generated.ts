@@ -183,6 +183,20 @@ export type Node = {
   id: Scalars['ID'];
 };
 
+export type Notification = Node & {
+  __typename?: 'Notification';
+  createdAt: Scalars['DateTime'];
+  dispatcher: User;
+  id: Scalars['ID'];
+  isRead: Scalars['Boolean'];
+  like: User;
+  message: Maybe<Scalars['String']>;
+  post: Post;
+  receiver: User;
+  type: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor: Maybe<Scalars['String']>;
@@ -282,6 +296,7 @@ export type Query = {
   me: User;
   node: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
+  notifications: Array<Notification>;
   popularHashtags: QueryPopularHashtagsConnection;
   postsByHashtag: QueryPostsByHashtagConnection;
   postsContainingHashtag: QueryPostsContainingHashtagConnection;
@@ -310,6 +325,11 @@ export type QueryNodeArgs = {
 
 export type QueryNodesArgs = {
   ids: Array<Scalars['ID']>;
+};
+
+
+export type QueryNotificationsArgs = {
+  isRead?: Scalars['Boolean'];
 };
 
 

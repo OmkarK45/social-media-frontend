@@ -77,6 +77,7 @@ export function UserPosts({
 
 	if (error) return <div>Something failed.</div>
 
+	const posts = data.seeProfile.user.posts.edges.map((e) => e?.node)
 	return (
 		<Tab.Group>
 			<Card.Body
@@ -118,15 +119,15 @@ export function UserPosts({
 										},
 									})
 								}}
-								dataLength={data.seeProfile.user.posts.edges.length}
+								dataLength={posts.length}
 								loader={<LoadingFallback />}
 								endMessage={<>ALL DONE</>}
 							>
-								{data.seeProfile.user.posts.edges.map((edge) => {
-									const data = edge?.node
+								{posts.map((post) => {
+									const data = post
 									if (data) {
 										return (
-											<div key={edge.node.id}>
+											<div key={post.id}>
 												<FeedPostCard {...data} />
 											</div>
 										)

@@ -28,6 +28,7 @@ const FEED_QUERY = gql`
 					isMine
 					isLiked
 					user {
+						id
 						username
 						firstName
 						avatar

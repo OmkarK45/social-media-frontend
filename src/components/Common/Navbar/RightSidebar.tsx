@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { HiOutlineCubeTransparent } from 'react-icons/hi'
 import { FollowButton } from '~/components/Profile/FollowButton'
+import { Button } from '~/components/ui/Button'
 import { Card } from '~/components/ui/Card'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
@@ -149,12 +150,9 @@ export function RightSidebar() {
 								</ul>
 							</div>
 							<div className="mt-6">
-								<a
-									href="#"
-									className="w-full block text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-								>
+								<Button variant="white" fullWidth>
 									View all
-								</a>
+								</Button>
 							</div>
 						</div>
 					</div>

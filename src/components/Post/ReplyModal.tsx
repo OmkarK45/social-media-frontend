@@ -31,7 +31,7 @@ export const CREATE_COMMENT_MUTATION = gql`
 	}
 `
 
-export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
+export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
 	const [createComment] = useMutation<
 		CreateCommentMutation,
 		CreateCommentMutationVariables
@@ -40,7 +40,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 			if (!result.data?.createComment) return
 
 			cache.modify({
-				id: `Post:${props.id}`,
+				id: `Post:${post.id}`,
 				fields: {
 					totalComments(prev) {
 						return prev + 1
@@ -68,7 +68,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 							<img
 								className="h-10 w-10 rounded-full"
 								src={
-									props.user.avatar ??
+									post.user.avatar ??
 									'https://res.cloudinary.com/dogecorp/image/upload/v1631712574/dogesocial/v1/images/1_oi7c6m.svg'
 								}
 								alt=""
@@ -77,16 +77,16 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 						<div className="min-w-0 flex-1">
 							<p className="text-sm font-medium ">
 								<a href="#" className="hover:underline">
-									{props.user.firstName + ' ' + props.user.lastName ?? ''}
+									{post.user.firstName + ' ' + post.user.lastName ?? ''}
 									<span className="text-muted text-sm ml-2">
-										@{props.user.username}
+										@{post.user.username}
 									</span>
 								</a>
 							</p>
 							<p className="text-sm text-gray-500">
 								<a href="#" className="hover:underline">
 									<time>
-										{format(new Date(props.createdAt), 'MMMM d, hh:mm aaa')}
+										{format(new Date(post.createdAt), 'MMMM d, hh:mm aaa')}
 									</time>
 								</a>
 							</p>
@@ -95,11 +95,11 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 				</div>
 				<div className=" mt-4">
 					<p className=" space-y-4 dark:text-gray-300">
-						{props.caption && !props.image && (
-							<Interweave content={props.caption} />
+						{post.caption && !post.image && (
+							<Interweave content={post.caption} />
 						)}
-						{props.caption && props.image && (
-							<Interweave content={props.caption + props.image} />
+						{post.caption && post.image && (
+							<Interweave content={post.caption + post.image} />
 						)}
 					</p>
 				</div>
@@ -112,7 +112,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 									variables: {
 										input: {
 											body: values.body,
-											postId: props.id,
+											postId: post.id,
 										},
 									},
 								})

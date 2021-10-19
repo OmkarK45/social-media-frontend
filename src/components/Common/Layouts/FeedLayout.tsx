@@ -1,10 +1,18 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { HiOutlineFire, HiOutlineHashtag, HiOutlineHome } from 'react-icons/hi'
 import { Feed } from '~/components/Feed'
 import { Hashtags } from '~/components/Hashtags/Hashtags'
-import { RightSidebar } from '../Navbar/RightSidebar'
 import { TabbedLayout } from '../Navbar/TabbedLayout'
+import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 
+const RightSidebar = dynamic<{}>(
+	async () => {
+		const { RightSidebar } = await import('../Navbar/RightSidebar')
+		return RightSidebar
+	},
+	{ loading: () => <LoadingFallback />, ssr: true }
+)
 export function FeedLayout() {
 	return (
 		<div className="py-20">

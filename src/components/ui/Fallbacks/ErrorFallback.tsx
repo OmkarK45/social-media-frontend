@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { HiOutlineSparkles } from 'react-icons/hi'
 import { Button } from '~/components/ui/Button'
 
-interface Props {
+export interface Props {
 	action?(): void
 	message?: string
 	icon?: ReactElement

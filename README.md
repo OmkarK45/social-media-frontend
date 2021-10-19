@@ -21,5 +21,6 @@
 
 who to follow for mobile
 
+- COdesplit the whotofollow section
 - FEEDPOST CARD IMAGE NEEDS A MODAL TOO [x]
   NOTIFICATIONS - Liked, commented, etc

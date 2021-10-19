@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useState } from 'react'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { format, formatDistance } from 'date-fns'
@@ -23,6 +24,11 @@ import { CREATE_COMMENT_MUTATION } from './ReplyModal'
 import { PostDropdown } from './PostDropdown'
 import { TOGGLE_LIKE_MUTATION } from './FeedPostCard'
 
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import Modal from '../ui/Modal'
+import { Link } from '~/components/ui/Link'
+
 import {
 	PostQuery,
 	PostQueryVariables,
@@ -35,10 +41,6 @@ import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
-import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
-import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
-import Modal from '../ui/Modal'
-import { useState } from 'react'
 
 export const CommentSchema = z.object({
 	body: z.string().min(1, 'Comment must be atleast 1 character long.'),
@@ -138,9 +140,17 @@ export function PostCard() {
 			/>
 		)
 
+	const post = data.seePost
+
 	return (
-		<div className="max-w-2xl mx-auto flex flex-wrap space-y-4">
-			<div className=" w-full pb-6 md:pb-0">
+		<div className="max-w-2xl mx-auto flex flex-wrap space-y-4 relative">
+			<div className="absolute -left-24 top-5">
+				<Button variant="dark" onClick={() => router.back()}>
+					{' '}
+					← Back
+				</Button>
+			</div>
+			<div className="w-full md:pb-0">
 				<div>
 					<Card className="rounded-t-lg ">
 						<div className="px-4 py-4  sm:p-4 sm:rounded-lg">
@@ -148,32 +158,30 @@ export function PostCard() {
 								<div className="flex-shrink-0">
 									<img
 										className="h-10 w-10 rounded-full"
-										src={data.seePost.user.avatar!}
+										src={post.user.avatar!}
 										alt=""
 									/>
 								</div>
 								<div className="min-w-0 flex-1">
 									<p className=" font-medium ">
-										<a href="#" className="hover:underline">
-											{data.seePost.user.username}
+										<Link
+											href={`/profile/${post.user.username}`}
+											className="no-underline"
+										>
+											{post.user.username}
 											<span className="text-muted ml-1 text-sm">
-												@{data.seePost.user.username}
+												@{post.user.username}
 											</span>
-										</a>
+										</Link>
 									</p>
 									<p className="text-sm text-muted">
 										<a href="#" className="hover:underline">
 											<time>
-												{format(
-													new Date(data.seePost.createdAt),
-													'MMMM d, hh:mm aaa'
-												)}{' '}
+												{format(new Date(post.createdAt), 'MMMM d, hh:mm aaa')}{' '}
 												(
-												{formatDistance(
-													new Date(data.seePost.createdAt),
-													new Date(),
-													{ addSuffix: true }
-												)}
+												{formatDistance(new Date(post.createdAt), new Date(), {
+													addSuffix: true,
+												})}
 												)
 											</time>
 										</a>
@@ -181,27 +189,27 @@ export function PostCard() {
 								</div>
 								<div className="flex-shrink-0 self-center flex">
 									<PostDropdown
-										id={data.seePost.id}
-										isMine={data.seePost.isMine}
-										caption={data.seePost.caption ?? ''}
-										gifLink={data.seePost.gifImage ?? ''}
+										id={post.id}
+										isMine={post.isMine}
+										caption={post.caption ?? ''}
+										gifLink={post.gifImage ?? ''}
 									/>
 								</div>
 							</div>
 						</div>
 
 						<div className="px-4 pb-4">
-							<Interweave content={data.seePost.caption} />
+							<Interweave content={post.caption} />
 						</div>
 
-						{data.seePost.image && data.seePost.blurHash && (
+						{post.image && (
 							<div className="unset-img full-bleed">
 								<NextImage
 									className="custom-img"
 									onClick={() => setImageModal(true)}
 									alt="TODO"
 									layout="fill"
-									src={data.seePost.image}
+									src={post.image}
 								/>
 							</div>
 						)}
@@ -220,7 +228,7 @@ export function PostCard() {
 									<NextImage
 										layout="fill"
 										objectFit="contain"
-										src={data.seePost.image!}
+										src={post.image!}
 									/>
 								</div>
 							</Modal.Content>
@@ -238,11 +246,11 @@ export function PostCard() {
 					<Card className="py-2 px-4 flex justify-between space-x-8">
 						<div className="flex space-x-6">
 							<span className="inline-flex">
-								<p className="font-bold">{data.seePost.likes}</p>
+								<p className="font-bold">{post.likes}</p>
 								<p className="text-muted ml-1 ">Likes</p>{' '}
 							</span>
 							<span className="inline-flex">
-								<p className="font-bold">{data.seePost.totalComments}</p>
+								<p className="font-bold">{post.totalComments}</p>
 								<p className="text-muted ml-1 ">Comments</p>{' '}
 							</span>
 						</div>
@@ -254,12 +262,12 @@ export function PostCard() {
 								<Button
 									onClick={async () => {
 										await toggleLike({
-											variables: { id: data.seePost.id },
+											variables: { id: post.id },
 										})
 									}}
 									variant="dark"
 								>
-									{data.seePost.isLiked ? (
+									{post.isLiked ? (
 										<HiHeart
 											className="h-5 w-5 text-brand-600"
 											aria-hidden="true"
@@ -326,7 +334,7 @@ export function PostCard() {
 				</Card.Body>
 			</Card>
 			<div className="w-full relative">
-				<Comments postId={data.seePost.id!} />
+				<Comments postId={post.id!} />
 			</div>
 		</div>
 	)
