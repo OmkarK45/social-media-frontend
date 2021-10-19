@@ -150,10 +150,6 @@ export function FeedPostCard(props: FeedPostCardProps) {
 					)}
 
 					{/* Caption */}
-					{/* <div>
-					<Tooltip content={<UserProfilePopover />}>
-						<Link href="#">@sushil_buragute</Link>
-					</Tooltip> */}
 
 					<div className="px-6 my-2">
 						<p className=" space-y-4 dark:text-gray-300">

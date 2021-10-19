@@ -95,7 +95,7 @@ export function WhoToFollow() {
 											<p className="text-sm font-medium ">
 												{person?.firstName}
 											</p>
-											<p className="text-sm text-gray-500  truncate">
+											<p className="text-sm text-gray-500 truncate">
 												@{person?.username}
 											</p>
 										</Link>

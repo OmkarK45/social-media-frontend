@@ -27,12 +27,18 @@ export function MenuItem({
 				<ButtonOrLink
 					{...props}
 					className={clsx(
-						active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-						'flex items-center w-full px-4 py-2 text-sm leading-5 text-left'
+						active
+							? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200'
+							: 'dark:text-gray-200',
+						'flex items-center w-full px-4 py-2 text-sm leading-5 text-left '
 					)}
 				>
 					<span className={clsx('flex items-center', className)}>
-						{icon && <div className="mr-2 text-lg text-gray-700">{Icon}</div>}
+						{icon && (
+							<div className="mr-2 text-lg text-gray-700 dark:text-white">
+								{Icon}
+							</div>
+						)}
 						{children}
 					</span>
 				</ButtonOrLink>
@@ -85,7 +91,7 @@ export function Menu<TTag extends ElementType<any>>({
 							<HeadlessMenu.Items
 								static
 								className={clsx(
-									'z-10 overflow-hidden origin-top-right absolute right-5 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
+									'z-10 overflow-hidden origin-top-right absolute right-5 w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none',
 									dropdownClassName
 								)}
 							>

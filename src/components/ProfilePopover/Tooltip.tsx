@@ -28,7 +28,7 @@ export function Tooltip({ children, content }: ToolTipProps) {
 			</span>
 			{isOver &&
 				renderLayer(
-					<div className="tooltip" {...layerProps} {...hoverProps}>
+					<div className="tooltip z-50" {...layerProps} {...hoverProps}>
 						{content}
 						<Arrow {...arrowProps} />
 					</div>

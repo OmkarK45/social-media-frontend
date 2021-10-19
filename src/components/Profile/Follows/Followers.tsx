@@ -138,7 +138,7 @@ export function Followers({ username }: FollowersProps) {
 												<FollowButton
 													isFollowing={user.isFollowing}
 													username={user.username}
-													variant="white"
+													variant="dark"
 												/>
 											)}
 										</div>

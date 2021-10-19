@@ -5,6 +5,7 @@ import { Button } from '~/components/ui/Button'
 import { Card } from '~/components/ui/Card'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
+import { GradientBar } from '~/components/ui/GradientBar'
 import { Heading } from '~/components/ui/Heading'
 import { Link } from '~/components/ui/Link'
 import { Footer } from '../Footer'
@@ -93,10 +94,11 @@ export function RightSidebar() {
 	}
 
 	return (
-		<aside className="w-full sticky top-20">
+		<aside className="w-full sticky top-20 overflow-hidden">
 			<div className=" space-y-4">
 				<section aria-labelledby="who-to-follow-heading">
-					<div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+					<div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
+						<GradientBar color="indigo" />
 						<div className="p-6">
 							<Heading
 								size="h5"
@@ -150,7 +152,7 @@ export function RightSidebar() {
 								</ul>
 							</div>
 							<div className="mt-6">
-								<Button variant="white" fullWidth>
+								<Button variant="dark" fullWidth>
 									View all
 								</Button>
 							</div>

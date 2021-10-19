@@ -542,6 +542,7 @@ export type User = Node & {
   avatar: Maybe<Scalars['String']>;
   bio: Maybe<Scalars['String']>;
   coverImage: Maybe<Scalars['String']>;
+  coverImageBg: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];

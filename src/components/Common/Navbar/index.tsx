@@ -15,6 +15,9 @@ import Spinner from '~/components/ui/Spinner'
 
 export function Navbar() {
 	const { user } = useUser()
+	if (!user) {
+		return 'WITHOUT USER NAVBAR'
+	}
 	return (
 		<Popover
 			as="header"
@@ -84,7 +87,7 @@ export function Navbar() {
 						</div>
 					</div>
 
-					<MobileMenu open={open} />
+					<MobileMenu user={user} open={open} />
 				</>
 			)}
 		</Popover>

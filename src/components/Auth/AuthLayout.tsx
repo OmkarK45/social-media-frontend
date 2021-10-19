@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from '~/components/ui/Card'
 import { Heading } from '~/components/ui/Heading'
 import { Footer } from '../Common/Footer'
+import { GradientBar } from '../ui/GradientBar'
 
 interface Props {
 	title: string
@@ -30,8 +31,12 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 				</div>
 				<p className="mt-3 text-gray-500">{subtitle}</p>
 			</div>
-			<Card rounded="md" className="py-3 sm:mx-auto sm:w-full sm:max-w-md">
-				<Card.Body>
+			<Card
+				rounded="md"
+				className="overflow-hidden sm:mx-auto sm:w-full sm:max-w-md"
+			>
+				<GradientBar color="indigo" />
+				<Card.Body className="py-5">
 					<div>{children}</div>
 				</Card.Body>
 			</Card>

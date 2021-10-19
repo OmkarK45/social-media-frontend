@@ -1,11 +1,28 @@
 import { Popover, Transition } from '@headlessui/react'
+import { HiOutlineSparkles } from 'react-icons/hi'
 import { Button } from '~/components/ui/Button'
+import { Link } from '~/components/ui/Link'
+import { User } from '~/__generated__/schema.generated'
 
 interface MobileMenuProps {
 	open: boolean
+	user: Partial<User>
+}
+type TLink = {
+	href: (username: string) => string
+	label: string
+	icon: React.ElementType
 }
 
-export function MobileMenu({ open }: MobileMenuProps) {
+export const links: TLink[] = [
+	{
+		href: (username) => `/profile/${username}`,
+		label: 'Your Profile',
+		icon: HiOutlineSparkles,
+	},
+]
+
+export function MobileMenu({ open, user }: MobileMenuProps) {
 	return (
 		<Transition
 			show={open}
@@ -22,18 +39,31 @@ export function MobileMenu({ open }: MobileMenuProps) {
 						<div className="flex-shrink-0">
 							<img
 								className="h-10 w-10 rounded-full"
-								src="https://placekitten.com/150/150"
+								src={user.avatar!}
 								alt=""
 							/>
 						</div>
 						<div className="ml-3">
 							<div className="text-base font-medium text-gray-800 dark:text-gray-100">
-								Demo User
-							</div>
-							<div className="text-sm font-medium text-gray-500">
-								demo_account@gmail.com
+								Hi! {user.firstName}
 							</div>
 						</div>
+					</div>
+					<div className="mt-3 px-2 space-y-1">
+						{links.map((link, idx) => {
+							const Icon = link.icon
+							return (
+								<Link
+									key={idx}
+									href={link.href(user.username!)}
+									className="flex no-underline px-3 py-2 rounded-md text-base text-gray-400 hover:text-white hover:bg-gray-700"
+								>
+									<span className="space-x-2 flex">
+										<Icon className="h-6 w-6" /> <span>Your Profile</span>
+									</span>
+								</Link>
+							)
+						})}
 					</div>
 					<div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
 						<Button className="mt-2" fullWidth href="#" size="lg">

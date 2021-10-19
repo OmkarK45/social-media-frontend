@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useQuery, gql } from '@apollo/client'
+import clsx from 'clsx'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useReducer } from 'react'
@@ -37,6 +38,7 @@ export const PROFILE_QUERY = gql`
 				createdAt
 				updatedAt
 				coverImage
+				coverImageBg
 				isMe
 				isFollowing
 				stats {
@@ -76,17 +78,26 @@ export function Profile({ username }: ProfileProps) {
 	return (
 		<div className="py-16">
 			<div>
-				{user.coverImage ? (
+				{user.coverImage && !user.coverImageBg ? (
 					<img
 						className="h-32 w-full object-cover lg:h-48"
 						src={user.coverImage}
-						alt=""
+						alt="TODO"
 					/>
 				) : (
-					<div className="h-32 w-full lg:h-48  bg-gradient-to-r from-purple-500 to-pink-500 bg-pink-400"></div>
+					<img
+						className="h-32 w-full object-cover lg:h-48"
+						src={user.coverImage!}
+						alt={`Cover image for user ${user.username}. Contains patterns and colors.`}
+						style={{
+							backgroundColor: `#${user.coverImageBg}`,
+							backgroundImage: `#${user.coverImage}`,
+							backgroundSize: '50%',
+						}}
+					/>
 				)}
 			</div>
-			<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
+			<div className="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 ">
 				<div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
 					<div className="flex">
 						<img

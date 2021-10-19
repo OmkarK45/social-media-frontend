@@ -1,6 +1,8 @@
 import React from 'react'
 import { Matcher, MatchResponse } from 'interweave'
 import { useRouter } from 'next/router'
+import { Tooltip } from '../ProfilePopover/Tooltip'
+import { UserProfilePopover } from '../ProfilePopover'
 
 export const MENTION_PATTERN = /\B@(\w+)/
 
@@ -10,10 +12,15 @@ export function Mention(props: any) {
 	function handleOnClick() {
 		router.push(`/profile/${props.display.replace('@', '')}`)
 	}
+
 	return (
-		<button className="font-medium underline" onClick={handleOnClick}>
-			{props.display}
-		</button>
+		<Tooltip
+			content={<UserProfilePopover username={props.display.replace('@', '')} />}
+		>
+			<button className="font-medium underline" onClick={handleOnClick}>
+				{props.display}
+			</button>
+		</Tooltip>
 	)
 }
 

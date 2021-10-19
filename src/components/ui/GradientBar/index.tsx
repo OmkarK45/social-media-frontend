@@ -3,6 +3,7 @@ import clsx from 'clsx'
 const colors = {
 	blue: 'from-indigo-500 to-teal-200 bg-teal-200',
 	pink: 'from-purple-400 to-pink-400 bg-pink-400',
+	indigo: 'from-indigo-500 to-red-500',
 }
 
 const sizes = {
