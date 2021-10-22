@@ -39,6 +39,7 @@ export function UserProfilePopover({ username }: UserProfileTooltipProps) {
 		variables: {
 			username,
 		},
+		fetchPolicy: 'no-cache',
 	})
 
 	if (!data || loading)

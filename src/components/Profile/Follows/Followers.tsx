@@ -10,6 +10,7 @@ import { Link } from '~/components/ui/Link'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FollowButton } from '../FollowButton'
+import { UserHandle } from '~/components/Common/UserHandle'
 
 interface FollowersProps {
 	username: string
@@ -105,34 +106,7 @@ export function Followers({ username }: FollowersProps) {
 									className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
 								>
 									<div className="flex items-center space-x-4 ">
-										<div className="flex-shrink-0">
-											<Image
-												className="h-10 w-10 rounded-full"
-												src={user.avatar!}
-												width="40px"
-												height="40px"
-												alt=""
-											/>
-										</div>
-										<div className="flex-1 min-w-0">
-											<Link
-												className="no-underline"
-												href={`/profile/${user.username}`}
-											>
-												<p className="text-sm font-medium  truncate">
-													{user.firstName + ' ' + user.lastName
-														? user.lastName
-														: ''}
-													OK
-												</p>
-												<p className="text-sm text-gray-500 truncate">
-													{'@' + user.username}
-												</p>
-												<p className="text-sm truncate pt-1">
-													{user.bio ? user.bio : ''}
-												</p>
-											</Link>
-										</div>
+										<UserHandle user={user} />
 										<div>
 											{user.isMe ? null : (
 												<FollowButton

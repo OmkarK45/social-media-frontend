@@ -16,7 +16,11 @@ import Spinner from '~/components/ui/Spinner'
 export function Navbar() {
 	const { user } = useUser()
 	if (!user) {
-		return 'WITHOUT USER NAVBAR'
+		return (
+			<>
+				<p>WITHOUT USER NAVBAR</p>
+			</>
+		)
 	}
 	return (
 		<Popover

@@ -41,6 +41,7 @@ import {
 	ToggleLikeMutation,
 	ToggleLikeMutationVariables,
 } from './__generated__/FeedPostCard.generated'
+import { ViewLikes } from './ViewLikes'
 
 export const CommentSchema = z.object({
 	body: z.string().min(1, 'Comment must be atleast 1 character long.'),
@@ -70,6 +71,7 @@ export const POST_QUERY = gql`
 
 export function PostCard() {
 	const [imageModal, setImageModal] = useState<boolean>(false)
+	const [likesModal, setLikesModal] = useState<boolean>(false)
 
 	const router = useRouter()
 
@@ -247,7 +249,13 @@ export function PostCard() {
 						<div className="flex space-x-6">
 							<span className="inline-flex">
 								<p className="font-bold">{post.likes}</p>
-								<p className="text-muted ml-1 ">Likes</p>{' '}
+								<button onClick={() => setLikesModal(true)}>
+									<p className="text-muted ml-1 ">Likes</p>{' '}
+								</button>
+								<ViewLikes
+									isOpen={likesModal}
+									onClose={() => setLikesModal(false)}
+								/>
 							</span>
 							<span className="inline-flex">
 								<p className="font-bold">{post.totalComments}</p>
