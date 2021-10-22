@@ -1,5 +1,5 @@
 import { Popover } from '@headlessui/react'
-import { HiX, HiMenu } from 'react-icons/hi'
+import { HiX, HiMenu, HiOutlineBell } from 'react-icons/hi'
 import clsx from 'clsx'
 
 import { GradientBar } from '~/components/ui/GradientBar'
@@ -12,8 +12,13 @@ import { ProfileDropdown } from './ProfileDropdown'
 import { MobileMenu } from './MobileMenu'
 import { useUser } from '~/utils/useUser'
 import Spinner from '~/components/ui/Spinner'
+import { boolean } from 'zod'
+import { useState } from 'react'
+import { NotificationOverlay } from '~/components/Notifications/NotificationOverlay'
 
 export function Navbar() {
+	const [openNotifications, setNotificationOpen] = useState<boolean>(false)
+
 	const { user } = useUser()
 	if (!user) {
 		return (
@@ -77,6 +82,14 @@ export function Navbar() {
 							</div>
 							<div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4 space-x-5">
 								<ThemeToggle />
+								<button
+									onClick={() => setNotificationOpen(true)}
+									type="button"
+									className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+								>
+									<span className="sr-only">View notifications</span>
+									<HiOutlineBell className="h-6 w-6" aria-hidden="true" />
+								</button>
 
 								{!user ? (
 									<Spinner className="w-5 h-5" />
@@ -90,7 +103,10 @@ export function Navbar() {
 							</div>
 						</div>
 					</div>
-
+					<NotificationOverlay
+						open={openNotifications}
+						setOpen={setNotificationOpen}
+					/>
 					<MobileMenu user={user} open={open} />
 				</>
 			)}

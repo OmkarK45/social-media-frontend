@@ -51,7 +51,6 @@ export function Feed() {
 		FEED_QUERY,
 		{
 			variables: { first: 5, after: null },
-			// notifyOnNetworkStatusChange: true,
 			fetchPolicy: 'cache-first',
 			nextFetchPolicy: 'cache-first',
 		}

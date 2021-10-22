@@ -189,9 +189,9 @@ export type Notification = Node & {
   dispatcher: User;
   id: Scalars['ID'];
   isRead: Scalars['Boolean'];
-  like: User;
+  like: Maybe<User>;
   message: Maybe<Scalars['String']>;
-  post: Post;
+  post: Maybe<Post>;
   receiver: User;
   type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -296,7 +296,7 @@ export type Query = {
   me: User;
   node: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
-  notifications: Array<Notification>;
+  notifications: QueryNotificationsConnection;
   popularHashtags: QueryPopularHashtagsConnection;
   postsByHashtag: QueryPostsByHashtagConnection;
   postsContainingHashtag: QueryPostsContainingHashtagConnection;
@@ -329,7 +329,11 @@ export type QueryNodesArgs = {
 
 
 export type QueryNotificationsArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
   isRead?: Scalars['Boolean'];
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -418,6 +422,18 @@ export type QueryFeedConnectionEdge = {
   __typename?: 'QueryFeedConnectionEdge';
   cursor: Scalars['String'];
   node: Post;
+};
+
+export type QueryNotificationsConnection = {
+  __typename?: 'QueryNotificationsConnection';
+  edges: Array<Maybe<QueryNotificationsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryNotificationsConnectionEdge = {
+  __typename?: 'QueryNotificationsConnectionEdge';
+  cursor: Scalars['String'];
+  node: Notification;
 };
 
 export type QueryPopularHashtagsConnection = {
