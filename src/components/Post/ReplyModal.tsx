@@ -10,7 +10,7 @@ import Form, { useZodForm } from '../ui/Form/Form'
 import { Heading } from '../ui/Heading'
 import Modal from '../ui/Modal'
 import { TextArea } from '../ui/TextArea'
-import { FeedPostCardProps } from './FeedPostCard'
+import { Props as FeedPostCardProps } from './FeedPostCard'
 import { CommentSchema } from './PostCard'
 import {
 	CreateCommentMutation,
@@ -31,7 +31,7 @@ export const CREATE_COMMENT_MUTATION = gql`
 	}
 `
 
-export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
+export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 	const [createComment] = useMutation<
 		CreateCommentMutation,
 		CreateCommentMutationVariables
@@ -40,7 +40,7 @@ export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
 			if (!result.data?.createComment) return
 
 			cache.modify({
-				id: `Post:${post.id}`,
+				id: `Post:${props.post.id}`,
 				fields: {
 					totalComments(prev) {
 						return prev + 1
@@ -67,26 +67,28 @@ export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
 						<div className="flex-shrink-0">
 							<img
 								className="h-10 w-10 rounded-full"
-								src={
-									post.user.avatar ??
-									'https://res.cloudinary.com/dogecorp/image/upload/v1631712574/dogesocial/v1/images/1_oi7c6m.svg'
-								}
+								src={props.post.user?.avatar}
 								alt=""
 							/>
 						</div>
 						<div className="min-w-0 flex-1">
 							<p className="text-sm font-medium ">
 								<a href="#" className="hover:underline">
-									{post.user.firstName + ' ' + post.user.lastName ?? ''}
+									{props.post?.user?.firstName +
+										' ' +
+										props.post?.user?.lastName ?? ''}
 									<span className="text-muted text-sm ml-2">
-										@{post.user.username}
+										@{props.post?.user?.username}
 									</span>
 								</a>
 							</p>
 							<p className="text-sm text-gray-500">
 								<a href="#" className="hover:underline">
 									<time>
-										{format(new Date(post.createdAt), 'MMMM d, hh:mm aaa')}
+										{format(
+											new Date(props.post.createdAt!),
+											'MMMM d, hh:mm aaa'
+										)}
 									</time>
 								</a>
 							</p>
@@ -95,11 +97,11 @@ export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
 				</div>
 				<div className=" mt-4">
 					<p className=" space-y-4 dark:text-gray-300">
-						{post.caption && !post.image && (
-							<Interweave content={post.caption} />
+						{props.post.caption && !props.post.image && (
+							<Interweave content={props.post.caption} />
 						)}
-						{post.caption && post.image && (
-							<Interweave content={post.caption + post.image} />
+						{props.post.caption && props.post.image && (
+							<Interweave content={props.post.caption + props.post.image} />
 						)}
 					</p>
 				</div>
@@ -112,7 +114,7 @@ export function ReplyModal({ isOpen, onClose, ...post }: ReplyModalProps) {
 									variables: {
 										input: {
 											body: values.body,
-											postId: post.id,
+											postId: props.post.id!,
 										},
 									},
 								})

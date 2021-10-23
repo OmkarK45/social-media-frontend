@@ -19,24 +19,22 @@ interface FollowersProps {
 const FOLLOWERS_LIST_QUERY = gql`
 	query FollowersListQuery($username: String!, $first: Int!, $after: ID) {
 		seeProfile(username: $username) {
-			user {
-				followers(first: $first, after: $after) {
-					edges {
-						cursor
-						node {
-							username
-							avatar
-							firstName
-							lastName
-							bio
-							isMe
-							isFollowing
-						}
+			followers(first: $first, after: $after) {
+				edges {
+					cursor
+					node {
+						username
+						avatar
+						firstName
+						lastName
+						bio
+						isMe
+						isFollowing
 					}
-					pageInfo {
-						hasNextPage
-						endCursor
-					}
+				}
+				pageInfo {
+					hasNextPage
+					endCursor
 				}
 			}
 		}
@@ -60,7 +58,7 @@ export function Followers({ username }: FollowersProps) {
 		return <LoadingFallback />
 	}
 
-	if (data.seeProfile.user.followers.edges.length === 0)
+	if (data.seeProfile.followers.edges.length === 0)
 		return (
 			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 				<h1 className="text-muted font-medium text-center">
@@ -82,22 +80,22 @@ export function Followers({ username }: FollowersProps) {
 			<div className="flow-root">
 				<ul role="list" className=" divide-y  divide-gray-600">
 					<InfiniteScroll
-						hasMore={data.seeProfile.user.followers.pageInfo.hasNextPage}
+						hasMore={data.seeProfile.followers.pageInfo.hasNextPage}
 						next={() => {
 							console.log('called')
 							fetchMore({
 								variables: {
 									first: 2,
-									after: data.seeProfile.user.followers.pageInfo.endCursor,
+									after: data.seeProfile.followers.pageInfo.endCursor,
 									username,
 								},
 							})
 						}}
-						dataLength={data.seeProfile.user.followers.edges.length}
+						dataLength={data.seeProfile.followers.edges.length}
 						loader={<LoadingFallback />}
 						endMessage={<h1>All done</h1>}
 					>
-						{data.seeProfile.user.followers.edges.map((edge) => {
+						{data.seeProfile.followers.edges.map((edge) => {
 							const user = edge?.node
 							if (!user) return <h1>TODO : No user </h1>
 							return (

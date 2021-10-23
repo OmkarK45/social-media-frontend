@@ -32,7 +32,7 @@ export function HashtagSearchResult({
 				posts.map((edge) => {
 					const data = edge?.node
 					if (data) {
-						return <FeedPostCard key={data.id} {...data} />
+						return <FeedPostCard key={data.id} post={data} />
 					}
 				})
 			) : (

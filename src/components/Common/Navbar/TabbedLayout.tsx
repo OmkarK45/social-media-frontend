@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import React from 'react'
 import { IconType } from 'react-icons/lib'
 
-// Gist this
 interface Navigation {
 	name: string
 	icon: IconType | React.ElementType

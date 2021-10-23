@@ -16,33 +16,35 @@ import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 const USER_POSTS_QUERY = gql`
 	query UserPostsQuery($username: String!, $first: Int!, $after: ID) {
 		seeProfile(username: $username) {
-			user {
-				posts(username: $username, first: $first, after: $after) {
-					edges {
-						node {
-							id
-							createdAt
-							updatedAt
-							gifImage
-							image
-							isLiked
-							caption
-							blurHash
-							totalComments
-							likes
-							isMine
-							user {
-								avatar
-								firstName
-								lastName
-								username
-							}
+			posts(first: $first, after: $after) {
+				edges {
+					node {
+						id
+						createdAt
+						updatedAt
+						gifImage
+						image
+						isLiked
+						caption
+						blurHash
+						comments {
+							totalCount
+						}
+						likes {
+							totalCount
+						}
+						isMine
+						user {
+							avatar
+							firstName
+							lastName
+							username
 						}
 					}
-					pageInfo {
-						endCursor
-						hasNextPage
-					}
+				}
+				pageInfo {
+					endCursor
+					hasNextPage
 				}
 			}
 		}
@@ -77,7 +79,7 @@ export function UserPosts({
 
 	if (error) return <div>Something failed.</div>
 
-	const posts = data.seeProfile.user.posts.edges.map((e) => e?.node)
+	const posts = data.seeProfile.posts.edges.map((e) => e?.node)
 	return (
 		<Tab.Group>
 			<Card.Body
@@ -109,12 +111,12 @@ export function UserPosts({
 					<main className="lg:col-span-7 xl:col-span-6 lg:grid lg:grid-cols-12 lg:gap-3">
 						<div className=" lg:col-span-12 ">
 							<InfiniteScroll
-								hasMore={data.seeProfile.user.posts.pageInfo.hasNextPage}
+								hasMore={data.seeProfile.posts.pageInfo.hasNextPage}
 								next={() => {
 									fetchMore({
 										variables: {
 											first: 10,
-											after: data.seeProfile.user.posts.pageInfo.endCursor,
+											after: data.seeProfile.posts.pageInfo.endCursor,
 											username,
 										},
 									})
@@ -128,7 +130,7 @@ export function UserPosts({
 									if (data) {
 										return (
 											<div key={post.id}>
-												<FeedPostCard {...data} />
+												<FeedPostCard post={data} />
 											</div>
 										)
 									}

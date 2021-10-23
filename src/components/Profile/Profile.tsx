@@ -28,25 +28,21 @@ interface ProfileProps {
 export const PROFILE_QUERY = gql`
 	query SeeProfileQuery($username: String!) {
 		seeProfile(username: $username) {
-			user {
-				id
-				bio
-				avatar
-				username
-				lastName
-				firstName
-				createdAt
-				updatedAt
-				coverImage
-				coverImageBg
-				isMe
-				isFollowing
-				stats {
-					followersCount
-					followingCount
-					postsCount
-				}
-			}
+			id
+			bio
+			avatar
+			username
+			lastName
+			firstName
+			createdAt
+			updatedAt
+			coverImage
+			coverImageBg
+			isMe
+			isFollowing
+			followersCount
+			postsCount
+			followingCount
 		}
 	}
 `
@@ -73,7 +69,7 @@ export function Profile({ username }: ProfileProps) {
 
 	if (!data || loading) return <LoadingFallback />
 
-	const user = data.seeProfile.user
+	const user = data.seeProfile
 
 	return (
 		<div className="py-16">
@@ -157,9 +153,7 @@ export function Profile({ username }: ProfileProps) {
 						</div>
 						<div className="flex space-x-4">
 							<div className="flex">
-								<span className="font-bold mr-2">
-									{user.stats.followersCount}
-								</span>
+								<span className="font-bold mr-2">{user.followersCount}</span>
 								<ButtonOrLink
 									href={`/profile/${user.username}/follows?firstName=${user.firstName}&lastName=${user.lastName}&type=followers`}
 									className="text-muted hover:underline"
@@ -168,9 +162,7 @@ export function Profile({ username }: ProfileProps) {
 								</ButtonOrLink>
 							</div>
 							<div className="flex">
-								<span className="font-bold mr-2">
-									{user.stats.followingCount}
-								</span>
+								<span className="font-bold mr-2">{user.followingCount}</span>
 								<ButtonOrLink
 									href={`/profile/${user.username}/follows?firstName=${user.firstName}&lastName=${user.lastName}`}
 									className="text-muted hover:underline"
@@ -181,7 +173,7 @@ export function Profile({ username }: ProfileProps) {
 						</div>
 					</div>
 				</div>
-				<UserPosts count={user.stats.postsCount} username={user.username} />
+				<UserPosts count={user.postsCount} username={user.username} />
 			</div>
 		</div>
 	)

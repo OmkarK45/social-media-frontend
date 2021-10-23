@@ -55,7 +55,9 @@ export const POST_QUERY = gql`
 			image
 			blurHash
 			gifImage
-			totalComments
+			comments {
+				totalCount
+			}
 			isMine
 			isLiked
 			createdAt
@@ -64,7 +66,9 @@ export const POST_QUERY = gql`
 				username
 				avatar
 			}
-			likes
+			likes {
+				totalCount
+			}
 		}
 	}
 `
@@ -248,7 +252,7 @@ export function PostCard() {
 					<Card className="py-2 px-4 flex justify-between space-x-8">
 						<div className="flex space-x-6">
 							<span className="inline-flex">
-								<p className="font-bold">{post.likes}</p>
+								<p className="font-bold">{post.likes.totalCount}</p>
 								<button onClick={() => setLikesModal(true)}>
 									<p className="text-muted ml-1 ">Likes</p>{' '}
 								</button>
@@ -258,7 +262,7 @@ export function PostCard() {
 								/>
 							</span>
 							<span className="inline-flex">
-								<p className="font-bold">{post.totalComments}</p>
+								<p className="font-bold">{post.comments.totalCount}</p>
 								<p className="text-muted ml-1 ">Comments</p>{' '}
 							</span>
 						</div>

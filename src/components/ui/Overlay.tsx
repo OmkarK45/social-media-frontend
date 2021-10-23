@@ -19,12 +19,8 @@ export function Overlay({
 }: OverlayProps) {
 	return (
 		<Transition.Root show={open} as={Fragment}>
-			<Dialog
-				as="div"
-				className="fixed inset-0 overflow-hidden "
-				onClose={setOpen}
-			>
-				<div className="absolute inset-0 overflow-hidden">
+			<Dialog as="div" className="fixed inset-0 " onClose={setOpen}>
+				<div className="absolute inset-0 ">
 					<Dialog.Overlay className="absolute inset-0  " />
 
 					<div className="fixed inset-y-0 top-[4.5rem] right-0 pl-10 max-w-full flex  z-20">

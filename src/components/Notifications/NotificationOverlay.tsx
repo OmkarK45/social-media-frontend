@@ -10,7 +10,10 @@ import Spinner from '../ui/Spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
-interface NotificationOverlayProps extends OverlayProps {}
+interface NotificationOverlayProps {
+	open: boolean
+	setOpen: (prev: boolean) => void
+}
 
 const NOTIFICATIONS_QUERY = gql`
 	query NotificationsQuery($first: Int!, $after: ID) {
@@ -18,9 +21,11 @@ const NOTIFICATIONS_QUERY = gql`
 			edges {
 				cursor
 				node {
+					isRead
 					id
 					type
 					dispatcher {
+						id
 						avatar
 						firstName
 						lastName
@@ -30,10 +35,13 @@ const NOTIFICATIONS_QUERY = gql`
 						id
 					}
 					like {
-						avatar
-						firstName
-						lastName
-						username
+						id
+						user {
+							avatar
+							firstName
+							lastName
+							username
+						}
 					}
 					createdAt
 				}
@@ -54,7 +62,7 @@ export function NotificationOverlay({
 		NotificationsQuery,
 		NotificationsQueryVariables
 	>(NOTIFICATIONS_QUERY, {
-		variables: { first: 5, after: null },
+		variables: { first: 10, after: null },
 	})
 
 	useEffect(() => {
@@ -85,17 +93,19 @@ export function NotificationOverlay({
 						loader={<Spinner className="w-5 h-5" />}
 					>
 						{data.notifications.edges.map((notification) => {
-							return (
-								<Notification
-									from={notification?.node.dispatcher!}
-									id={notification?.node.id!}
-									notificationType={
-										notification?.node.type! as NotificationType
-									}
-									postId={notification?.node.post?.id}
-									key={notification?.cursor}
-								/>
-							)
+							const notif = notification?.node
+							if (notif) {
+								return (
+									<Notification
+										from={notif.dispatcher!}
+										id={notif.id!}
+										notificationType={notif.type! as NotificationType}
+										postId={notif.post?.id}
+										key={notification?.cursor}
+										createdAt={notif.createdAt!}
+									/>
+								)
+							}
 						})}
 					</InfiniteScroll>
 				) : (
@@ -104,11 +114,6 @@ export function NotificationOverlay({
 						message="No notifications for now. All caught up!"
 					/>
 				)}
-
-				<h2 className="text-sm leading-normal pt-8 border-b pb-2 border-gray-300 ">
-					YESTERDAY
-				</h2>
-
 				<div className="flex items-center justiyf-between">
 					<hr className="w-full" />
 					<p className="text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500">

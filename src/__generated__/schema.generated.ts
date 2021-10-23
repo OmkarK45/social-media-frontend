@@ -26,12 +26,13 @@ export type ChangePasswordInput = {
   oldPassword: Scalars['String'];
 };
 
-export type Comment = {
+export type Comment = Node & {
   __typename?: 'Comment';
   body: Scalars['String'];
   createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   isMine: Scalars['Boolean'];
+  post: Post;
   updatedAt: Scalars['DateTime'];
   user: User;
 };
@@ -85,10 +86,38 @@ export type FollowUserInput = {
   username: Scalars['String'];
 };
 
-export type Hashtag = {
+export type Hashtag = Node & {
   __typename?: 'Hashtag';
   hashtag: Scalars['String'];
   id: Scalars['ID'];
+  posts: HashtagPostsConnection;
+};
+
+
+export type HashtagPostsArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+};
+
+export type HashtagPostsConnection = {
+  __typename?: 'HashtagPostsConnection';
+  edges: Array<Maybe<HashtagPostsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type HashtagPostsConnectionEdge = {
+  __typename?: 'HashtagPostsConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
+};
+
+export type Like = Node & {
+  __typename?: 'Like';
+  id: Scalars['ID'];
+  post: Post;
+  user: User;
 };
 
 export type LoginInput = {
@@ -189,8 +218,7 @@ export type Notification = Node & {
   dispatcher: User;
   id: Scalars['ID'];
   isRead: Scalars['Boolean'];
-  like: Maybe<User>;
-  message: Maybe<Scalars['String']>;
+  like: Maybe<Like>;
   post: Maybe<Post>;
   receiver: User;
   type: Scalars['String'];
@@ -217,9 +245,7 @@ export type Post = Node & {
   image: Maybe<Scalars['String']>;
   isLiked: Scalars['Boolean'];
   isMine: Scalars['Boolean'];
-  likedBy: PostLikedByConnection;
-  likes: Scalars['Int'];
-  totalComments: Scalars['Int'];
+  likes: PostLikesConnection;
   updatedAt: Scalars['DateTime'];
   user: User;
 };
@@ -241,7 +267,7 @@ export type PostHashtagsArgs = {
 };
 
 
-export type PostLikedByArgs = {
+export type PostLikesArgs = {
   after: Maybe<Scalars['ID']>;
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
@@ -252,6 +278,7 @@ export type PostCommentsConnection = {
   __typename?: 'PostCommentsConnection';
   edges: Array<Maybe<PostCommentsConnectionEdge>>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type PostCommentsConnectionEdge = {
@@ -272,21 +299,17 @@ export type PostHashtagsConnectionEdge = {
   node: Hashtag;
 };
 
-export type PostLikedByConnection = {
-  __typename?: 'PostLikedByConnection';
-  edges: Array<Maybe<PostLikedByConnectionEdge>>;
+export type PostLikesConnection = {
+  __typename?: 'PostLikesConnection';
+  edges: Array<Maybe<PostLikesConnectionEdge>>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-export type PostLikedByConnectionEdge = {
-  __typename?: 'PostLikedByConnectionEdge';
+export type PostLikesConnectionEdge = {
+  __typename?: 'PostLikesConnectionEdge';
   cursor: Scalars['String'];
-  node: User;
-};
-
-export type ProfileResponse = {
-  __typename?: 'ProfileResponse';
-  user: User;
+  node: Like;
 };
 
 export type Query = {
@@ -302,9 +325,8 @@ export type Query = {
   postsContainingHashtag: QueryPostsContainingHashtagConnection;
   searchByHashtag: QuerySearchByHashtagConnection;
   searchUser: QuerySearchUserConnection;
-  seeLikes: QuerySeeLikesConnection;
   seePost: Post;
-  seeProfile: ProfileResponse;
+  seeProfile: User;
   sessionById: Session;
   whoToFollow: QueryWhoToFollowConnection;
 };
@@ -377,15 +399,6 @@ export type QuerySearchUserArgs = {
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
   keyword: Scalars['String'];
-  last: Maybe<Scalars['Int']>;
-};
-
-
-export type QuerySeeLikesArgs = {
-  after: Maybe<Scalars['ID']>;
-  before: Maybe<Scalars['ID']>;
-  first: Maybe<Scalars['Int']>;
-  id: Scalars['String'];
   last: Maybe<Scalars['Int']>;
 };
 
@@ -496,18 +509,6 @@ export type QuerySearchUserConnectionEdge = {
   node: User;
 };
 
-export type QuerySeeLikesConnection = {
-  __typename?: 'QuerySeeLikesConnection';
-  edges: Array<Maybe<QuerySeeLikesConnectionEdge>>;
-  pageInfo: PageInfo;
-};
-
-export type QuerySeeLikesConnectionEdge = {
-  __typename?: 'QuerySeeLikesConnectionEdge';
-  cursor: Scalars['String'];
-  node: User;
-};
-
 export type QueryWhoToFollowConnection = {
   __typename?: 'QueryWhoToFollowConnection';
   edges: Array<Maybe<QueryWhoToFollowConnectionEdge>>;
@@ -523,12 +524,6 @@ export type QueryWhoToFollowConnectionEdge = {
 export type ResultResponse = {
   __typename?: 'ResultResponse';
   success: Scalars['Boolean'];
-};
-
-export type SearchResponse = {
-  __typename?: 'SearchResponse';
-  total: Scalars['Int'];
-  users: Array<User>;
 };
 
 export type Session = {
@@ -555,21 +550,23 @@ export type SignUpInput = {
 
 export type User = Node & {
   __typename?: 'User';
-  avatar: Maybe<Scalars['String']>;
+  avatar: Scalars['String'];
   bio: Maybe<Scalars['String']>;
-  coverImage: Maybe<Scalars['String']>;
-  coverImageBg: Maybe<Scalars['String']>;
+  coverImage: Scalars['String'];
+  coverImageBg: Scalars['String'];
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   followers: UserFollowersConnection;
+  followersCount: Scalars['Int'];
   following: UserFollowingConnection;
+  followingCount: Scalars['Int'];
   id: Scalars['ID'];
   isFollowing: Scalars['Boolean'];
   isMe: Scalars['Boolean'];
   lastName: Maybe<Scalars['String']>;
   posts: UserPostsConnection;
-  stats: UserStatsObject;
+  postsCount: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
 };
@@ -596,13 +593,13 @@ export type UserPostsArgs = {
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
-  username: Scalars['String'];
 };
 
 export type UserFollowersConnection = {
   __typename?: 'UserFollowersConnection';
   edges: Array<Maybe<UserFollowersConnectionEdge>>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type UserFollowersConnectionEdge = {
@@ -615,6 +612,7 @@ export type UserFollowingConnection = {
   __typename?: 'UserFollowingConnection';
   edges: Array<Maybe<UserFollowingConnectionEdge>>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type UserFollowingConnectionEdge = {
@@ -627,17 +625,11 @@ export type UserPostsConnection = {
   __typename?: 'UserPostsConnection';
   edges: Array<Maybe<UserPostsConnectionEdge>>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type UserPostsConnectionEdge = {
   __typename?: 'UserPostsConnectionEdge';
   cursor: Scalars['String'];
   node: Post;
-};
-
-export type UserStatsObject = {
-  __typename?: 'UserStatsObject';
-  followersCount: Scalars['Int'];
-  followingCount: Scalars['Int'];
-  postsCount: Scalars['Int'];
 };

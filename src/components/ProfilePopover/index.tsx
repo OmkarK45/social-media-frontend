@@ -16,18 +16,14 @@ interface UserProfileTooltipProps {
 const USER_POPOVER_QUERY = gql`
 	query UserPopoverQuery($username: String!) {
 		seeProfile(username: $username) {
-			user {
-				id
-				avatar
-				firstName
-				lastName
-				username
-				stats {
-					followersCount
-					followingCount
-					postsCount
-				}
-			}
+			id
+			avatar
+			firstName
+			lastName
+			username
+			followersCount
+			followingCount
+			postsCount
 		}
 	}
 `
@@ -56,7 +52,7 @@ export function UserProfilePopover({ username }: UserProfileTooltipProps) {
 			</Card>
 		)
 	if (error) return <ErrorFallback message="Failed to load user data." />
-	const user = data.seeProfile.user
+	const user = data.seeProfile
 	return (
 		<Card
 			rounded="lg"
@@ -78,7 +74,7 @@ export function UserProfilePopover({ username }: UserProfileTooltipProps) {
 					<div className="flex items-center">
 						<div>
 							<p className="text-xl font-semibold leading-tight text-muted">
-								{user.stats.followersCount}
+								{user.followersCount}
 							</p>
 							<p className="text-sm leading-3 mt-2 text-gray-500 dark:text-gray-400">
 								Followers
@@ -86,7 +82,7 @@ export function UserProfilePopover({ username }: UserProfileTooltipProps) {
 						</div>
 						<div className="ml-11">
 							<p className="text-xl font-semibold leading-tight  text-blue-600">
-								{user.stats.postsCount}
+								{user.postsCount}
 							</p>
 							<p className="text-sm leading-3 mt-2 text-gray-500 dark:text-gray-400">
 								Posts
@@ -95,9 +91,6 @@ export function UserProfilePopover({ username }: UserProfileTooltipProps) {
 					</div>
 					<Button fullWidth>View Profile</Button>
 				</div>
-				{/* <div className="mx-auto">
-					<Spinner className="w-5 h-5" />
-				</div> */}
 			</div>
 		</Card>
 	)

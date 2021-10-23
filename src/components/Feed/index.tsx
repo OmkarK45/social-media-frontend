@@ -9,7 +9,6 @@ import { GradientBar } from '~/components/ui/GradientBar'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
-import { RightSidebar } from '../Common/Navbar/RightSidebar'
 import { WhoToFollow } from './WhoToFollow'
 
 const FEED_QUERY = gql`
@@ -22,8 +21,12 @@ const FEED_QUERY = gql`
 					id
 					caption
 					blurHash
-					likes
-					totalComments
+					likes {
+						totalCount
+					}
+					comments {
+						totalCount
+					}
 					gifImage
 					isMine
 					isLiked
@@ -89,7 +92,7 @@ export function Feed() {
 						if (data) {
 							return (
 								<div key={edge?.cursor}>
-									<FeedPostCard {...data} />
+									<FeedPostCard post={data} />
 									{index === 5 || index === 10 ? <WhoToFollow /> : null}
 								</div>
 							)

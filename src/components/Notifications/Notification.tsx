@@ -4,8 +4,12 @@ import {
 	HiOutlineUserAdd,
 	HiOutlineX,
 } from 'react-icons/hi'
-import { User } from '~/__generated__/schema.generated'
+import {
+	Notification as NotificationSchemaType,
+	User,
+} from '~/__generated__/schema.generated'
 import Link from 'next/link'
+import { formatDistance, formatDistanceToNow } from 'date-fns'
 
 export type NotificationType = 'USER_FOLLOW' | 'POST_LIKE' | 'POST_REPLY'
 
@@ -18,6 +22,7 @@ interface NotificationProps {
 	notificationType: NotificationType
 	/** ID of post */
 	postId?: string | null
+	createdAt: string
 }
 
 const NOTIFICATION_ICON: Record<NotificationType, JSX.Element> = {
@@ -32,37 +37,15 @@ const NOTIFICATION_STRING: Record<NotificationType, string> = {
 	POST_REPLY: 'replied to your',
 }
 
-interface NotificationLinkOptions {
-	entityId?: string
-	notificationType: NotificationType
-	username: string
-}
-
-function getNotificationDestination({
-	entityId,
-	notificationType,
-	username,
-}: NotificationLinkOptions) {
-	if (notificationType === 'POST_LIKE') {
-		return `/post/${entityId}`
-	}
-	if (notificationType === 'POST_REPLY') {
-		return `/post/${entityId}`
-	}
-	if (notificationType === 'USER_FOLLOW') {
-		return `/profile/${username}`
-	}
-	return '#'
-}
-
 export function Notification({
 	from,
 	notificationType,
 	postId,
+	createdAt,
 }: NotificationProps) {
 	return (
 		<div className="w-full p-3 mt-4 bg-white dark:bg-gray-700 rounded shadow flex flex-shrink-0">
-			<div className="w-8 h-8 border rounded-full border-gray-200 dark:border-gray-500 flex flex-shrink-0 items-center justify-center">
+			<div className="w-8 h-8 border rounded-full  border-gray-200 dark:border-gray-500 flex flex-shrink-0 items-center justify-center">
 				{NOTIFICATION_ICON[notificationType]}
 			</div>
 			<div className="pl-3 w-full">
@@ -75,13 +58,18 @@ export function Notification({
 						{notificationType !== 'USER_FOLLOW' && (
 							<Link href={`/post/${postId}`}>post</Link>
 						)}
+						{JSON.stringify(postId)}
 					</p>
 					<button>
 						{/* add something onclick ondismiss and then handle dismiss in parent component */}
 						<HiOutlineX />
 					</button>
 				</div>
-				<p className="text-xs leading-3 pt-1 text-gray-500">2 hours ago</p>
+				<p className="text-xs leading-3 pt-1 text-gray-500">
+					{formatDistance(new Date(createdAt), new Date(), {
+						addSuffix: true,
+					})}
+				</p>
 			</div>
 		</div>
 	)

@@ -1,8 +1,6 @@
 import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Image from 'next/image'
 
-import { Link } from '~/components/ui/Link'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import Spinner from '~/components/ui/Spinner'
 
@@ -20,24 +18,22 @@ interface FollowingProps {
 const FOLLOWING_LIST_QUERY = gql`
 	query FollowingListQuery($username: String!, $first: Int!, $after: ID) {
 		seeProfile(username: $username) {
-			user {
-				following(first: $first, after: $after) {
-					edges {
-						cursor
-						node {
-							username
-							avatar
-							firstName
-							lastName
-							bio
-							isMe
-							isFollowing
-						}
+			following(first: $first, after: $after) {
+				edges {
+					cursor
+					node {
+						username
+						avatar
+						firstName
+						lastName
+						bio
+						isMe
+						isFollowing
 					}
-					pageInfo {
-						hasNextPage
-						endCursor
-					}
+				}
+				pageInfo {
+					hasNextPage
+					endCursor
 				}
 			}
 		}
@@ -61,7 +57,7 @@ export function Following({ username }: FollowingProps) {
 		return <LoadingFallback />
 	}
 
-	if (data.seeProfile.user.following.edges.length === 0)
+	if (data.seeProfile.following.edges.length === 0)
 		return (
 			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 				<h1 className="text-muted font-medium text-center">
@@ -83,22 +79,22 @@ export function Following({ username }: FollowingProps) {
 			<div className="flow-root">
 				<ul role="list" className=" divide-y  divide-gray-600">
 					<InfiniteScroll
-						hasMore={data.seeProfile.user.following.pageInfo.hasNextPage}
+						hasMore={data.seeProfile.following.pageInfo.hasNextPage}
 						next={() => {
 							console.log('called')
 							fetchMore({
 								variables: {
 									first: 2,
-									after: data.seeProfile.user.following.pageInfo.endCursor,
+									after: data.seeProfile.following.pageInfo.endCursor,
 									username,
 								},
 							})
 						}}
-						dataLength={data.seeProfile.user.following.edges.length}
+						dataLength={data.seeProfile.following.edges.length}
 						loader={<LoadingFallback />}
 						endMessage={<h1>All done</h1>}
 					>
-						{data.seeProfile.user.following.edges.map((edge) => {
+						{data.seeProfile.following.edges.map((edge) => {
 							const user = edge?.node
 							if (!user) return <h1>TODO : No user </h1>
 							return (

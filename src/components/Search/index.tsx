@@ -20,7 +20,9 @@ export const SEARCH_FOR_POST_BY_HASHTAG = gql`
 					image
 					blurHash
 					gifImage
-					totalComments
+					comments {
+						totalCount
+					}
 					isMine
 					isLiked
 					createdAt
@@ -31,7 +33,9 @@ export const SEARCH_FOR_POST_BY_HASHTAG = gql`
 						username
 						avatar
 					}
-					likes
+					likes {
+						totalCount
+					}
 				}
 			}
 		}

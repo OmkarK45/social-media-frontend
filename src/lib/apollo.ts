@@ -99,18 +99,22 @@ export const createApolloClient = ({
 					Query: {
 						fields: {
 							feed: relayStylePagination(),
+							notifications: relayStylePagination(),
 							seePost: {
+								merge: true,
+							},
+							seeProfile: {
 								merge: true,
 							},
 							'seeProfile.user.followers': {
 								merge: true,
 							},
-							'seeProfile.user.posts': relayStylePagination(),
+							'seeProfile.posts': relayStylePagination(),
 						},
 					},
 					Post: {
 						fields: {
-							comments: relayStylePagination(),
+							comments: relayStylePagination([]),
 						},
 					},
 					User: {

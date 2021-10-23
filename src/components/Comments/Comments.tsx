@@ -21,8 +21,8 @@ interface CommentsProps {
 export const COMMENTS_QUERY = gql`
 	query CommentsQuery($id: String!, $first: Int, $after: ID) {
 		seePost(id: $id) {
-			totalComments
 			comments(first: $first, after: $after) {
+				totalCount
 				edges {
 					cursor
 					node {
@@ -53,7 +53,7 @@ export function Comments({ postId }: CommentsProps) {
 		CommentsQuery,
 		CommentsQueryVariables
 	>(COMMENTS_QUERY, {
-		variables: { id: postId, first: 2, after: null },
+		variables: { id: postId, first: 3, after: null },
 		notifyOnNetworkStatusChange: true,
 		fetchPolicy: 'cache-first',
 	})
@@ -76,11 +76,11 @@ export function Comments({ postId }: CommentsProps) {
 				<div className="flow-root h-full ">
 					<div className="py-3 px-4 border-b dark:border-gray-600 border-gray-200">
 						<Heading size="h5">
-							Comments ({data?.seePost.totalComments})
+							Comments ({data?.seePost.comments.totalCount})
 						</Heading>
 					</div>
 
-					{!data || data.seePost.comments.edges.length === 0 ? (
+					{!data || data.seePost.comments.totalCount === 0 ? (
 						<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
 							<h1 className="text-muted font-medium text-center">
 								There are no comments on this post. <br /> Be the first one to
@@ -115,7 +115,7 @@ export function Comments({ postId }: CommentsProps) {
 											<div className="flex-shrink-0">
 												<img
 													className="h-10 w-10 rounded-full"
-													src={edge?.node.user.avatar ?? ''}
+													src={edge?.node.user.avatar}
 													alt=""
 												/>
 											</div>

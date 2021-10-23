@@ -10,7 +10,6 @@ import {
 import { format } from 'date-fns'
 
 import { Card } from '~/components/ui/Card'
-import { Image } from '~/components/ui/Image'
 import { Interweave } from '../Interweave'
 import { ReplyModal } from './ReplyModal'
 import { Button } from '../ui/Button'
@@ -21,29 +20,15 @@ import {
 import { Link } from '~/components/ui/Link'
 import { PostDropdown } from './PostDropdown'
 import NextImage from 'next/image'
-import { Tooltip } from '../ProfilePopover/Tooltip'
-import { UserProfilePopover } from '../ProfilePopover'
-export interface FeedPostCardProps {
-	id: string
-	createdAt: Date | string
-	updatedAt: Date | string
-	gifImage: string | null
-	image: string | null
-	caption: string | null
-	blurHash: string | null
-	user: {
-		avatar: string | null
-		firstName: string
-		lastName: string | null
-		username: string
-	}
+import { Post } from '~/__generated__/schema.generated'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
-	likes: number
-	totalComments: number
-	isMine: boolean
-	isLiked: boolean
+type DeepPartial<T> = {
+	[propertyKey in keyof T]?: DeepPartial<T[propertyKey]>
 }
-
+export interface Props {
+	post: DeepPartial<Post>
+}
 export const TOGGLE_LIKE_MUTATION = gql`
 	mutation ToggleLikeMutation($id: String!) {
 		toggleLike(id: $id) {
@@ -52,9 +37,8 @@ export const TOGGLE_LIKE_MUTATION = gql`
 	}
 `
 
-export function FeedPostCard(props: FeedPostCardProps) {
+export function FeedPostCard(props: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-
 	const [toggleLike] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
@@ -63,13 +47,13 @@ export function FeedPostCard(props: FeedPostCardProps) {
 			if (!result.data?.toggleLike.success) return
 
 			cache.modify({
-				id: `Post:${props.id}`,
+				id: `Post:${props.post.id}`,
 				fields: {
 					isLiked(prev) {
 						return !prev
 					},
 					likes(prev) {
-						if (props.isLiked) {
+						if (props.post.isLiked) {
 							return prev - 1
 						}
 						return prev + 1
@@ -79,6 +63,10 @@ export function FeedPostCard(props: FeedPostCardProps) {
 		},
 	})
 
+	if (!props.post || !props.post.user) {
+		return <ErrorFallback message="Failed to load" />
+	}
+
 	return (
 		<Card noPadding className="max-w-2xl bg-white my-3 sm:rounded-lg">
 			<article>
@@ -87,40 +75,42 @@ export function FeedPostCard(props: FeedPostCardProps) {
 						<div className="flex-shrink-0">
 							<img
 								className="h-10 w-10 rounded-full"
-								src={
-									props.user.avatar ??
-									'https://res.cloudinary.com/dogecorp/image/upload/v1631712574/dogesocial/v1/images/1_oi7c6m.svg'
-								}
+								src={props.post.user.avatar!}
 								alt=""
 							/>
 						</div>
 						<div className="min-w-0 flex-1">
 							<Link
-								href={`/profile/${props.user.username}`}
+								href={`/profile/${props.post.user.username}`}
 								className="no-underline"
 							>
 								<p className="text-sm font-medium ">
-									{props.user.firstName}{' '}
-									{props.user.lastName ? props.user.lastName : null}
+									{props.post?.user?.firstName}{' '}
+									{props.post?.user?.lastName
+										? props.post?.user?.lastName
+										: null}
 									<span className="text-muted text-sm ml-2">
-										@{props.user.username}
+										@{props.post?.user?.username}
 									</span>
 								</p>
 							</Link>
 							<p className="text-sm text-gray-500">
 								<a href="#" className="hover:underline">
 									<time dateTime="2020-12-09T11:43:00">
-										{format(new Date(props.createdAt), 'MMMM d, hh:mm aaa')}
+										{format(
+											new Date(props.post.createdAt!),
+											'MMMM d, hh:mm aaa'
+										)}
 									</time>
 								</a>
 							</p>
 						</div>
 						<div className="flex-shrink-0 self-center flex">
 							<PostDropdown
-								id={props.id}
-								isMine={props.isMine}
-								caption={props.caption ?? ''}
-								gifLink={props.gifImage ?? ''}
+								id={props.post.id!}
+								isMine={props.post.isMine!}
+								caption={props.post.caption ?? ''}
+								gifLink={props.post.gifImage ?? ''}
 							/>
 						</div>
 					</div>
@@ -134,17 +124,17 @@ export function FeedPostCard(props: FeedPostCardProps) {
 					/>
 				</div> */}
 				<Link
-					href={`/post/${props.id}`}
+					href={`/post/${props.post.id}`}
 					className="mt-1 block no-underline font-normal outline-none focus:outline-none focus:ring-0"
 				>
 					{/* Image */}
-					{props.image && (
+					{props.post.image && (
 						<div className="mx-auto w-11/12 rounded-lg overflow-hidden unset-img full-bleed">
 							<NextImage
 								className="custom-img"
 								alt="TODO"
 								layout="fill"
-								src={props.image}
+								src={props.post.image}
 							/>
 						</div>
 					)}
@@ -153,7 +143,7 @@ export function FeedPostCard(props: FeedPostCardProps) {
 
 					<div className="px-6 my-2">
 						<p className=" space-y-4 dark:text-gray-300">
-							<Interweave content={props.caption} />
+							<Interweave content={props.post.caption} />
 						</p>
 					</div>
 				</Link>
@@ -166,18 +156,18 @@ export function FeedPostCard(props: FeedPostCardProps) {
 								onClick={async () => {
 									await toggleLike({
 										variables: {
-											id: props.id,
+											id: props.post.id!,
 										},
 									})
 								}}
 								className="rounded-full overflow-hidden space-x-2"
 							>
-								{props.isLiked ? (
+								{props.post.isLiked ? (
 									<HiHeart className="w-5 h-5 text-brand-700" />
 								) : (
 									<HiOutlineHeart className="w-5 h-5" />
 								)}
-								<p>{props.likes}</p>
+								<p>{props.post?.likes?.totalCount}</p>
 							</Button>
 						</span>
 						<span className="inline-flex items-center space-x-2">
@@ -187,7 +177,7 @@ export function FeedPostCard(props: FeedPostCardProps) {
 								className="space-x-2"
 							>
 								<HiOutlineReply className="w-5 h-5" />
-								<p>{props.totalComments}</p>
+								<p>{props.post.comments?.totalCount}</p>
 							</Button>
 							<ReplyModal
 								isOpen={isOpen}

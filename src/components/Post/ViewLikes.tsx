@@ -24,15 +24,17 @@ interface ViewLikesProps {
 const LIKED_BY_QUERY = gql`
 	query LikedByQuery($first: Int!, $id: String!, $after: ID) {
 		seePost(id: $id) {
-			likedBy(first: $first, after: $after) {
+			likes(first: $first, after: $after) {
 				edges {
 					cursor
 					node {
-						avatar
-						firstName
-						lastName
-						username
-						bio
+						user {
+							avatar
+							firstName
+							lastName
+							username
+							bio
+						}
 					}
 				}
 				pageInfo {
@@ -80,9 +82,9 @@ export function ViewLikes({ isOpen, onClose }: ViewLikesProps) {
 				<Spinner className="w-8 h-8" />
 			) : (
 				<ul role="list" className=" divide-y  divide-gray-600">
-					{data.seePost.likedBy.edges.length > 0 ? (
+					{data.seePost.likes.edges.length > 0 ? (
 						<InfiniteScroll
-							hasMore={data.seePost.likedBy.pageInfo.hasNextPage}
+							hasMore={data.seePost.likes.pageInfo.hasNextPage}
 							next={() => {
 								if (!fetchMore) {
 									loadLikedBy({
@@ -96,16 +98,16 @@ export function ViewLikes({ isOpen, onClose }: ViewLikesProps) {
 									fetchMore({
 										variables: {
 											first: 3,
-											after: data.seePost.likedBy.pageInfo.endCursor,
+											after: data.seePost.likes.pageInfo.endCursor,
 										},
 									})
 								}
 							}}
-							dataLength={data.seePost.likedBy.edges.length}
+							dataLength={data.seePost.likes.edges.length}
 							loader={<LoadingFallback />}
 						>
-							{data.seePost.likedBy.edges.map((u) => {
-								const user = u?.node
+							{data.seePost.likes.edges.map((u) => {
+								const user = u?.node.user
 								return (
 									<li className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg">
 										<div className="flex items-center space-x-4 ">

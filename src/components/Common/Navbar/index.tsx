@@ -12,7 +12,6 @@ import { ProfileDropdown } from './ProfileDropdown'
 import { MobileMenu } from './MobileMenu'
 import { useUser } from '~/utils/useUser'
 import Spinner from '~/components/ui/Spinner'
-import { boolean } from 'zod'
 import { useState } from 'react'
 import { NotificationOverlay } from '~/components/Notifications/NotificationOverlay'
 
