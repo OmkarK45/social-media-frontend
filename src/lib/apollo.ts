@@ -66,12 +66,6 @@ export const createApolloClient = ({
 	const ssrMode = typeof window === 'undefined'
 	let nextClient = apolloClient
 
-	const httpLink = new HttpLink({
-		uri: ssrMode ? 'http://localhost:5000/graphql' : API_URL,
-		headers: headers,
-		credentials: 'include',
-	})
-
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
 			graphQLErrors.forEach(({ message, locations, path }) =>
@@ -100,6 +94,7 @@ export const createApolloClient = ({
 						fields: {
 							feed: relayStylePagination([]),
 							notifications: relayStylePagination(),
+							whoToFollow: relayStylePagination(),
 							seePost: {
 								merge: true,
 							},

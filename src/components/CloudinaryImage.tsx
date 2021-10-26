@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { buildUrl, extractPublicId } from 'cloudinary-build-url'
 
 interface CloudinaryImageProps {
-	publicId: string
+	imageURL: string
 	height: number
 	width: number
 	alt: string
@@ -13,13 +13,14 @@ interface CloudinaryImageProps {
 export const Public_ID_Regex = /upload\/(?:v\d+\/)?([^\.]+)/
 
 export default function CloudinaryImg({
-	publicId,
+	imageURL,
 	height,
 	width,
 	alt = 'Project Image',
 	title,
 	className,
 }: CloudinaryImageProps) {
+	const publicId = extractPublicId(imageURL)
 	const urlBlurred = buildUrl(publicId, {
 		cloud: {
 			cloudName: 'dogecorp',
@@ -64,6 +65,7 @@ export default function CloudinaryImg({
 					alt={alt}
 					unoptimized={true}
 					title={title || alt}
+					layout="fill"
 				/>
 			</div>
 		</div>

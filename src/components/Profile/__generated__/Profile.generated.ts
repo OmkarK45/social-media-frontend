@@ -5,4 +5,4 @@ export type SeeProfileQueryVariables = Types.Exact<{
 }>;
 
 
-export type SeeProfileQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', id: string, bio: Types.Maybe<string>, avatar: string, username: string, lastName: Types.Maybe<string>, firstName: string, createdAt: string, updatedAt: string, coverImage: string, coverImageBg: string, isMe: boolean, isFollowing: boolean, followersCount: number, postsCount: number, followingCount: number } };
+export type SeeProfileQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', id: string, bio: string | null, avatar: string, username: string, lastName: string | null, firstName: string, createdAt: string, updatedAt: string, coverImage: string, coverImageBg: string, isMe: boolean, isFollowing: boolean, followersCount: number, postsCount: number, followingCount: number } };

@@ -44,7 +44,7 @@ export function EditCommentModal({
 	const form = useZodForm({
 		schema: EditCommentSchema,
 	})
-
+	console.log(postId)
 	const [editComment] = useMutation<
 		EditCommentMutation,
 		EditCommentMutationVariables

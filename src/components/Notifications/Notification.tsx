@@ -23,6 +23,7 @@ interface NotificationProps {
 	/** ID of post */
 	postId?: string | null
 	createdAt: string
+	postLikeId?: string | null
 }
 
 const NOTIFICATION_ICON: Record<NotificationType, JSX.Element> = {
@@ -42,6 +43,7 @@ export function Notification({
 	notificationType,
 	postId,
 	createdAt,
+	postLikeId,
 }: NotificationProps) {
 	return (
 		<div className="w-full p-3 mt-4 bg-white dark:bg-gray-700 rounded shadow flex flex-shrink-0">
@@ -55,8 +57,11 @@ export function Notification({
 							<Link href={`/profile/${from.username}`}>{from.firstName}</Link>
 						</span>{' '}
 						{NOTIFICATION_STRING[notificationType]}{' '}
-						{notificationType !== 'USER_FOLLOW' && (
+						{notificationType === 'POST_REPLY' && (
 							<Link href={`/post/${postId}`}>post</Link>
+						)}
+						{notificationType === 'POST_LIKE' && (
+							<a href={`/post/${postLikeId}`}>post</a>
 						)}
 					</p>
 					<button>

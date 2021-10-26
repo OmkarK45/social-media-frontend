@@ -36,6 +36,9 @@ const NOTIFICATIONS_QUERY = gql`
 					}
 					like {
 						id
+						post {
+							id
+						}
 						user {
 							avatar
 							firstName
@@ -103,6 +106,7 @@ export function NotificationOverlay({
 										postId={notif.post?.id}
 										key={notification?.cursor}
 										createdAt={notif.createdAt!}
+										postLikeId={notif.like?.post?.id}
 									/>
 								)
 							}

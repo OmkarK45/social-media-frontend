@@ -12,11 +12,13 @@ import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { Badge } from '../ui/Badge'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { EndMessage } from '../Feed'
 
 const USER_POSTS_QUERY = gql`
 	query UserPostsQuery($username: String!, $first: Int!, $after: ID) {
 		seeProfile(username: $username) {
 			posts(first: $first, after: $after) {
+				totalCount
 				edges {
 					node {
 						id
@@ -69,13 +71,8 @@ export function UserPosts({
 		},
 	})
 	// TODO
-	if (!data)
-		return (
-			<ErrorFallback
-				action={() => {}}
-				message={`${username} have no posts yet.`}
-			/>
-		)
+	if (data?.seeProfile.posts.totalCount === 0 || !data)
+		return <ErrorFallback noAction message={`${username} have no posts yet.`} />
 
 	if (error) return <div>Something failed.</div>
 
@@ -123,7 +120,7 @@ export function UserPosts({
 								}}
 								dataLength={posts.length}
 								loader={<LoadingFallback />}
-								endMessage={<>ALL DONE</>}
+								endMessage={<EndMessage />}
 							>
 								{posts.map((post) => {
 									const data = post

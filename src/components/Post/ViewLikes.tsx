@@ -109,7 +109,10 @@ export function ViewLikes({ isOpen, onClose }: ViewLikesProps) {
 							{data.seePost.likes.edges.map((u) => {
 								const user = u?.node.user
 								return (
-									<li className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg">
+									<li
+										key={u?.cursor}
+										className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
+									>
 										<div className="flex items-center space-x-4 ">
 											<UserHandle user={user!} />
 										</div>

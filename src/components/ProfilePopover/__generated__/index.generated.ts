@@ -5,4 +5,4 @@ export type UserPopoverQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserPopoverQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', id: string, avatar: string, firstName: string, lastName: Types.Maybe<string>, username: string, followersCount: number, followingCount: number, postsCount: number } };
+export type UserPopoverQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', id: string, avatar: string, firstName: string, lastName: string | null, username: string, followersCount: number, followingCount: number, postsCount: number } };

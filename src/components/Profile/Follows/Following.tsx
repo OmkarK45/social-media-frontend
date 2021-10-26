@@ -10,6 +10,7 @@ import {
 } from './__generated__/Following.generated'
 import { FollowButton } from '../FollowButton'
 import { UserHandle } from '~/components/Common/UserHandle'
+import { EndMessage } from '~/components/Feed'
 
 interface FollowingProps {
 	username: string
@@ -81,7 +82,6 @@ export function Following({ username }: FollowingProps) {
 					<InfiniteScroll
 						hasMore={data.seeProfile.following.pageInfo.hasNextPage}
 						next={() => {
-							console.log('called')
 							fetchMore({
 								variables: {
 									first: 2,
@@ -92,7 +92,6 @@ export function Following({ username }: FollowingProps) {
 						}}
 						dataLength={data.seeProfile.following.edges.length}
 						loader={<LoadingFallback />}
-						endMessage={<h1>All done</h1>}
 					>
 						{data.seeProfile.following.edges.map((edge) => {
 							const user = edge?.node

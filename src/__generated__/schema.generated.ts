@@ -54,7 +54,6 @@ export type CreatePostInput = {
   media: Maybe<Scalars['FileUpload']>;
 };
 
-
 export type EditCommentInput = {
   body: Scalars['String'];
   id: Scalars['String'];
@@ -75,7 +74,6 @@ export type EditProfileInput = {
   lastName: Maybe<Scalars['String']>;
   username: Maybe<Scalars['String']>;
 };
-
 
 export type FollowResponse = {
   __typename?: 'FollowResponse';
@@ -216,6 +214,7 @@ export type Notification = Node & {
   __typename?: 'Notification';
   createdAt: Scalars['DateTime'];
   dispatcher: User;
+  entityId: Scalars['String'];
   id: Scalars['ID'];
   isRead: Scalars['Boolean'];
   like: Maybe<Like>;

@@ -6,4 +6,4 @@ export type WhoToFollowQueryVariables = Types.Exact<{
 }>;
 
 
-export type WhoToFollowQuery = { __typename?: 'Query', whoToFollow: { __typename?: 'QueryWhoToFollowConnection', edges: Array<Types.Maybe<{ __typename?: 'QueryWhoToFollowConnectionEdge', node: { __typename?: 'User', id: string, avatar: string, username: string, firstName: string, lastName: Types.Maybe<string>, isFollowing: boolean } }>>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: Types.Maybe<string> } } };
+export type WhoToFollowQuery = { __typename?: 'Query', whoToFollow: { __typename?: 'QueryWhoToFollowConnection', edges: Array<{ __typename?: 'QueryWhoToFollowConnectionEdge', node: { __typename?: 'User', id: string, avatar: string, username: string, firstName: string, lastName: string | null, isFollowing: boolean } } | null>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } };

@@ -5,4 +5,4 @@ export type EditPostMutationVariables = Types.Exact<{
 }>;
 
 
-export type EditPostMutation = { __typename?: 'Mutation', editPost: { __typename?: 'Post', caption: Types.Maybe<string>, id: string } };
+export type EditPostMutation = { __typename?: 'Mutation', editPost: { __typename?: 'Post', caption: string | null, id: string } };

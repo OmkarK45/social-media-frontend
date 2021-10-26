@@ -7,4 +7,4 @@ export type FollowingListQueryVariables = Types.Exact<{
 }>;
 
 
-export type FollowingListQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', following: { __typename?: 'UserFollowingConnection', edges: Array<Types.Maybe<{ __typename?: 'UserFollowingConnectionEdge', cursor: string, node: { __typename?: 'User', username: string, avatar: string, firstName: string, lastName: Types.Maybe<string>, bio: Types.Maybe<string>, isMe: boolean, isFollowing: boolean } }>>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: Types.Maybe<string> } } } };
+export type FollowingListQuery = { __typename?: 'Query', seeProfile: { __typename?: 'User', following: { __typename?: 'UserFollowingConnection', edges: Array<{ __typename?: 'UserFollowingConnectionEdge', cursor: string, node: { __typename?: 'User', username: string, avatar: string, firstName: string, lastName: string | null, bio: string | null, isMe: boolean, isFollowing: boolean } } | null>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } } };

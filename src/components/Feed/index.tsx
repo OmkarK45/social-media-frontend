@@ -79,7 +79,7 @@ export function Feed() {
 			},
 		})
 	}
-	console.log(data.feed.edges.length)
+
 	const length = data.feed.edges.length
 
 	return (
@@ -101,7 +101,7 @@ export function Feed() {
 	)
 }
 
-function EndMessage() {
+export function EndMessage() {
 	return (
 		<Card
 			rounded="lg"

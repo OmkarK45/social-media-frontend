@@ -110,17 +110,17 @@ export function FeedPostCard(props: Props) {
 				</div>
 
 				{/* GIF */}
-				{/* <div className="mx-auto w-11/12 rounded-lg overflow-hidden">
-					<img
-						className="w-full"
-						src="https://media4.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif?cid=621ab156bo1wrbfwp11t84w3nan2wxi78cqd03ia4ijvp3iu&rid=giphy.gif&ct=g"
-					/>
-				</div> */}
+
 				<Link
 					href={`/post/${props.post.id}`}
 					className="mt-1 block no-underline font-normal outline-none focus:outline-none focus:ring-0"
 				>
-					{/* Image */}
+					{props.post.gifImage && (
+						<div className="mx-auto w-11/12 rounded-lg overflow-hidden">
+							<img className="w-full" src={props.post.gifImage} />
+						</div>
+					)}
+
 					{props.post.image && (
 						<div className="mx-auto w-11/12 rounded-lg overflow-hidden unset-img full-bleed">
 							<NextImage

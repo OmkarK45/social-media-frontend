@@ -24,7 +24,6 @@ export const getServerSideProps: GetServerSideProps<
 		},
 	})
 }
-
 export default function Post() {
 	return (
 		<div className="mt-20">

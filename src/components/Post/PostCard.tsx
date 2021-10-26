@@ -154,7 +154,7 @@ export function PostCard() {
 	return (
 		<div className="max-w-2xl mx-auto flex flex-wrap space-y-4 relative">
 			<div className="absolute -left-24 top-5">
-				<Button variant="dark" onClick={() => router.back()}>
+				<Button variant="dark" onClick={() => router.push('/feed')}>
 					{' '}
 					← Back
 				</Button>
@@ -210,7 +210,11 @@ export function PostCard() {
 						<div className="px-4 pb-4">
 							<Interweave content={post.caption} />
 						</div>
-
+						{post.gifImage && (
+							<div className="mx-auto w-11/12 rounded-lg pb-4 overflow-hidden">
+								<img className="w-full rounded-lg" src={post.gifImage} />
+							</div>
+						)}
 						{post.image && (
 							<div className="unset-img full-bleed">
 								<NextImage

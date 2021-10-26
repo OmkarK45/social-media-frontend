@@ -1,12 +1,9 @@
 import { gql, useQuery } from '@apollo/client'
-import { Button } from '~/components/ui/Button'
-import Image from 'next/image'
 import Spinner from '~/components/ui/Spinner'
 import {
 	FollowersListQuery,
 	FollowersListQueryVariables,
 } from './__generated__/Followers.generated'
-import { Link } from '~/components/ui/Link'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FollowButton } from '../FollowButton'
@@ -93,7 +90,6 @@ export function Followers({ username }: FollowersProps) {
 						}}
 						dataLength={data.seeProfile.followers.edges.length}
 						loader={<LoadingFallback />}
-						endMessage={<h1>All done</h1>}
 					>
 						{data.seeProfile.followers.edges.map((edge) => {
 							const user = edge?.node
