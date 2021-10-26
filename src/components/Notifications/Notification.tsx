@@ -58,7 +58,6 @@ export function Notification({
 						{notificationType !== 'USER_FOLLOW' && (
 							<Link href={`/post/${postId}`}>post</Link>
 						)}
-						{JSON.stringify(postId)}
 					</p>
 					<button>
 						{/* add something onclick ondismiss and then handle dismiss in parent component */}

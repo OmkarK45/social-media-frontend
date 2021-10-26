@@ -37,13 +37,15 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 		CreateCommentMutationVariables
 	>(CREATE_COMMENT_MUTATION, {
 		update: (cache, result) => {
-			if (!result.data?.createComment) return
-
+			console.log('called')
 			cache.modify({
 				id: `Post:${props.post.id}`,
 				fields: {
-					totalComments(prev) {
-						return prev + 1
+					comments(prev) {
+						return {
+							...prev,
+							totalCount: prev.totalCount + 1,
+						}
 					},
 				},
 			})

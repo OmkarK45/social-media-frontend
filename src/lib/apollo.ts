@@ -98,7 +98,7 @@ export const createApolloClient = ({
 				typePolicies: {
 					Query: {
 						fields: {
-							feed: relayStylePagination(),
+							feed: relayStylePagination([]),
 							notifications: relayStylePagination(),
 							seePost: {
 								merge: true,

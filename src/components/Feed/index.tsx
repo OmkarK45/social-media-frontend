@@ -10,10 +10,11 @@ import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 import { WhoToFollow } from './WhoToFollow'
+import useInView from 'react-cool-inview'
 
 const FEED_QUERY = gql`
-	query FeedQuery($first: Int, $after: ID) {
-		feed(first: $first, after: $after) {
+	query FeedQuery($after: ID) {
+		feed(first: 10, after: $after) {
 			edges {
 				cursor
 				node {
@@ -53,7 +54,6 @@ export function Feed() {
 	const { data, error, fetchMore } = useQuery<FeedQuery, FeedQueryVariables>(
 		FEED_QUERY,
 		{
-			variables: { first: 5, after: null },
 			fetchPolicy: 'cache-first',
 			nextFetchPolicy: 'cache-first',
 		}
@@ -67,36 +67,33 @@ export function Feed() {
 			/>
 		)
 	}
-	if (!data) return <LoadingFallback />
+	if (!data) {
+		return <h1></h1>
+	}
+
+	function handleNext() {
+		fetchMore({
+			variables: {
+				first: 10,
+				after: data?.feed.pageInfo.endCursor,
+			},
+		})
+	}
+	console.log(data.feed.edges.length)
+	const length = data.feed.edges.length
 
 	return (
 		<main className="lg:col-span-7 xl:col-span-6 lg:grid lg:grid-cols-12 lg:gap-3">
 			<div className="px-4 lg:col-span-12 -mt-3">
 				<InfiniteScroll
 					hasMore={data.feed.pageInfo.hasNextPage}
-					next={() => {
-						fetchMore({
-							variables: {
-								first: 5,
-								after: data.feed.pageInfo.endCursor,
-							},
-						})
-					}}
-					dataLength={data.feed.edges.length}
+					next={handleNext}
+					dataLength={length}
 					loader={<LoadingFallback />}
 					endMessage={<EndMessage />}
 				>
-					{/* TODO : Better empty state here */}
-					{data?.feed.edges.map((edge, index) => {
-						const data = edge?.node
-						if (data) {
-							return (
-								<div key={edge?.cursor}>
-									<FeedPostCard post={data} />
-									{index === 5 || index === 10 ? <WhoToFollow /> : null}
-								</div>
-							)
-						}
+					{data.feed.edges.map((edge, index) => {
+						return <FeedPostCard post={edge?.node!} key={edge?.cursor} />
 					})}
 				</InfiniteScroll>
 			</div>

@@ -13,7 +13,9 @@ const ME_QUERY = gql`
 `
 
 export function useUser() {
-	const { data, loading } = useQuery<MeQuery>(ME_QUERY)
+	const { data, loading } = useQuery<MeQuery>(ME_QUERY, {
+		fetchPolicy: 'cache-and-network',
+	})
 
 	return { user: data?.me, loading }
 }

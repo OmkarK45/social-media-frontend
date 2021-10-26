@@ -88,6 +88,20 @@ export function PostCard() {
 		CreateCommentMutationVariables
 	>(CREATE_COMMENT_MUTATION, {
 		refetchQueries: [COMMENTS_QUERY, 'CommentsQuery'],
+		update: (cache, result) => {
+			console.log('called')
+			cache.modify({
+				id: `Post:${router.query.id as string}`,
+				fields: {
+					comments(prev) {
+						return {
+							...prev,
+							totalCount: prev.totalCount + 1,
+						}
+					},
+				},
+			})
+		},
 	})
 
 	const { data, error, loading } = useQuery<PostQuery, PostQueryVariables>(
@@ -97,34 +111,23 @@ export function PostCard() {
 				id: router.query.id as string,
 			},
 			skip: !router.isReady,
+			fetchPolicy: 'cache-first',
 		}
+	)
+	const [likesCount, setLikesCount] = useState<number>(
+		data?.seePost.likes?.totalCount as number
+	)
+	const [hasLiked, setHasLiked] = useState<boolean>(
+		data?.seePost.isLiked as boolean
 	)
 
 	const [toggleLike] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
-		update: (cache, result) => {
-			if (!result.data?.toggleLike.success) return
-
-			cache.modify({
-				id: `Post:${data?.seePost.id}`,
-				fields: {
-					isLiked(prev) {
-						return !prev
-					},
-					likes(prev) {
-						if (data?.seePost.isLiked) {
-							return prev - 1
-						}
-						return prev + 1
-					},
-					updatedAt: () => {
-						console.log('test')
-						return new Date().toISOString()
-					},
-				},
-			})
+		onCompleted: () => {
+			setHasLiked(!hasLiked)
+			setLikesCount(hasLiked ? likesCount - 1 : likesCount + 1)
 		},
 	})
 
@@ -252,7 +255,7 @@ export function PostCard() {
 					<Card className="py-2 px-4 flex justify-between space-x-8">
 						<div className="flex space-x-6">
 							<span className="inline-flex">
-								<p className="font-bold">{post.likes.totalCount}</p>
+								<p className="font-bold">{likesCount}</p>
 								<button onClick={() => setLikesModal(true)}>
 									<p className="text-muted ml-1 ">Likes</p>{' '}
 								</button>
@@ -279,7 +282,7 @@ export function PostCard() {
 									}}
 									variant="dark"
 								>
-									{post.isLiked ? (
+									{hasLiked ? (
 										<HiHeart
 											className="h-5 w-5 text-brand-600"
 											aria-hidden="true"
