@@ -121,7 +121,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 									},
 								})
 
-								toast('Your comment has been posted!')
+								toast.success('Your comment has been posted!')
 
 								onClose()
 							}}

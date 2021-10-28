@@ -35,7 +35,7 @@ export function Overlay({
 						>
 							<div className="w-screen max-w-md rounded overflow-hidden">
 								<GradientBar color="indigo" />
-								<div className="h-full z-30 flex flex-col py-6 bg-white dark:bg-gray-700 shadow-xl overflow-y-scroll">
+								<div className="h-full  z-30 flex flex-col py-6 bg-white dark:bg-gray-700 shadow-xl overflow-y-scroll">
 									<div className="px-4 sm:px-6">
 										<div className="flex items-start justify-between">
 											<Dialog.Title

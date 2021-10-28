@@ -320,6 +320,7 @@ export type Query = {
   nodes: Array<Maybe<Node>>;
   notifications: QueryNotificationsConnection;
   popularHashtags: QueryPopularHashtagsConnection;
+  popularPosts: QueryPopularPostsConnection;
   postsByHashtag: QueryPostsByHashtagConnection;
   postsContainingHashtag: QueryPostsContainingHashtagConnection;
   searchByHashtag: QuerySearchByHashtagConnection;
@@ -363,6 +364,15 @@ export type QueryPopularHashtagsArgs = {
   before: Maybe<Scalars['ID']>;
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPopularPostsArgs = {
+  after: Maybe<Scalars['ID']>;
+  before: Maybe<Scalars['ID']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderBy: Scalars['String'];
 };
 
 
@@ -458,6 +468,18 @@ export type QueryPopularHashtagsConnectionEdge = {
   __typename?: 'QueryPopularHashtagsConnectionEdge';
   cursor: Scalars['String'];
   node: Hashtag;
+};
+
+export type QueryPopularPostsConnection = {
+  __typename?: 'QueryPopularPostsConnection';
+  edges: Array<Maybe<QueryPopularPostsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryPopularPostsConnectionEdge = {
+  __typename?: 'QueryPopularPostsConnectionEdge';
+  cursor: Scalars['String'];
+  node: Post;
 };
 
 export type QueryPostsByHashtagConnection = {

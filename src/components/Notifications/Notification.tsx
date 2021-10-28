@@ -64,10 +64,6 @@ export function Notification({
 							<a href={`/post/${postLikeId}`}>post</a>
 						)}
 					</p>
-					<button>
-						{/* add something onclick ondismiss and then handle dismiss in parent component */}
-						<HiOutlineX />
-					</button>
 				</div>
 				<p className="text-xs leading-3 pt-1 text-gray-500">
 					{formatDistance(new Date(createdAt), new Date(), {

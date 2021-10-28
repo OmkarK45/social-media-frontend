@@ -43,7 +43,7 @@ export function SignUp() {
 		`,
 		{
 			onCompleted: () => {
-				router.push('/about')
+				router.push('/feed')
 			},
 			onError: (error) => toast(error.message),
 		}
@@ -64,7 +64,7 @@ export function SignUp() {
 					signup({ variables: { input: { ...values } } })
 					if (data?.signUp.success) {
 						makeSession(data.signUp.session.id)
-						router.push('/about')
+						router.push('/feed')
 					}
 				}}
 			>

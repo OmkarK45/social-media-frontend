@@ -61,7 +61,10 @@ export function FeedPostCard(props: Props) {
 	}
 
 	return (
-		<Card noPadding className="max-w-2xl bg-white my-3 sm:rounded-lg">
+		<Card
+			noPadding
+			className="max-w-2xl overflow-hidden bg-white my-3 sm:rounded-lg"
+		>
 			<article>
 				<div className="px-6 py-4">
 					<div className="flex space-x-3">
@@ -122,26 +125,28 @@ export function FeedPostCard(props: Props) {
 					)}
 
 					{props.post.image && (
-						<div className="mx-auto w-11/12 rounded-lg overflow-hidden unset-img full-bleed">
-							<NextImage
-								className="custom-img"
-								alt="TODO"
-								layout="fill"
-								src={props.post.image}
-							/>
+						<div className="mx-auto w-11/12 rounded-lg overflow-hidden ">
+							<div className="aspect-w-1 aspect-h-1">
+								<NextImage
+									src={props.post.image}
+									layout="fill"
+									objectFit="cover"
+									placeholder="empty"
+								/>
+							</div>
 						</div>
 					)}
 
 					{/* Caption */}
 
-					<div className="px-6 my-2">
+					<div className="px-6 my-2 pb-2 ">
 						<p className=" space-y-4 dark:text-gray-300">
 							<Interweave content={props.post.caption} />
 						</p>
 					</div>
 				</Link>
 				{/* Post Actions */}
-				<div className="py-4 px-6 flex justify-between space-x-8">
+				<div className="py-2 px-6 bg-gray-50 dark:bg-gray-900/30 flex border-t border-gray-200 dark:border-gray-700 justify-between space-x-8">
 					<div className="flex space-x-6">
 						<span className="inline-flex items-center space-x-2  ">
 							<Button

@@ -118,13 +118,6 @@ export function NotificationOverlay({
 						message="No notifications for now. All caught up!"
 					/>
 				)}
-				<div className="flex items-center justiyf-between">
-					<hr className="w-full" />
-					<p className="text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500">
-						Thats it for now :)
-					</p>
-					<hr className="w-full" />
-				</div>
 			</div>
 		</Overlay>
 	)

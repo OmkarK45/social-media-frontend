@@ -216,13 +216,13 @@ export function PostCard() {
 							</div>
 						)}
 						{post.image && (
-							<div className="unset-img full-bleed">
+							<div className="aspect-w-1 aspect-h-1">
 								<NextImage
-									className="custom-img"
 									onClick={() => setImageModal(true)}
-									alt="TODO"
-									layout="fill"
 									src={post.image}
+									layout="fill"
+									objectFit="cover"
+									placeholder="empty"
 								/>
 							</div>
 						)}
@@ -336,7 +336,7 @@ export function PostCard() {
 									},
 								},
 							})
-							toast('Done boss')
+							toast.success('Your comment has been posted.')
 							form.reset()
 						}}
 					>

@@ -63,13 +63,21 @@ export function Navbar() {
 									</Link>
 								</div>
 							</div>
-							<div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-								<div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+							<div className="min-w-0 flex-1  lg:px-0 lg:max-w-5xl xl:col-span-6 flex-grow">
+								<div className="flex items-center px-6 py-4 md:max-w-5xl md:mx-auto lg:mx-0 xl:px-0">
 									<SearchBar />
 								</div>
 							</div>
 							<div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
 								{/* Mobile menu button */}
+								<button
+									onClick={() => setNotificationOpen((prev) => !prev)}
+									type="button"
+									className="mx-3 ml-auto flex-shrink-0 bg-white dark:bg-gray-800 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+								>
+									<span className="sr-only">View notifications</span>
+									<HiOutlineBell className="h-6 w-6" aria-hidden="true" />
+								</button>
 								<Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500">
 									<span className="sr-only">Open menu</span>
 									{open ? (
@@ -79,17 +87,16 @@ export function Navbar() {
 									)}
 								</Popover.Button>
 							</div>
-							<div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4 space-x-5">
+							<div className="hidden  lg:flex lg:items-center lg:justify-end xl:col-span-4 space-x-5">
 								<ThemeToggle />
 								<button
-									onClick={() => setNotificationOpen(true)}
+									onClick={() => setNotificationOpen((prev) => !prev)}
 									type="button"
-									className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+									className="ml-auto flex-shrink-0 bg-white dark:bg-gray-800 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
 								>
 									<span className="sr-only">View notifications</span>
 									<HiOutlineBell className="h-6 w-6" aria-hidden="true" />
 								</button>
-
 								{!user ? (
 									<Spinner className="w-5 h-5" />
 								) : (

@@ -11,6 +11,7 @@ import '../styles.css'
 
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
+import { toastOptions } from '~/utils/toastOptions'
 
 type NextPageWithLayout = NextPage & {
 	getLayout?: (page: ReactElement) => ReactNode
@@ -30,7 +31,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 			<ThemeProvider storageKey="preferred-theme" attribute="class">
 				<DefaultSeo defaultTitle="DogeSocial" titleTemplate="%s | DogeSocial" />
 				<NProgress />
-				<Toaster position="top-right" />
+				<Toaster position="top-right" toastOptions={toastOptions} />
 				{getLayout(<Component {...pageProps} />)}
 			</ThemeProvider>
 		</ApolloProvider>

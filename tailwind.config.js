@@ -7,17 +7,15 @@ const brandColor = colors.pink
  * @type {import('tailwindcss/tailwind-config').TailwindConfig }
  **/
 module.exports = {
-	mode: 'jit',
 	darkMode: 'class',
-	purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-
+	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', ...defaultTheme.fontFamily.sans],
 			},
 			colors: {
-				gray: colors.gray,
+				gray: colors.trueGray,
 				brand: brandColor,
 			},
 			ringColor: {
@@ -25,10 +23,9 @@ module.exports = {
 			},
 		},
 	},
-
 	plugins: [
-		require('@tailwindcss/typography'),
 		require('@tailwindcss/aspect-ratio'),
 		require('@tailwindcss/forms'),
+		require('@tailwindcss/typography'),
 	],
 }

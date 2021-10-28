@@ -119,7 +119,7 @@ export function FileInput(props: FileInputProps) {
 								return (
 									<div key={file.name}>
 										<img
-											className="mx-auto max-w-sm object-cover"
+											className="mx-auto object-cover"
 											src={URL.createObjectURL(file)}
 											alt={file.name}
 										/>
