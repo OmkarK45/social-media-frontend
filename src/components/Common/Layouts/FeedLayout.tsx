@@ -8,6 +8,7 @@ import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { CurrentUser } from '~/components/User/CurrentUser'
 import { useUser } from '~/utils/useUser'
 import Spinner from '~/components/ui/Spinner'
+import { PopularPostsFeed } from '~/components/Feed/PopularPosts'
 
 const RightSidebar = dynamic<{}>(
 	async () => {
@@ -16,6 +17,28 @@ const RightSidebar = dynamic<{}>(
 	},
 	{ loading: () => <LoadingFallback />, ssr: true }
 )
+
+export const navigation = [
+	{
+		component: <Feed />,
+		icon: HiOutlineHome,
+		name: 'Your Feed',
+		id: 'all',
+	},
+	{
+		component: <PopularPostsFeed />,
+		icon: HiOutlineFire,
+		name: 'Popular',
+		id: 'popular',
+	},
+	{
+		component: <Hashtags />,
+		icon: HiOutlineHashtag,
+		name: 'Trending',
+		id: 'trending',
+	},
+]
+
 export function FeedLayout() {
 	const { user, loading } = useUser()
 	if (loading || !user) return <Spinner className="w-5 h-5" />
@@ -23,26 +46,7 @@ export function FeedLayout() {
 		<div className="py-20">
 			<div className="max-w-3xl  mx-auto sm:px-6 lg:max-w-full xl:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">
 				<div className="lg:col-span-9 lg:grid lg:grid-cols-12 lg:gap-8 ">
-					<TabbedLayout
-						isTabbed={true}
-						navigation={[
-							{
-								component: <Feed />,
-								icon: HiOutlineHome,
-								name: 'Your Feed',
-							},
-							{
-								component: <h1>Feature under construction 🚧</h1>,
-								icon: HiOutlineFire,
-								name: 'Popular',
-							},
-							{
-								component: <Hashtags />,
-								icon: HiOutlineHashtag,
-								name: 'Trending',
-							},
-						]}
-					/>
+					<TabbedLayout isTabbed={true} navigation={navigation} />
 					<div className="hidden lg:block fixed bottom-8">
 						<CurrentUser
 							avatar={user.avatar}

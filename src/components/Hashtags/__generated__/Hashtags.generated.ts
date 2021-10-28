@@ -6,4 +6,4 @@ export type PopularHashtagsQueryVariables = Types.Exact<{
 }>;
 
 
-export type PopularHashtagsQuery = { __typename?: 'Query', popularHashtags: { __typename?: 'QueryPopularHashtagsConnection', edges: Array<{ __typename?: 'QueryPopularHashtagsConnectionEdge', cursor: string, node: { __typename?: 'Hashtag', id: string, hashtag: string } } | null>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } };
+export type PopularHashtagsQuery = { __typename?: 'Query', popularHashtags: { __typename?: 'QueryPopularHashtagsConnection', edges: Array<{ __typename?: 'QueryPopularHashtagsConnectionEdge', cursor: string, node: { __typename?: 'Hashtag', id: string, hashtag: string, postsCount: number } } | null>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } };

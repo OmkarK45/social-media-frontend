@@ -1,12 +1,18 @@
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { IconType } from 'react-icons/lib'
+import { useState } from 'react'
+
+import { GetStaticPaths } from 'next'
+import { navigation } from '../Layouts/FeedLayout'
 
 interface Navigation {
 	name: string
 	icon: IconType | React.ElementType
 	component: React.ReactNode
+	id: string
 }
 
 interface TabbedLayoutProps {
@@ -15,8 +21,26 @@ interface TabbedLayoutProps {
 }
 
 export function TabbedLayout({ navigation }: TabbedLayoutProps) {
+	const router = useRouter()
+
+	const [currentPath, setCurrentPath] = useState(
+		router.isReady ? router.pathname : '/all'
+	)
+
+	function handleChange(idx: number) {
+		const path = navigation[idx].id
+		setCurrentPath(path)
+		router.push(path, undefined, {
+			shallow: true,
+		})
+	}
+
 	return (
-		<Tab.Group vertical>
+		<Tab.Group
+			defaultIndex={navigation.findIndex((x) => x.id === currentPath)}
+			onChange={(idx) => handleChange(idx)}
+			vertical
+		>
 			<aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
 				<nav
 					aria-label="Sidebar"

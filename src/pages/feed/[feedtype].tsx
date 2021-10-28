@@ -8,7 +8,6 @@ export default function FeedPage() {
 	return <FeedLayout />
 }
 
-/** TODO : eslint*/
 export const getServerSideProps: GetServerSideProps = authenticatedRoute
 
 FeedPage.getLayout = function getLayout(page: ReactElement) {

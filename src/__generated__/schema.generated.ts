@@ -89,6 +89,7 @@ export type Hashtag = Node & {
   hashtag: Scalars['String'];
   id: Scalars['ID'];
   posts: HashtagPostsConnection;
+  postsCount: Scalars['Int'];
 };
 
 

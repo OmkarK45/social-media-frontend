@@ -9,8 +9,6 @@ import { GradientBar } from '~/components/ui/GradientBar'
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
 import { FeedPostCard } from '../Post/FeedPostCard'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
-import { WhoToFollow } from './WhoToFollow'
-import useInView from 'react-cool-inview'
 
 const FEED_QUERY = gql`
 	query FeedQuery($after: ID) {

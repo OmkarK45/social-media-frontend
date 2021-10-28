@@ -7,6 +7,7 @@ import {
 } from './__generated__/Hashtags.generated'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { Link } from '../ui/Link'
 
 const HASHTAGS_QUERY = gql`
 	query PopularHashtagsQuery($first: Int!, $after: ID) {
@@ -16,6 +17,7 @@ const HASHTAGS_QUERY = gql`
 				node {
 					id
 					hashtag
+					postsCount
 				}
 			}
 			pageInfo {
@@ -45,19 +47,25 @@ export function Hashtags() {
 		return <ErrorFallback noAction message="Failed to load hashtags." />
 
 	return (
-		<Card>
+		<Card rounded="lg">
 			<Card.Body>
 				<Heading size="h3">Hashtags.</Heading>
 				<p className="text-muted text-base">Showing top 10 popular hashtags</p>
 			</Card.Body>
-			<div className="w-full border-t border-gray-300" />
-			<Card.Body>
-				<ul className="divide-y divide-gray-200">
+			<div className="w-full border-t border-gray-300 dark:border-gray-500" />
+			<Card.Body noPadding>
+				<ul className="divide-y border-gray-300 dark:divide-gray-500">
 					{data.popularHashtags.edges.map((edge, index) => {
 						return (
-							<li key={edge?.cursor} className="py-4 flex text-lg font-medium">
+							<Link
+								key={edge?.cursor}
+								className="py-4 px-4 flex text-lg no-underline"
+								href={`search?query=${
+									edge?.node.hashtag.split('#')[1]
+								}&type=hashtag`}
+							>
 								{index + 1}. {edge?.node.hashtag}
-							</li>
+							</Link>
 						)
 					})}
 				</ul>
