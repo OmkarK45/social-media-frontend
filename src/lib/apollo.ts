@@ -76,10 +76,11 @@ export const createApolloClient = ({
 	})
 
 	const uploadLink = new createUploadLink({
-		uri: 'https://social-media-backend-production.up.railway.app/graphql',
-		// process.env.NODE_ENV === 'development'
-		// 	? 'http://localhost:5000/graphql'
-		// 	: API_URL,
+		// uri: 'https://social-media-backend-production.up.railway.app/graphql',
+		uri:
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:5000/graphql'
+				: API_URL,
 		headers: headers,
 		credentials: 'include',
 	})

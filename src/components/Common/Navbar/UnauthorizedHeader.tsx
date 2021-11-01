@@ -24,7 +24,7 @@ export function UnauthorizedHeader() {
 							</div>
 						</div>
 						<div className="-mr-2 -my-2 md:hidden">
-							<Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500">
+							<Popover.Button className=" rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500">
 								<span className="sr-only">Open menu</span>
 								<HiOutlineMenu className="h-6 w-6" aria-hidden="true" />
 							</Popover.Button>
@@ -54,7 +54,7 @@ export function UnauthorizedHeader() {
 					>
 						<Popover.Panel
 							focus
-							className="absolute bg-white z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+							className="absolute bg-white dark:bg-gray-800 z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
 						>
 							<div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5  divide-y-2 divide-gray-50">
 								<div className="pt-5 pb-6 ">
@@ -76,7 +76,7 @@ export function UnauthorizedHeader() {
 											Sign up
 										</Button>
 										<p className="mt-6 text-center text-base font-medium text-gray-500">
-											Exisitng user?{' '}
+											Existing user?{' '}
 											<Link
 												href="/auth/signin"
 												className="text-gray-900 no-underline"
