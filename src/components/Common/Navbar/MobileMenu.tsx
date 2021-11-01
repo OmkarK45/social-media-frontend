@@ -116,7 +116,7 @@ export function MobileMenu({ open, user }: MobileMenuProps) {
 					</div>
 					<div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
 						<Button
-							variant="white"
+							variant="dark"
 							className="mt-2"
 							fullWidth
 							href="#"
