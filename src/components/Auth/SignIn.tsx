@@ -43,7 +43,7 @@ export function LoginForm() {
 		`,
 		{
 			onCompleted: () => {
-				router.push('/feed')
+				router.push('/feed/all')
 			},
 			onError(err) {
 				toast(err.message)
@@ -61,7 +61,7 @@ export function LoginForm() {
 		console.log(loginResult)
 		if (loginResult.data?.signIn.success) {
 			makeSession(loginResult.data.signIn.session.id)
-			router.push('/feed')
+			router.push('/feed/all')
 		}
 	}, [loginResult])
 

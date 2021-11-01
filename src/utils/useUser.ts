@@ -8,13 +8,15 @@ const ME_QUERY = gql`
 			firstName
 			id
 			avatar
+			coverImage
+			coverImageBg
 		}
 	}
 `
 
 export function useUser() {
 	const { data, loading } = useQuery<MeQuery>(ME_QUERY, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'cache-first',
 	})
 
 	return { user: data?.me, loading }

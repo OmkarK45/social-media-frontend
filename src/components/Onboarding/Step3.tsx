@@ -1,12 +1,14 @@
 import { useMutation } from '@apollo/client'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
+import { useUser } from '~/utils/useUser'
 import { EDIT_PROFILE_MUTATION } from '../Profile/EditProfileTab'
 import {
 	EditProfileMutation,
 	EditProfileMutationVariables,
 } from '../Profile/__generated__/EditProfileTab.generated'
 import { Card } from '../ui/Card'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { FileInput } from '../ui/Form/FileInput'
 import Form, { useZodForm } from '../ui/Form/Form'
 import { TextArea } from '../ui/TextArea'
@@ -22,6 +24,8 @@ const ProfileFormSchema = z.object({
 })
 
 export function Step3() {
+	const { loading, user } = useUser()
+
 	const [updateProfile] = useMutation<
 		EditProfileMutation,
 		EditProfileMutationVariables
@@ -30,6 +34,8 @@ export function Step3() {
 	const form = useZodForm({
 		schema: ProfileFormSchema,
 	})
+
+	if (loading) return <LoadingFallback />
 
 	return (
 		<Card className="space-y-4 my-6 overflow-hidden" rounded="lg">
@@ -68,6 +74,7 @@ export function Step3() {
 				<div className="flex space-x-3 px-5">
 					<div className="flex-[0.3]">
 						<FileInput
+							existingimage={user?.avatar}
 							name="avatar"
 							accept="image/png, image/jpg, image/jpeg, image/gif"
 							multiple={false}
@@ -75,6 +82,7 @@ export function Step3() {
 					</div>
 					<div className="flex-[0.7] ">
 						<FileInput
+							existingimage={user?.coverImage}
 							accept="image/png, image/jpg, image/jpeg, image/gif"
 							name="coverImage"
 							label="Cover Image"

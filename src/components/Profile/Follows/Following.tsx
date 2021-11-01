@@ -11,6 +11,8 @@ import {
 import { FollowButton } from '../FollowButton'
 import { UserHandle } from '~/components/Common/UserHandle'
 import { EndMessage } from '~/components/Feed'
+import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
+import { SEO } from '~/components/SEO'
 
 interface FollowingProps {
 	username: string
@@ -55,7 +57,7 @@ export function Following({ username }: FollowingProps) {
 	})
 
 	if (!data) {
-		return <LoadingFallback />
+		return <ErrorFallback message="No following list for this user." />
 	}
 
 	if (data.seeProfile.following.edges.length === 0)
@@ -76,49 +78,52 @@ export function Following({ username }: FollowingProps) {
 	}
 
 	return (
-		<div>
-			<div className="flow-root">
-				<ul role="list" className=" divide-y  divide-gray-600">
-					<InfiniteScroll
-						hasMore={data.seeProfile.following.pageInfo.hasNextPage}
-						next={() => {
-							fetchMore({
-								variables: {
-									first: 2,
-									after: data.seeProfile.following.pageInfo.endCursor,
-									username,
-								},
-							})
-						}}
-						dataLength={data.seeProfile.following.edges.length}
-						loader={<LoadingFallback />}
-					>
-						{data.seeProfile.following.edges.map((edge) => {
-							const user = edge?.node
-							if (!user) return <h1>TODO : No user </h1>
-							return (
-								<li
-									key={edge.cursor}
-									className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
-								>
-									<div className="flex items-center space-x-4 ">
-										<UserHandle user={user} />
-										<div>
-											{user.isMe ? null : (
-												<FollowButton
-													variant="dark"
-													isFollowing={user.isFollowing}
-													username={user.username}
-												/>
-											)}
+		<>
+			<SEO title={`${username} / Following · DogeSocial`} />
+			<div>
+				<div className="flow-root">
+					<ul role="list" className=" divide-y  divide-gray-600">
+						<InfiniteScroll
+							hasMore={data.seeProfile.following.pageInfo.hasNextPage}
+							next={() => {
+								fetchMore({
+									variables: {
+										first: 2,
+										after: data.seeProfile.following.pageInfo.endCursor,
+										username,
+									},
+								})
+							}}
+							dataLength={data.seeProfile.following.edges.length}
+							loader={<LoadingFallback />}
+						>
+							{data.seeProfile.following.edges.map((edge) => {
+								const user = edge?.node
+								if (!user) return <h1>TODO : No user </h1>
+								return (
+									<li
+										key={edge.cursor}
+										className="py-4 px-5 hover:bg-gray-100 dark:hover:bg-gray-900 hover:rounded-lg"
+									>
+										<div className="flex items-center space-x-4 ">
+											<UserHandle user={user} />
+											<div>
+												{user.isMe ? null : (
+													<FollowButton
+														variant="dark"
+														isFollowing={user.isFollowing}
+														username={user.username}
+													/>
+												)}
+											</div>
 										</div>
-									</div>
-								</li>
-							)
-						})}
-					</InfiniteScroll>
-				</ul>
+									</li>
+								)
+							})}
+						</InfiniteScroll>
+					</ul>
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }

@@ -41,7 +41,7 @@ export function RightSidebar() {
 		WhoToFollowQueryVariables
 	>(WHO_TO_FOLLOW_QUERY, {
 		variables: {
-			first: 4,
+			first: 5,
 			after: null,
 		},
 	})
@@ -139,11 +139,6 @@ export function RightSidebar() {
 										)
 									})}
 								</ul>
-							</div>
-							<div className="mt-6">
-								<Button variant="dark" fullWidth>
-									View all
-								</Button>
 							</div>
 						</div>
 					</div>

@@ -22,6 +22,7 @@ import { PostDropdown } from './PostDropdown'
 import NextImage from 'next/image'
 import { Post } from '~/__generated__/schema.generated'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import toast from 'react-hot-toast'
 
 type DeepPartial<T> = {
 	[propertyKey in keyof T]?: DeepPartial<T[propertyKey]>
@@ -58,6 +59,12 @@ export function FeedPostCard(props: Props) {
 
 	if (!props.post || !props.post.user) {
 		return <ErrorFallback message="Failed to load" />
+	}
+
+	const shareData = {
+		title: `DogeSocial | Post by ${props.post.user.firstName}`,
+		description: props.post.caption ?? 'Check it out on DogeSocial.',
+		url: `https://dogesocial.vercel.app/post/${props.post.id}`,
 	}
 
 	return (
@@ -186,7 +193,16 @@ export function FeedPostCard(props: Props) {
 					</div>
 					<div>
 						<span className="inline-flex items-center space-x-2  ">
-							<Button variant="dark">
+							<Button
+								variant="dark"
+								onClick={async () => {
+									navigator.clipboard
+										.writeText(
+											`https://dogesocial.vercel.app/post/${props.post.id}`
+										)
+										.then(() => toast.success('Link copied to clipboard'))
+								}}
+							>
 								<HiOutlineShare className="w-6 h-6 " />
 							</Button>
 						</span>

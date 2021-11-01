@@ -5,6 +5,7 @@ import ModalContent from './ModalContent'
 import ModalFooter from './ModalFooter'
 import { useContext } from 'react'
 import clsx from 'clsx'
+import { GradientBar } from '../GradientBar'
 
 export interface Props {
 	isOpen: boolean
@@ -57,11 +58,12 @@ const Modal = ({ isOpen, onClose, children, className }: Props) => {
 						>
 							<div
 								className={clsx(
-									'inline-block w-full bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 lg:align-top sm:max-w-lg sm:w-full sm:p-6',
+									'inline-block w-full bg-white sm:my-8 dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all  lg:align-top sm:max-w-lg sm:w-full ',
 									className
 								)}
 							>
-								{children}
+								<GradientBar color="pink" size="md" />
+								<div className="px-4 pt-5 pb-4  sm:p-6">{children}</div>
 							</div>
 						</Transition.Child>
 					</div>

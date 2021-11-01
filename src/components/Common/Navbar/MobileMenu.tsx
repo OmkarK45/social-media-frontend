@@ -1,7 +1,9 @@
+import { gql, useMutation } from '@apollo/client'
 import { Popover, Transition } from '@headlessui/react'
 import { HiOutlineCog, HiOutlineHome, HiOutlineSparkles } from 'react-icons/hi'
 import { Button } from '~/components/ui/Button'
 import { Link } from '~/components/ui/Link'
+import { useAuthRedirect } from '~/utils/useAuthRedirect'
 import { User } from '~/__generated__/schema.generated'
 
 interface MobileMenuProps {
@@ -21,7 +23,7 @@ export const links: TLink[] = [
 		icon: HiOutlineSparkles,
 	},
 	{
-		href: '/feed',
+		href: '/feed/all',
 		label: 'Home',
 		icon: HiOutlineHome,
 	},
@@ -32,7 +34,23 @@ export const links: TLink[] = [
 	},
 ]
 
+const LOGOUT_MUTATION = gql`
+	mutation SignOutMutation {
+		logout {
+			success
+		}
+	}
+`
+
 export function MobileMenu({ open, user }: MobileMenuProps) {
+	const authRedirect = useAuthRedirect()
+
+	const [signout] = useMutation(LOGOUT_MUTATION, {
+		onCompleted: () => {
+			authRedirect()
+		},
+	})
+
 	return (
 		<Transition
 			show={open}
@@ -100,6 +118,7 @@ export function MobileMenu({ open, user }: MobileMenuProps) {
 							fullWidth
 							href="#"
 							size="lg"
+							onClick={() => signout()}
 						>
 							Sign Out
 						</Button>

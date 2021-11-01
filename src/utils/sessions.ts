@@ -83,7 +83,7 @@ export const resolveClientSession = async ({
 	const reqWithSession = req as unknown as ReqWithSession
 
 	const sessionId = reqWithSession.session.get(IRON_SESSION_ID_KEY) as string
-
+	console.log('sessionId', reqWithSession.session.get(IRON_SESSION_ID_KEY))
 	if (sessionId) {
 		session = await fetchSession(client, sessionId)
 		if (!session) return destroy(reqWithSession)
@@ -113,7 +113,7 @@ const fetchSession = async (
 				sessionId,
 			},
 		})
-		console.log('im run')
+		console.log('im run', data)
 		return data.data.sessionById
 	} catch (error) {
 		console.log('Fetch client session: ', error)

@@ -4,8 +4,9 @@ import clsx from 'clsx'
 import React, { useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
-import { HiOutlinePhotograph } from 'react-icons/hi'
+import { MdUploadFile } from 'react-icons/md'
 import { Alert } from '../Alert'
+import { Button } from '../Button'
 
 interface FileInputProps
 	extends React.DetailedHTMLProps<
@@ -70,7 +71,7 @@ export function FileInput(props: FileInputProps) {
 				/>
 				<div
 					className={clsx(
-						'border-2 border-gray-300 dark:border-gray-500 border-dashed rounded-md  flex justify-center  overflow-hidden',
+						'border-2 h-52 border-gray-300 dark:border-gray-500 border-dashed rounded-md  flex justify-center  overflow-hidden',
 						isDragActive
 							? 'bg-gray-400 dark:bg-gray-800'
 							: 'bg-white dark:bg-gray-800'
@@ -80,8 +81,10 @@ export function FileInput(props: FileInputProps) {
 							? {
 									backgroundImage: `url(${existingimage})`,
 									backgroundRepeat: 'no-repeat',
-									backgroundSize: '100%',
+									backgroundSize: 'contain',
 									backgroundPosition: 'center center',
+									objectFit: 'cover',
+									backgroundColor: 'rgba(0,0,0,0.1)',
 							  }
 							: {}
 					}
@@ -96,17 +99,15 @@ export function FileInput(props: FileInputProps) {
 									/>
 								</div>
 							) : (
-								<div className="space-y-1 py-3">
-									<div className="z-10">
-										<HiOutlinePhotograph className="mx-auto h-10 w-10 text-brand-600  dark:text-brand-700" />
-										<div className="flex text-sm">
-											<label className="relative text-center cursor-pointer text-brand-600 dark:text-brand-400 rounded-md font-medium ">
-												<p>Upload a file or drag and drop</p>
-											</label>
-										</div>
-										<p className="text-xs  text-center">
-											PNG, JPG, GIF up to 5MB
-										</p>
+								<div className="space-y-1 flex items-center justify-end py-3">
+									<div>
+										<Button
+											onClick={(e) => e.preventDefault()}
+											className="bg-opacity-20"
+										>
+											<MdUploadFile className="mx-auto h-7 w-7 " />
+											<span>Upload</span>
+										</Button>
 									</div>
 								</div>
 							)}

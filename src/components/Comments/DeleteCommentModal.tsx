@@ -32,8 +32,11 @@ export function DeleteCommentModal({
 			cache.modify({
 				id: `Post:${postId}`,
 				fields: {
-					totalComments(prev) {
-						return prev - 1
+					comments(prev) {
+						return {
+							...prev,
+							totalCount: prev.totalCount - 1,
+						}
 					},
 				},
 			})
@@ -57,7 +60,7 @@ export function DeleteCommentModal({
 						onClick={async () => {
 							const response = await deleteComment({ variables: { id } })
 							if (response.data?.deleteComment.success) {
-								toast('Comment has been deleted. LOOK INTO MY STYLES #TODO')
+								toast('Comment has been deleted.')
 								onClose()
 							}
 						}}

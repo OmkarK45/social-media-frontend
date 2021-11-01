@@ -43,7 +43,7 @@ export function SignUp() {
 		`,
 		{
 			onCompleted: () => {
-				router.push('/feed')
+				router.push('/onboarding?step=0')
 			},
 			onError: (error) => toast(error.message),
 		}
@@ -60,11 +60,12 @@ export function SignUp() {
 		<AuthLayout title="Sign Up." subtitle="Sign up and join the DogeSocial!">
 			<Form
 				form={form}
-				onSubmit={(values) => {
-					signup({ variables: { input: { ...values } } })
-					if (data?.signUp.success) {
-						makeSession(data.signUp.session.id)
-						router.push('/feed')
+				onSubmit={async (values) => {
+					const ok = await signup({ variables: { input: { ...values } } })
+					if (ok.data?.signUp.success) {
+						makeSession(ok.data.signUp.session.id)
+
+						router.push('/onboarding?step=0')
 					}
 				}}
 			>

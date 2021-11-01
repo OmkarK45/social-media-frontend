@@ -27,7 +27,7 @@ const oneOf = (keys: string[]) => (val: any) => {
 }
 
 export const CreatePostSchema = object({
-	caption: z.string().nonempty('Caption is required.').max(400),
+	caption: z.string().nonempty('Caption is required.').max(420),
 	media: z.any().optional(),
 	gifLink: z.string().optional(),
 }).refine(oneOf(['caption', 'media']), {

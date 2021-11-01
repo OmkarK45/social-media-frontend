@@ -27,7 +27,7 @@ export const authenticatedRoute = async (
 	redirect = '/auth/signup'
 ): Promise<GetServerSidePropsResult<{}>> => {
 	const session = await resolveClientSession(ctx)
-
+	console.log('authenticated Route', session, redirect)
 	if (!session) {
 		return {
 			redirect: {

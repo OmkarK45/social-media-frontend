@@ -20,16 +20,19 @@ export function AccountPageLayout() {
 							component: <EditProfileTab />,
 							icon: HiOutlineUserCircle,
 							name: 'Profile Settings',
+							id: '',
 						},
 						{
 							component: <PasswordTab />,
 							icon: HiOutlineKey,
 							name: 'Security Settings',
+							id: '',
 						},
 						{
 							component: <Preferences />,
 							icon: HiOutlineSparkles,
 							name: 'Preferences',
+							id: '',
 						},
 					]}
 					isTabbed={true}

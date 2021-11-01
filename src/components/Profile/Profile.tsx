@@ -61,10 +61,12 @@ export function Profile({ username }: ProfileProps) {
 
 	if (error)
 		return (
-			<ErrorFallback
-				action={() => router.reload()}
-				message="Failed to load information. Try reloading."
-			/>
+			<div className="mt-24">
+				<ErrorFallback
+					action={() => router.reload()}
+					message="Failed to load information. Try reloading."
+				/>
+			</div>
 		)
 
 	if (!data || loading) return <LoadingFallback />
