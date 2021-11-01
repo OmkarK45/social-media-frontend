@@ -11,7 +11,7 @@ export default function Home() {
 			<SEO
 				title="DogeSocial | Capture and share the world's moments"
 				description="DogeSocial is a social media platform created for you. See what your friends are up to."
-				image="/images/seo-header.png"
+				image="https://i.imgur.com/ni5JNk1.png"
 				cardType="summary_large_image"
 				path="/"
 			/>
