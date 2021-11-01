@@ -1,7 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
-import { z } from 'zod'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { Heading } from '../ui/Heading'
@@ -26,7 +24,7 @@ const DELETE_POST_MUTATION = gql`
 `
 
 export function DeletePostModal({ isOpen, onClose, id }: Props) {
-	const [deletePost, { loading, data, error }] = useMutation<
+	const [deletePost] = useMutation<
 		DeletePostMutation,
 		DeletePostMutationVariables
 	>(DELETE_POST_MUTATION, {
@@ -53,7 +51,7 @@ export function DeletePostModal({ isOpen, onClose, id }: Props) {
 							const response = await deletePost({ variables: { id } })
 							if (response.data?.deletePost.success) {
 								onClose()
-								toast('POST HAS BEEN DELETED')
+								toast.success('Requested post has been deleted.')
 							}
 						}}
 						size="lg"

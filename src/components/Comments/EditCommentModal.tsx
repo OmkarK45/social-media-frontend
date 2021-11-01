@@ -65,7 +65,7 @@ export function EditCommentModal({
 		form.reset({
 			body,
 		})
-	}, [form])
+	}, [form, body])
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} className="sm:max-w-lg">

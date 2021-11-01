@@ -68,6 +68,9 @@ export function ViewLikes({ isOpen, onClose }: ViewLikesProps) {
 		}
 	}, [isOpen])
 
+	if (error)
+		return <ErrorFallback noAction message="Failed to load liked by list." />
+
 	return (
 		<Modal
 			isOpen={isOpen}

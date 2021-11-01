@@ -10,7 +10,7 @@ export function Hero() {
 				<div className="flex flex-col items-center w-full py-10 lg:space-x-10 lg:flex-row">
 					<div className="relative z-10 w-full space-y-10 lg:w-1/2">
 						<h1 className="text-5xl font-bold sm:text-7xl xl:text-7xl tracking-tighter">
-							Capture and share the world's moments
+							Capture and share the world&apos;s moments
 						</h1>
 						<p className="text-base text-gray-500 sm:text-lg">
 							Welcome to DogeSocial. A social media platform made for people
@@ -36,7 +36,8 @@ export function Hero() {
 					<div className="relative z-0 w-full mt-8 lg:w-1/2">
 						<img
 							src="https://res.cloudinary.com/dogecorp/image/upload/q_69/v1635767865/Saly-1245_eqly7l.png"
-							className="transform xl:translate-x-20 lg:ml-0  lg:scale-125"
+							className="transform xl:translate-x-20 lg:ml-0 lg:scale-125"
+							alt="Illustration showing a social media website on a mobile device."
 						/>
 					</div>
 				</div>

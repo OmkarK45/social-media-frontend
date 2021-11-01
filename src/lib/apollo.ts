@@ -1,17 +1,14 @@
-import {
-	ApolloClient,
-	from,
-	HttpLink,
-	InMemoryCache,
-	QueryOptions,
-} from '@apollo/client'
+import { ApolloClient, from, InMemoryCache, QueryOptions } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { useMemo } from 'react'
 import { API_URL } from './config'
-import { createUploadLink } from 'apollo-upload-client'
+// @ts-ignore - I promise this exists
+declare module 'apollo-upload-client'
+// @ts-ignore
 
+import { createUploadLink } from 'apollo-upload-client'
 let apolloClient: ApolloClient<any>
 
 interface ClientOptions {

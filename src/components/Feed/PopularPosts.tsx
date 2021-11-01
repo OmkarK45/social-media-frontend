@@ -49,7 +49,7 @@ export const POPULAR_POSTS = gql`
 `
 
 export function PopularPostsFeed() {
-	const { data, error, loading, fetchMore } = useQuery<
+	const { data, error, fetchMore } = useQuery<
 		PopularPostsQuery,
 		PopularPostsQueryVariables
 	>(POPULAR_POSTS, {
@@ -99,7 +99,7 @@ export function PopularPostsFeed() {
 					loader={<LoadingFallback />}
 					endMessage={<EndMessage />}
 				>
-					{data.popularPosts.edges.map((edge, index) => {
+					{data.popularPosts.edges.map((edge) => {
 						return <FeedPostCard post={edge?.node!} key={edge?.cursor} />
 					})}
 				</InfiniteScroll>

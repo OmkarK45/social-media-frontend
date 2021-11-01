@@ -3,7 +3,6 @@ import { Fragment } from 'react'
 import { AiOutlineSmile } from 'react-icons/ai'
 import { Picker, EmojiData } from 'emoji-mart'
 
-import twitter from 'emoji-mart/data/twitter.json'
 import clsx from 'clsx'
 import React from 'react'
 

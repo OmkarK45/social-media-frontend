@@ -1,9 +1,9 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { HiOutlineX } from 'react-icons/hi'
 import { Heading } from '../ui/Heading'
 import { GradientBar } from './GradientBar'
-
+import * as React from 'react'
 export interface OverlayProps {
 	open: boolean
 	setOpen: (prev: boolean) => void

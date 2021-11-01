@@ -5,9 +5,6 @@ import React from 'react'
 import { IconType } from 'react-icons/lib'
 import { useState } from 'react'
 
-import { GetStaticPaths } from 'next'
-import { navigation } from '../Layouts/FeedLayout'
-
 interface Navigation {
 	name: string
 	icon: IconType | React.ElementType

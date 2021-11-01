@@ -60,7 +60,7 @@ export function UserPosts({
 	username: string
 	count: number
 }) {
-	const { data, loading, error, fetchMore } = useQuery<
+	const { data, error, fetchMore } = useQuery<
 		UserPostsQuery,
 		UserPostsQueryVariables
 	>(USER_POSTS_QUERY, {

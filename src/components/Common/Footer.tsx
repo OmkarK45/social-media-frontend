@@ -101,7 +101,7 @@ export function Footer() {
 												</p>
 											</div>
 											<div>
-												<Button variant="dark" rounded="lg">
+												<Button href={stack.url} variant="dark" rounded="lg">
 													Visit 🡥
 												</Button>
 											</div>
@@ -128,6 +128,7 @@ export function Footer() {
 					<a
 						className="no-underline text-muted"
 						target="_blank"
+						rel="noreferrer"
 						href="https://twitter.com/omkar_k45"
 					>
 						Twitter
@@ -137,6 +138,7 @@ export function Footer() {
 					<a
 						className="no-underline text-muted"
 						target="_blank"
+						rel="noreferrer"
 						href="https://twitter.com/omkar_k45"
 					>
 						Hire Me
@@ -146,6 +148,7 @@ export function Footer() {
 					<a
 						className="no-underline text-muted"
 						target="_blank"
+						rel="noreferrer"
 						href="https://github.com/omkark45"
 					>
 						GitHub

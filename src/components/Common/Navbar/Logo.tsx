@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function Logo() {
 	return (
-		<Link href="/">
+		<Link href="/" passHref>
 			<svg
 				className="hi-solid hi-cube-transparent inline-block w-10 h-10 text-brand-600"
 				fill="currentColor"

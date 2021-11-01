@@ -1,15 +1,8 @@
-import {
-	HiHeart,
-	HiOutlineReply,
-	HiOutlineUserAdd,
-	HiOutlineX,
-} from 'react-icons/hi'
-import {
-	Notification as NotificationSchemaType,
-	User,
-} from '~/__generated__/schema.generated'
+import { HiHeart, HiOutlineReply, HiOutlineUserAdd } from 'react-icons/hi'
+import { User } from '~/__generated__/schema.generated'
 import Link from 'next/link'
-import { formatDistance, formatDistanceToNow } from 'date-fns'
+import { formatDistance } from 'date-fns'
+import * as React from 'react'
 
 export type NotificationType = 'USER_FOLLOW' | 'POST_LIKE' | 'POST_REPLY'
 
@@ -26,7 +19,7 @@ interface NotificationProps {
 	postLikeId?: string | null
 }
 
-const NOTIFICATION_ICON: Record<NotificationType, JSX.Element> = {
+const NOTIFICATION_ICON: Record<NotificationType, React.ReactNode> = {
 	USER_FOLLOW: <HiOutlineUserAdd className="text-gray-500" />,
 	POST_LIKE: <HiHeart className="text-red-600" />,
 	POST_REPLY: <HiOutlineReply className="text-gray-500" />,

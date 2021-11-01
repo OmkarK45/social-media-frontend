@@ -34,18 +34,12 @@ export function FileInput(props: FileInputProps) {
 		[setValue, name]
 	)
 
-	const {
-		getRootProps,
-		getInputProps,
-		isDragActive,
-		isDragReject,
-		acceptedFiles,
-		fileRejections,
-	} = useDropzone({
-		onDrop,
-		accept: props.accept,
-		maxSize,
-	})
+	const { getRootProps, getInputProps, isDragActive, fileRejections } =
+		useDropzone({
+			onDrop,
+			accept: props.accept,
+			maxSize,
+		})
 
 	useEffect(() => {
 		register(name)

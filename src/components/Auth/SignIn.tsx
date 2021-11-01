@@ -10,7 +10,6 @@ import { AuthLayout } from './AuthLayout'
 import { Card } from '../ui/Card'
 import { initializeSession } from '~/utils/initializeSession'
 import toast from 'react-hot-toast'
-import { Button } from '../ui/Button'
 import {
 	LoginFormMutation,
 	LoginFormMutationVariables,

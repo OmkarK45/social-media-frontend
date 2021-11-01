@@ -1,4 +1,4 @@
-import { gql, useQuery, useReactiveVar } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import { LoadingFallback } from '~/components/ui/Fallbacks/LoadingFallback'
@@ -10,7 +10,6 @@ import {
 } from './__generated__/Following.generated'
 import { FollowButton } from '../FollowButton'
 import { UserHandle } from '~/components/Common/UserHandle'
-import { EndMessage } from '~/components/Feed'
 import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 import { SEO } from '~/components/SEO'
 

@@ -8,7 +8,6 @@ import {
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { Link } from '../ui/Link'
-import { Badge } from '../ui/Badge'
 import { SEO } from '../SEO'
 
 const HASHTAGS_QUERY = gql`

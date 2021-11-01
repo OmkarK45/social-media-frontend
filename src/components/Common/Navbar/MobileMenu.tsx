@@ -1,11 +1,12 @@
 import { gql, useMutation } from '@apollo/client'
 import { Popover, Transition } from '@headlessui/react'
 import { HiOutlineCog, HiOutlineHome, HiOutlineSparkles } from 'react-icons/hi'
+import { IconType } from 'react-icons/lib'
 import { Button } from '~/components/ui/Button'
 import { Link } from '~/components/ui/Link'
 import { useAuthRedirect } from '~/utils/useAuthRedirect'
 import { User } from '~/__generated__/schema.generated'
-
+import Image from 'next/image'
 interface MobileMenuProps {
 	open: boolean
 	user: Partial<User>
@@ -13,7 +14,7 @@ interface MobileMenuProps {
 type TLink = {
 	href: string | ((username: string) => string)
 	label: string
-	icon: React.ElementType
+	icon: IconType
 }
 
 export const links: TLink[] = [
@@ -73,10 +74,12 @@ export function MobileMenu({ open, user }: MobileMenuProps) {
 					>
 						<div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
 							<div className="flex-shrink-0">
-								<img
+								<Image
 									className="h-10 w-10 rounded-full"
 									src={user.avatar!}
-									alt=""
+									height={40}
+									width={40}
+									alt={`Profile picture of ${user.firstName}`}
 								/>
 							</div>
 							<div className="ml-3">

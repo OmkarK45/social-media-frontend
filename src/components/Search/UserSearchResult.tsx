@@ -30,7 +30,8 @@ export function UserSearchResult({
 				{router.query.type}s
 			</Heading>
 			<p className="text-muted text-sm  px-4">
-				Want to search hashtags instead? Include a '#' in your query. eg. #doge
+				Want to search hashtags instead? Include a &apos;#&apos; in your query.
+				eg. #doge
 			</p>
 
 			<div className="flow-root mt-2 px-4">

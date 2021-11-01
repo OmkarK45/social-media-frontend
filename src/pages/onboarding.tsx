@@ -6,7 +6,6 @@ import { Step1 } from '~/components/Onboarding/Step1'
 import { Step2 } from '~/components/Onboarding/Step2'
 import { Step3 } from '~/components/Onboarding/Step3'
 import { Button } from '~/components/ui/Button'
-import { Card } from '~/components/ui/Card'
 import { Heading } from '~/components/ui/Heading'
 import { Link } from '~/components/ui/Link'
 
@@ -102,18 +101,14 @@ export default function Onboarding() {
 							return (
 								<Tab
 									key={step.id}
-									className={({ selected }) =>
-										clsx(
-											currentStep === step.id
-												? 'bg-brand-100 text-brand-700'
-												: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-											tabIdx === 0 ? 'rounded-l-lg' : '',
-											tabIdx === onboardingTabs.length - 1
-												? 'rounded-r-lg'
-												: '',
-											'group relative min-w-0 flex-1  overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10'
-										)
-									}
+									className={clsx(
+										currentStep === step.id
+											? 'bg-brand-100 text-brand-700'
+											: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+										tabIdx === 0 ? 'rounded-l-lg' : '',
+										tabIdx === onboardingTabs.length - 1 ? 'rounded-r-lg' : '',
+										'group relative min-w-0 flex-1  overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10'
+									)}
 								>
 									<p className="text-base font-medium">{step.label}</p>
 								</Tab>

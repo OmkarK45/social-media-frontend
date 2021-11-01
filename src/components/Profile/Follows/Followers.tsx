@@ -57,6 +57,8 @@ export function Followers({ username }: FollowersProps) {
 		return <ErrorFallback message="No followers for the user." />
 	}
 
+	if (error) return <ErrorFallback message="Something went wrong." />
+
 	if (data.seeProfile.followers.edges.length === 0)
 		return (
 			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">

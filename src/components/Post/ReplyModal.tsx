@@ -36,7 +36,7 @@ export function ReplyModal({ isOpen, onClose, ...props }: ReplyModalProps) {
 		CreateCommentMutation,
 		CreateCommentMutationVariables
 	>(CREATE_COMMENT_MUTATION, {
-		update: (cache, result) => {
+		update: (cache) => {
 			console.log('called')
 			cache.modify({
 				id: `Post:${props.post.id}`,

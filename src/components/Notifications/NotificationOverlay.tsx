@@ -61,7 +61,7 @@ export function NotificationOverlay({
 	open,
 	setOpen,
 }: NotificationOverlayProps) {
-	const [loadNotifications, { data, error, loading, fetchMore }] = useLazyQuery<
+	const [loadNotifications, { data, error, fetchMore }] = useLazyQuery<
 		NotificationsQuery,
 		NotificationsQueryVariables
 	>(NOTIFICATIONS_QUERY, {
@@ -71,6 +71,14 @@ export function NotificationOverlay({
 	useEffect(() => {
 		if (open) loadNotifications()
 	}, [open])
+
+	if (error)
+		return (
+			<ErrorFallback
+				noAction
+				message="We are having trouble fetching notifications."
+			/>
+		)
 
 	return (
 		<Overlay open={open} setOpen={setOpen} overlayTitle="Notifications">

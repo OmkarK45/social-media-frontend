@@ -1,3 +1,4 @@
+// eslint-disable-file  react/display-name
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { HiOutlineFire, HiOutlineHashtag, HiOutlineHome } from 'react-icons/hi'
@@ -15,8 +16,11 @@ const RightSidebar = dynamic<{}>(
 		const { RightSidebar } = await import('../Navbar/RightSidebar')
 		return RightSidebar
 	},
+	// eslint-disable-next-line react/display-name
 	{ loading: () => <LoadingFallback />, ssr: true }
 )
+
+RightSidebar.displayName = 'RightSidebar'
 
 export const navigation = [
 	{

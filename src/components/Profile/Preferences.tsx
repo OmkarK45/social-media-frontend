@@ -1,6 +1,3 @@
-import { Switch } from '@headlessui/react'
-import clsx from 'clsx'
-import { useTheme } from 'next-themes'
 import { ThemeToggle } from '../ThemeSwitcher'
 import { Card } from '../ui/Card'
 import { Heading } from '../ui/Heading'

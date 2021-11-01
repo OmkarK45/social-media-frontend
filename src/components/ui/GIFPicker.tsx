@@ -1,6 +1,9 @@
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import { Fragment } from 'react'
+// @ts-ignore
+declare module 'react-giphy-searchbox'
+// @ts-ignore
 import ReactGiphySearchbox from 'react-giphy-searchbox'
 import { AiOutlineGif } from 'react-icons/ai'
 
@@ -36,6 +39,7 @@ export function GIFPicker({ className, onGIFPick, disabled }: GIFPickerProps) {
 						>
 							<Popover.Panel className=" absolute z-10 bg-white dark:bg-gray-900 overflow-hidden  rounded-lg mt-3 sm:px-0 ">
 								<div className="overflow-hidden shadow-lg">
+									{/* @ts-ignore */}
 									<ReactGiphySearchbox
 										apiKey="OlrXcjSFLlBV6djyQinQv7gx0L8Gsumr"
 										onSelect={(item: any) => onGIFPick(item)}

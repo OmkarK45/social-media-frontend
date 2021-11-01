@@ -24,10 +24,7 @@ const SignUpSchema = z.object({
 })
 
 export function SignUp() {
-	const [signup, { data }] = useMutation<
-		SignUpMutation,
-		SignUpMutationVariables
-	>(
+	const [signup] = useMutation<SignUpMutation, SignUpMutationVariables>(
 		gql`
 			mutation SignUpMutation($input: SignUpInput!) {
 				signUp(input: $input) {

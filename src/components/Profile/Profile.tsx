@@ -48,6 +48,7 @@ export const PROFILE_QUERY = gql`
 `
 
 export function Profile({ username }: ProfileProps) {
+	const isMobile = useMediaQuery(MEDIA_QUERIES.SMALL)
 	const router = useRouter()
 
 	const { data, loading, error } = useQuery<
@@ -72,7 +73,6 @@ export function Profile({ username }: ProfileProps) {
 	if (!data || loading) return <LoadingFallback />
 
 	const user = data.seeProfile
-	const isMobile = useMediaQuery(MEDIA_QUERIES.SMALL)
 
 	return (
 		<div className="py-16">

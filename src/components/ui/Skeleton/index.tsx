@@ -30,6 +30,7 @@ const Skeleton = ({
 			{[...Array(rows).keys()].map((_, i) => {
 				return (
 					<div
+						key={i}
 						className={clsx('bg-opacity-25 rounded-lg', h, variants[variant])}
 					></div>
 				)

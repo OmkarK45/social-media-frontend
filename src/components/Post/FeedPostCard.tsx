@@ -61,12 +61,6 @@ export function FeedPostCard(props: Props) {
 		return <ErrorFallback message="Failed to load" />
 	}
 
-	const shareData = {
-		title: `DogeSocial | Post by ${props.post.user.firstName}`,
-		description: props.post.caption ?? 'Check it out on DogeSocial.',
-		url: `https://dogesocial.vercel.app/post/${props.post.id}`,
-	}
-
 	return (
 		<Card
 			noPadding
@@ -79,7 +73,7 @@ export function FeedPostCard(props: Props) {
 							<img
 								className="h-10 w-10 rounded-full"
 								src={props.post.user.avatar!}
-								alt=""
+								alt={`Profile avatar of ${props.post.user.username}`}
 							/>
 						</div>
 						<div className="min-w-0 flex-1">
@@ -139,6 +133,7 @@ export function FeedPostCard(props: Props) {
 									layout="fill"
 									objectFit="cover"
 									placeholder="empty"
+									alt={`Image posted by ${props.post.user.firstName} on DogeSocial.`}
 								/>
 							</div>
 						</div>

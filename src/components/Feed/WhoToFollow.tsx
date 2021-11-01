@@ -13,6 +13,7 @@ import {
 	WhoToFollowQuery,
 	WhoToFollowQueryVariables,
 } from '../Common/Navbar/__generated__/RightSidebar.generated'
+import Image from 'next/image'
 
 export function WhoToFollow() {
 	const { data, loading, error, refetch } = useQuery<
@@ -81,11 +82,15 @@ export function WhoToFollow() {
 							>
 								<div className="space-y-3">
 									<div className="flex-shrink-0 ">
-										<img
-											className="h-12 w-12 rounded-full mx-auto"
-											src={person?.avatar!}
-											alt=""
-										/>
+										<div className="rounded-full mx-auto flex justify-center">
+											<Image
+												className="h-12 w-12 mx-auto"
+												src={person?.avatar!}
+												height={48}
+												width={48}
+												alt=""
+											/>
+										</div>
 									</div>
 									<div className="flex-1 min-w-0">
 										<Link

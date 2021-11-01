@@ -89,8 +89,7 @@ export function PostCard() {
 		CreateCommentMutationVariables
 	>(CREATE_COMMENT_MUTATION, {
 		refetchQueries: [COMMENTS_QUERY, 'CommentsQuery'],
-		update: (cache, result) => {
-			console.log('called')
+		update: (cache) => {
 			cache.modify({
 				id: `Post:${router.query.id as string}`,
 				fields: {
@@ -237,7 +236,11 @@ export function PostCard() {
 							</div>
 							{post.gifImage && (
 								<div className="mx-auto w-11/12 rounded-lg pb-4 overflow-hidden">
-									<img className="w-full rounded-lg" src={post.gifImage} />
+									<img
+										className="w-full rounded-lg"
+										src={post.gifImage}
+										alt={`A moving GIF image posted by ${post.user.username}.`}
+									/>
 								</div>
 							)}
 							{post.image && (

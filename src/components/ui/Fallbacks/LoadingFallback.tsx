@@ -24,3 +24,5 @@ export const LoadingFallback = forwardRef<HTMLDivElement>((_, ref) => {
 		</div>
 	)
 })
+
+LoadingFallback.displayName = 'LoadingFallback'

@@ -1,5 +1,4 @@
 import { gql, useQuery } from '@apollo/client'
-import { User } from '~/__generated__/schema.generated'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'

@@ -1,3 +1,6 @@
+/**
+ * @type {import("eslint").Linter.Config}
+ */
 module.exports = {
 	env: {
 		browser: true,
@@ -20,8 +23,13 @@ module.exports = {
 	plugins: ['react', '@typescript-eslint'],
 	rules: {
 		'no-unused-vars': [
-			'warn',
+			'off',
 			{ vars: 'all', args: 'after-used', ignoreRestSiblings: false },
 		],
+		'react-hooks/exhaustive-deps': 'off',
+		'@next/next/no-img-element': 'off',
+	},
+	globals: {
+		NodeJS: true,
 	},
 }
