@@ -21,7 +21,12 @@ export const preloadQuery = async (
 	...queries: QueryOptions[]
 ): Promise<GetServerSidePropsResult<{}>> => {
 	const client = createApolloClient({
-		headers: context.req.headers as Record<string, string>,
+		headers: {
+			...(context.req.headers as Record<string, string>),
+			'Access-Control-Allow-Origin': '*', // you can add the domain names here or '*' will allow all domains
+			/* Required for cookies, authorization headers with HTTPS */
+			'Access-Control-Allow-Credentials': 'true',
+		},
 	})
 
 	try {
@@ -79,7 +84,12 @@ export const createApolloClient = ({
 		// uri: 'https://social-media-backend-production.up.railway.app/graphql',
 		uri: 'https://social-media-backend-production.up.railway.app/graphql',
 
-		headers: headers,
+		headers: {
+			...headers,
+			'Access-Control-Allow-Origin': '*', // you can add the domain names here or '*' will allow all domains
+			/* Required for cookies, authorization headers with HTTPS */
+			'Access-Control-Allow-Credentials': 'true',
+		},
 		credentials: 'include',
 	})
 
