@@ -1,0 +1,31 @@
+prisma:query SELECT "public"."Session"."id", "public"."Session"."createdAt", "public"."Session"."updatedAt", "public"."Session"."expiresAt", "public"."Session"."userId" FROM "public"."Session" WHERE ("public"."Session"."id" = $1 AND "public"."Session"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1) OFFSET $2
+
+prisma:query SELECT "public"."Post"."id", "public"."Post"."userId", "public"."Post"."image", "public"."Post"."caption", "public"."Post"."createdAt", "public"."Post"."updatedAt" FROM "public"."Post" WHERE "public"."Post"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."Comment"."id", "public"."Comment"."userId", "public"."Comment"."postId", "public"."Comment"."body", "public"."Comment"."createdAt", "public"."Comment"."updatedAt" FROM "public"."Comment" WHERE ("public"."Comment"."id") IN (SELECT "t0"."id" FROM "public"."Comment" AS "t0" INNER JOIN "public"."Post" AS "j0" ON ("j0"."id") = ("t0"."postId") WHERE ("j0"."id" = $1 AND "t0"."id" IS NOT NULL)) OFFSET $2
+
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1,$2) OFFSET $3
+
+----- NEW ACCOUNT ------
+
+prisma:query SELECT "public"."Session"."id", "public"."Session"."createdAt", "public"."Session"."updatedAt", "public"."Session"."expiresAt", "public"."Session"."userId" FROM "public"."Session" WHERE ("public"."Session"."id" = $1 AND "public"."Session"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1) OFFSET $2
+
+prisma:query SELECT "public"."Post"."id", "public"."Post"."userId", "public"."Post"."image", "public"."Post"."caption", "public"."Post"."createdAt", "public"."Post"."updatedAt" FROM "public"."Post" WHERE "public"."Post"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."Comment"."id", "public"."Comment"."userId", "public"."Comment"."postId", "public"."Comment"."body", "public"."Comment"."createdAt", "public"."Comment"."updatedAt" FROM "public"."Comment" WHERE ("public"."Comment"."id") IN (SELECT "t0"."id" FROM "public"."Comment" AS "t0" INNER JOIN "public"."Post" AS "j0" ON ("j0"."id") = ("t0"."postId") WHERE ("j0"."id" = $1 AND "t0"."id" IS NOT NULL)) OFFSET $2
+
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1,$2,$3) OFFSET $4
+
+
+---- ASKING FOR MORE DETAILS -----
+
+prisma:query SELECT "public"."Session"."id", "public"."Session"."createdAt", "public"."Session"."updatedAt", "public"."Session"."expiresAt", "public"."Session"."userId" FROM "public"."Session" WHERE ("public"."Session"."id" = $1 AND "public"."Session"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1) OFFSET $2
+
+prisma:query SELECT "public"."Post"."id", "public"."Post"."userId", "public"."Post"."image", "public"."Post"."caption", "public"."Post"."createdAt", "public"."Post"."updatedAt" FROM "public"."Post" WHERE "public"."Post"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."Comment"."id", "public"."Comment"."userId", "public"."Comment"."postId", "public"."Comment"."body", "public"."Comment"."createdAt", "public"."Comment"."updatedAt" FROM "public"."Comment" WHERE ("public"."Comment"."id") IN (SELECT "t0"."id" FROM "public"."Comment" AS "t0" INNER JOIN "public"."Post" AS "j0" ON ("j0"."id") = ("t0"."postId") WHERE ("j0"."id" = $1 AND "t0"."id" IS NOT NULL)) OFFSET $2
+
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."username", "public"."User"."email", "public"."User"."hashedPassword", "public"."User"."bio", "public"."User"."avatar", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE "public"."User"."id" IN ($1,$2,$3) OFFSET $4

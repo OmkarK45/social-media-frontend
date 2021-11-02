@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator giraphql {
+  provider     = "prisma-giraphql-types"
+  clientOutput = "@prisma/client"
+  output       = "./giraphql-types.ts"
+}
+
+enum NodeType {
+  User
+  Comment
+  Post
+  Notification
+}
+
+model User {
+  id                     String         @id @default(uuid())
+  firstName              String
+  lastName               String?
+  username               String         @unique
+  email                  String         @unique
+  hashedPassword         String
+  bio                    String?
+  avatar                 String // we would probably want this to be from cloudinary 
+  coverImage             String
+  coverImageBg           String
+  posts                  Post[]
+  likes                  Like[]
+  comments               Comment[]
+  followers              User[]         @relation("FollowRelation", references: [id])
+  following              User[]         @relation("FollowRelation", references: [id])
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  sessions               Session[]
+  nodeType               NodeType       @default(User)
+  receivedNotification   Notification[] @relation("notificationReceiver")
+  dispatchedNotification Notification[] @relation("notificationDispatcher")
+}
+
+model Session {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expiresAt DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Post {
+  id           String         @id @default(uuid())
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String
+  image        String?
+  blurHash     String?
+  caption      String?
+  gifLink      String?
+  likes        Like[]
+  hashtags     Hashtag[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  comments     Comment[]
+  nodeType     NodeType       @default(Post)
+  notification Notification[] @relation("post")
+}
+
+model Like {
+  id           String         @id @default(uuid())
+  post         Post           @relation(fields: [postId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  postId       String
+  userId       String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Notification Notification[] @relation("like")
+
+  @@unique([postId, userId])
+}
+
+model Hashtag {
+  id        String   @id @default(uuid())
+  hashtag   String   @unique
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nodeType  NodeType @default(Comment)
+}
+
+model Notification {
+  id           String           @id @default(uuid())
+  message      String?
+  isRead       Boolean          @default(false)
+  type         NotificationType
+  entityId     String           @unique
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  receiver     User             @relation("notificationReceiver", fields: [receiverId], references: [id])
+  receiverId   String
+  dispatcher   User             @relation("notificationDispatcher", fields: [dispatcherId], references: [id])
+  dispatcherId String
+  like         Like?            @relation("like", fields: [likeId], references: [id])
+  likeId       String?
+  post         Post?            @relation("post", fields: [postId], references: [id])
+  postId       String?
+  nodeType     NodeType         @default(Notification)
+
+  @@map("Notifications")
+}
+
+enum NotificationType {
+  POST_LIKE
+  POST_REPLY
+
+  USER_FOLLOW
+  USER_MENTION
+
+}

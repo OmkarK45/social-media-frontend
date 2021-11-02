@@ -1,4 +1,5 @@
 type AuthResponse {
+  session: Session!
   success: Boolean!
   user: User!
 }
@@ -8,10 +9,13 @@ input ChangePasswordInput {
   oldPassword: String!
 }
 
-type Comment {
+type Comment implements Node {
   body: String!
-  id: String!
+  createdAt: DateTime!
+  id: ID!
   isMine: Boolean!
+  post: Post!
+  updatedAt: DateTime!
   user: User!
 }
 
@@ -20,9 +24,15 @@ input CreateCommentInput {
   postId: String!
 }
 
+type CreateCommentObject {
+  body: String!
+  id: String!
+}
+
 input CreatePostInput {
   caption: String!
-  media: FileUpload!
+  gifLink: String
+  media: FileUpload
 }
 
 scalar DateTime
@@ -35,27 +45,51 @@ input EditCommentInput {
 
 input EditPostInput {
   caption: String!
+  gifLink: String
   id: String!
 }
 
 input EditProfileInput {
-  avatar: String
+  avatar: FileUpload
   bio: String
-  firstName: String!
+  coverImage: FileUpload
+  firstName: String
   lastName: String
-  username: String!
+  username: String
 }
 
 """The `Upload` scalar type represents a file upload."""
 scalar FileUpload
 
+type FollowResponse {
+  ok: Boolean!
+}
+
 input FollowUserInput {
   username: String!
 }
 
-type Hashtag {
+type Hashtag implements Node {
   hashtag: String!
   id: ID!
+  posts(after: ID, before: ID, first: Int, last: Int): HashtagPostsConnection!
+  postsCount: Int!
+}
+
+type HashtagPostsConnection {
+  edges: [HashtagPostsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type HashtagPostsConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type Like implements Node {
+  id: ID!
+  post: Post!
+  user: User!
 }
 
 input LoginInput {
@@ -65,24 +99,36 @@ input LoginInput {
 
 type Mutation {
   changePassword(input: ChangePasswordInput!): ResultResponse!
-  createComment(input: CreateCommentInput!): ResultResponse!
+  createComment(input: CreateCommentInput!): CreateCommentObject!
   createPost(input: CreatePostInput!): Post!
   deleteComment(id: String!): ResultResponse!
   deletePost(id: String!): ResultResponse!
   editComment(input: EditCommentInput!): ResultResponse!
   editPost(input: EditPostInput!): Post!
   editProfile(input: EditProfileInput!): User!
-  followUser(input: FollowUserInput!): User!
+  followUser(input: FollowUserInput!): FollowResponse!
   logout: ResultResponse!
-  searchUser(keyword: String!): SearchResponse!
   signIn(input: SignInInput!): AuthResponse!
   signUp(input: SignUpInput!): AuthResponse!
   toggleLike(id: String!): ResultResponse!
-  unfollowUser(input: FollowUserInput!): User!
+  unfollowUser(input: FollowUserInput!): FollowResponse!
 }
 
 interface Node {
   id: ID!
+}
+
+type Notification implements Node {
+  createdAt: DateTime!
+  dispatcher: User!
+  entityId: String!
+  id: ID!
+  isRead: Boolean!
+  like: Like
+  post: Post
+  receiver: User!
+  type: String!
+  updatedAt: DateTime!
 }
 
 type PageInfo {
@@ -93,22 +139,25 @@ type PageInfo {
 }
 
 type Post implements Node {
+  blurHash: String
   caption: String
   comments(after: ID, before: ID, first: Int, last: Int): PostCommentsConnection!
+  createdAt: DateTime!
+  gifImage: String
   hashtags(after: ID, before: ID, first: Int, last: Int): PostHashtagsConnection!
   id: ID!
   image: String
   isLiked: Boolean!
   isMine: Boolean!
-  likedBy(after: ID, before: ID, first: Int, last: Int): PostLikedByConnection!
-  likes: Int!
-  totalComments: Int!
+  likes(after: ID, before: ID, first: Int, last: Int): PostLikesConnection!
+  updatedAt: DateTime!
   user: User!
 }
 
 type PostCommentsConnection {
   edges: [PostCommentsConnectionEdge]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type PostCommentsConnectionEdge {
@@ -126,18 +175,15 @@ type PostHashtagsConnectionEdge {
   node: Hashtag!
 }
 
-type PostLikedByConnection {
-  edges: [PostLikedByConnectionEdge]!
+type PostLikesConnection {
+  edges: [PostLikesConnectionEdge]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
-type PostLikedByConnectionEdge {
+type PostLikesConnectionEdge {
   cursor: String!
-  node: User!
-}
-
-type ProfileResponse {
-  user: User!
+  node: Like!
 }
 
 type Query {
@@ -146,9 +192,17 @@ type Query {
   me: User!
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]!
-  seeLikes(after: ID, before: ID, first: Int, id: String!, last: Int): QuerySeeLikesConnection!
+  notifications(after: ID, before: ID, first: Int, isRead: Boolean! = false, last: Int): QueryNotificationsConnection!
+  popularHashtags(after: ID, before: ID, first: Int, last: Int): QueryPopularHashtagsConnection!
+  popularPosts(after: ID, before: ID, first: Int, last: Int, orderBy: String!): QueryPopularPostsConnection!
+  postsByHashtag(after: ID, before: ID, first: Int, hashtag: String!, last: Int): QueryPostsByHashtagConnection!
+  postsContainingHashtag(after: ID, before: ID, first: Int, hashtag: String!, last: Int): QueryPostsContainingHashtagConnection!
+  searchByHashtag(after: ID, before: ID, first: Int, keyword: String!, last: Int): QuerySearchByHashtagConnection!
+  searchUser(after: ID, before: ID, first: Int, keyword: String!, last: Int): QuerySearchUserConnection!
   seePost(id: String!): Post!
-  seeProfile(username: String!): ProfileResponse!
+  seeProfile(username: String!): User!
+  sessionById(id: String!): Session!
+  whoToFollow(after: ID, before: ID, first: Int, last: Int): QueryWhoToFollowConnection!
 }
 
 type QueryFeedConnection {
@@ -161,12 +215,82 @@ type QueryFeedConnectionEdge {
   node: Post!
 }
 
-type QuerySeeLikesConnection {
-  edges: [QuerySeeLikesConnectionEdge]!
+type QueryNotificationsConnection {
+  edges: [QueryNotificationsConnectionEdge]!
   pageInfo: PageInfo!
 }
 
-type QuerySeeLikesConnectionEdge {
+type QueryNotificationsConnectionEdge {
+  cursor: String!
+  node: Notification!
+}
+
+type QueryPopularHashtagsConnection {
+  edges: [QueryPopularHashtagsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryPopularHashtagsConnectionEdge {
+  cursor: String!
+  node: Hashtag!
+}
+
+type QueryPopularPostsConnection {
+  edges: [QueryPopularPostsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryPopularPostsConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type QueryPostsByHashtagConnection {
+  edges: [QueryPostsByHashtagConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryPostsByHashtagConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type QueryPostsContainingHashtagConnection {
+  edges: [QueryPostsContainingHashtagConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryPostsContainingHashtagConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type QuerySearchByHashtagConnection {
+  edges: [QuerySearchByHashtagConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QuerySearchByHashtagConnectionEdge {
+  cursor: String!
+  node: Post!
+}
+
+type QuerySearchUserConnection {
+  edges: [QuerySearchUserConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QuerySearchUserConnectionEdge {
+  cursor: String!
+  node: User!
+}
+
+type QueryWhoToFollowConnection {
+  edges: [QueryWhoToFollowConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryWhoToFollowConnectionEdge {
   cursor: String!
   node: User!
 }
@@ -175,13 +299,9 @@ type ResultResponse {
   success: Boolean!
 }
 
-type SearchResponse {
-  total: Int!
-  users: [User!]!
-}
-
 type Session {
   createdAt: DateTime!
+  expiresAt: DateTime
   id: ID!
   updatedAt: DateTime!
   userId: ID!
@@ -201,15 +321,23 @@ input SignUpInput {
 }
 
 type User implements Node {
-  avatar: String
+  avatar: String!
   bio: String
+  coverImage: String!
+  coverImageBg: String!
   createdAt: DateTime!
   email: String!
   firstName: String!
   followers(after: ID, before: ID, first: Int, last: Int): UserFollowersConnection!
+  followersCount: Int!
   following(after: ID, before: ID, first: Int, last: Int): UserFollowingConnection!
+  followingCount: Int!
   id: ID!
+  isFollowing: Boolean!
+  isMe: Boolean!
   lastName: String
+  posts(after: ID, before: ID, first: Int, last: Int): UserPostsConnection!
+  postsCount: Int!
   updatedAt: DateTime!
   username: String!
 }
@@ -217,6 +345,7 @@ type User implements Node {
 type UserFollowersConnection {
   edges: [UserFollowersConnectionEdge]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type UserFollowersConnectionEdge {
@@ -227,9 +356,21 @@ type UserFollowersConnectionEdge {
 type UserFollowingConnection {
   edges: [UserFollowingConnectionEdge]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type UserFollowingConnectionEdge {
   cursor: String!
   node: User!
+}
+
+type UserPostsConnection {
+  edges: [UserPostsConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserPostsConnectionEdge {
+  cursor: String!
+  node: Post!
 }

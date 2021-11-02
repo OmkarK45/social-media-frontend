@@ -2,7 +2,6 @@ import { gql, useMutation } from '@apollo/client'
 import router from 'next/router'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import { initializeSession } from '~/utils/initializeSession'
 import { useAuthRedirect } from '~/utils/useAuthRedirect'
 import { Card } from '../ui/Card'
 import Form, { useZodForm } from '../ui/Form/Form'
@@ -47,7 +46,6 @@ export function SignUp() {
 	)
 
 	const authRedirect = useAuthRedirect()
-	const makeSession = initializeSession()
 
 	const form = useZodForm({
 		schema: SignUpSchema,
@@ -60,8 +58,6 @@ export function SignUp() {
 				onSubmit={async (values) => {
 					const ok = await signup({ variables: { input: { ...values } } })
 					if (ok.data?.signUp.success) {
-						makeSession(ok.data.signUp.session.id)
-
 						router.push('/onboarding?step=0')
 					}
 				}}
