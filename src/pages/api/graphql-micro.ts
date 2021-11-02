@@ -29,6 +29,7 @@ const handler: NextApiHandler = async (req, res) => {
 	const contentType = req.headers['content-type']
 
 	if (contentType && contentType.startsWith('multipart/form-data')) {
+		// @ts-ignore
 		req.filePayload = await processRequest(req, res)
 	}
 
