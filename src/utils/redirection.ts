@@ -1,13 +1,12 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { resolveClientSession } from './sessions'
+import { resolveSession } from '~/lib/session'
 
-export const unauthenticatedRoute = async (
+export async function unauthenticatedRoute(
 	ctx: GetServerSidePropsContext,
 	redirect: string = '/'
-) => {
-	const session = await resolveClientSession(ctx)
+) {
+	const session = await resolveSession(ctx)
 
-	console.log(session, redirect)
 	if (session) {
 		return {
 			redirect: {
@@ -22,12 +21,12 @@ export const unauthenticatedRoute = async (
 	}
 }
 
-export const authenticatedRoute = async (
+export async function authenticatedRoute(
 	ctx: GetServerSidePropsContext,
 	redirect = '/auth/signup'
-): Promise<GetServerSidePropsResult<{}>> => {
-	const session = await resolveClientSession(ctx)
-	console.log('authenticated Route', session, redirect)
+): Promise<GetServerSidePropsResult<{}>> {
+	const session = await resolveSession(ctx)
+
 	if (!session) {
 		return {
 			redirect: {
@@ -38,6 +37,7 @@ export const authenticatedRoute = async (
 			},
 		}
 	}
+
 	return {
 		props: {},
 	}

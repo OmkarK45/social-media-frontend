@@ -8,7 +8,6 @@ import { useAuthRedirect } from '~/utils/useAuthRedirect'
 import router from 'next/router'
 import { AuthLayout } from './AuthLayout'
 import { Card } from '../ui/Card'
-import { initializeSession } from '~/utils/initializeSession'
 import toast from 'react-hot-toast'
 import {
 	LoginFormMutation,
@@ -23,6 +22,8 @@ const loginSchema = object({
 })
 
 export function LoginForm() {
+	const authRedirect = useAuthRedirect()
+
 	const [login, loginResult] = useMutation<
 		LoginFormMutation,
 		LoginFormMutationVariables
@@ -42,27 +43,17 @@ export function LoginForm() {
 		`,
 		{
 			onCompleted: () => {
-				router.push('/feed/all')
+				authRedirect()
 			},
 			onError(err) {
 				toast(err.message)
 			},
 		}
 	)
-	const makeSession = initializeSession()
-	const authRedirect = useAuthRedirect()
 
 	const form = useZodForm({
 		schema: loginSchema,
 	})
-
-	useEffect(() => {
-		console.log(loginResult)
-		if (loginResult.data?.signIn.success) {
-			makeSession(loginResult.data.signIn.session.id)
-			router.push('/feed/all')
-		}
-	}, [loginResult])
 
 	return (
 		<AuthLayout

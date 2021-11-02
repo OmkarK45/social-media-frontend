@@ -1,14 +1,15 @@
 import { ApolloClient, from, InMemoryCache, QueryOptions } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
 import { relayStylePagination } from '@apollo/client/utilities'
+import { onError } from '@apollo/client/link/error'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { useMemo } from 'react'
-import { API_URL } from './config'
+
 // @ts-ignore - I promise this exists
 declare module 'apollo-upload-client'
 // @ts-ignore
 
 import { createUploadLink } from 'apollo-upload-client'
+
 let apolloClient: ApolloClient<any>
 
 interface ClientOptions {
@@ -16,17 +17,12 @@ interface ClientOptions {
 	initialState?: Record<string, any>
 }
 
-export const preloadQuery = async (
+export async function preloadQuery(
 	context: GetServerSidePropsContext,
 	...queries: QueryOptions[]
-): Promise<GetServerSidePropsResult<{}>> => {
+): Promise<GetServerSidePropsResult<{}>> {
 	const client = createApolloClient({
-		headers: {
-			...(context.req.headers as Record<string, string>),
-			'Access-Control-Allow-Origin': '*', // you can add the domain names here or '*' will allow all domains
-			/* Required for cookies, authorization headers with HTTPS */
-			'Access-Control-Allow-Credentials': 'true',
-		},
+		headers: context.req.headers as Record<string, string>,
 	})
 
 	try {
@@ -38,9 +34,9 @@ export const preloadQuery = async (
 			},
 		}
 	} catch (e: any) {
-		const notFoundError = e.graphQLErrors.find(
-			(error: Error) => (error as any)?.extensions.code === 404
-		)
+		const notFoundError = e.graphQLErrors.find((error: Error) => {
+			return (error as any)?.extensions.code === 404
+		})
 
 		if (notFoundError) {
 			return {
@@ -49,10 +45,16 @@ export const preloadQuery = async (
 		}
 
 		return { props: {} }
+
+		// NOTE: By default, we treat errors to preloading as if we didn't attempt to
+		// preload the request at all. This allows the client to react to this, re-attempt
+		// the request, and react accordingly. If you'd rather the error trigger a failure
+		// in the server-side rendering itself, replace the return with the following line:
+		// throw e;
 	}
 }
 
-export const useApollo = (initialState?: Record<string, any>) => {
+export function useApollo(initialState?: Record<string, any>) {
 	const client = useMemo(
 		() => createApolloClient({ initialState }),
 		[initialState]
@@ -61,11 +63,7 @@ export const useApollo = (initialState?: Record<string, any>) => {
 	return client
 }
 
-export const createApolloClient = ({
-	initialState,
-	headers,
-}: ClientOptions) => {
-	const ssrMode = typeof window === 'undefined'
+export function createApolloClient({ initialState, headers }: ClientOptions) {
 	let nextClient = apolloClient
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -82,20 +80,19 @@ export const createApolloClient = ({
 
 	const uploadLink = new createUploadLink({
 		// uri: 'https://social-media-backend-production.up.railway.app/graphql',
-		uri: 'https://social-media-backend-production.up.railway.app/graphql',
+		uri:
+			typeof window === 'undefined'
+				? 'http://localhost:3000/api/graphql-micro'
+				: '/api/graphql-micro',
 
-		headers: {
-			...headers,
-			'Access-Control-Allow-Origin': '*', // you can add the domain names here or '*' will allow all domains
-			/* Required for cookies, authorization headers with HTTPS */
-			'Access-Control-Allow-Credentials': 'true',
-		},
+		headers,
 		credentials: 'include',
 	})
 
 	if (!nextClient) {
 		nextClient = new ApolloClient({
-			ssrMode,
+			ssrMode: typeof window === 'undefined',
+			credentials: 'include',
 			link: from([errorLink, uploadLink]),
 			cache: new InMemoryCache({
 				typePolicies: {
@@ -133,12 +130,21 @@ export const createApolloClient = ({
 		})
 	}
 
+	// If your page has Next.js data fetching methods that use Apollo Client,
+	// the initial state gets hydrated here
 	if (initialState) {
+		// Get existing cache, loaded during client side data fetching
 		const existingCache = nextClient.extract()
+
+		// Restore the cache using the data passed from
+		// getStaticProps/getServerSideProps combined with the existing cached data
 		nextClient.cache.restore({ ...existingCache, ...initialState })
 	}
 
-	if (ssrMode) return nextClient
+	// For SSG and SSR always create a new Apollo Client
+	if (typeof window === 'undefined') return nextClient
+
+	// Create the Apollo Client once in the client
 	if (!apolloClient) apolloClient = nextClient
 
 	return nextClient
