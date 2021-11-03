@@ -78,7 +78,7 @@ builder.mutationField('editProfile', (t) =>
 		resolve: async (query, _parent, { input }, { user }) => {
 			let username
 			let firstName
-
+			console.log('INPUT', input)
 			const avatarUpload = input.avatar ? await upload(input.avatar) : null
 
 			const coverImageUpload = input.coverImage

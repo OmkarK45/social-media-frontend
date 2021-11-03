@@ -20,9 +20,9 @@ export function UserHandle({ user }: UserHandleProps) {
 			</div>
 			<div className="flex-1 min-w-0">
 				<Link className="no-underline" href={`/profile/${user.username}`}>
-					<p className="text-sm font-medium  truncate">
-						{user.firstName + ' ' + user.lastName ? user.lastName : ''}
-						OK
+					<p className="text-sm font-medium truncate">
+						{user.firstName + ' '}
+						{user.lastName ? user.lastName : ''}
 					</p>
 					<p className="text-sm text-gray-500 truncate">
 						{'@' + user.username}

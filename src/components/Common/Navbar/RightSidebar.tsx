@@ -46,7 +46,7 @@ export function RightSidebar() {
 		},
 	})
 
-	if (error || !data) {
+	if (error) {
 		return (
 			<aside className="w-full sticky top-20">
 				<ErrorFallback
@@ -54,7 +54,7 @@ export function RightSidebar() {
 					action={() =>
 						refetch({
 							after: null,
-							first: 4,
+							first: 5,
 						})
 					}
 					buttonText="Retry"
@@ -63,7 +63,7 @@ export function RightSidebar() {
 		)
 	}
 
-	if (loading) return <LoadingFallback />
+	if (loading || !data) return <LoadingFallback />
 
 	if (data.whoToFollow.edges.length === 0) {
 		return (
@@ -89,12 +89,7 @@ export function RightSidebar() {
 					<div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
 						<GradientBar color="indigo" />
 						<div className="p-6">
-							<Heading
-								size="h5"
-								className="text-base font-medium text-gray-900"
-							>
-								Who to follow
-							</Heading>
+							<Heading size="h5">Who to follow</Heading>
 							<div className="mt-6 flow-root">
 								<ul
 									role="list"

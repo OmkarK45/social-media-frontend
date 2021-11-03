@@ -40,9 +40,7 @@ export function Hashtags() {
 		},
 	})
 
-	if (!data) return <h1>No Data</h1>
-
-	if (loading) return <LoadingFallback />
+	if (loading || !data) return <LoadingFallback />
 
 	if (error)
 		return <ErrorFallback noAction message="Failed to load hashtags." />

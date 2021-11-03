@@ -1,15 +1,18 @@
 import { gql, useQuery } from '@apollo/client'
 import { MeQuery } from './__generated__/useUser.generated'
 
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
 	query MeQuery {
 		me {
 			username
 			firstName
+			lastName
 			id
 			avatar
 			coverImage
 			coverImageBg
+			bio
+			email
 		}
 	}
 `

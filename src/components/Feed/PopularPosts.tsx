@@ -70,12 +70,7 @@ export function PopularPostsFeed() {
 		)
 	}
 	if (!data) {
-		return (
-			<ErrorFallback
-				noAction
-				message="Some error occured while fetching feed."
-			/>
-		)
+		return <LoadingFallback />
 	}
 
 	function handleNext() {

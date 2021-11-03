@@ -8,7 +8,13 @@
 		"start": "next start",
 		"lint": "next lint",
 		"codegen": "graphql-codegen --watch",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"db:migrate": "npx prisma migrate dev",
+		"db:generate": "npx prisma generate",
+		"db:reset": "npx prisma migrate reset",
+		"db:studio": "npx prisma studio --browser none",
+		"gql:schema": "ts-node -r dotenv/config src/graphql/schema.ts",
+		"postinstall": "npx prisma generate"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.4.10",

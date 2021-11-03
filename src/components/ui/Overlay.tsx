@@ -40,7 +40,7 @@ export function Overlay({
 										<div className="flex items-start justify-between">
 											<Dialog.Title
 												as={Heading}
-												className="text-lg font-medium text-gray-900"
+												className="text-lg font-bold text-gray-900"
 												size="h4"
 											>
 												{overlayTitle}{' '}

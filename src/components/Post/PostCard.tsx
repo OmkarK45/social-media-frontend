@@ -114,20 +114,24 @@ export function PostCard() {
 			fetchPolicy: 'cache-first',
 		}
 	)
-	const [likesCount, setLikesCount] = useState<number>(
-		data?.seePost.likes?.totalCount as number
-	)
-	const [hasLiked, setHasLiked] = useState<boolean>(
-		data?.seePost.isLiked as boolean
-	)
 
 	const [toggleLike] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
-		onCompleted: () => {
-			setHasLiked(!hasLiked)
-			setLikesCount(hasLiked ? likesCount - 1 : likesCount + 1)
+		update: (cache) => {
+			cache.modify({
+				id: `Post:${router.query.id as string}`,
+				fields: {
+					isLiked: (prev) => !prev,
+					likes: (prev) => {
+						return {
+							...prev,
+							totalCount: prev.totalCount + (data?.seePost.isLiked ? -1 : 1),
+						}
+					},
+				},
+			})
 		},
 	})
 
@@ -287,7 +291,7 @@ export function PostCard() {
 						<Card className="py-2 px-4 flex justify-between space-x-8">
 							<div className="flex space-x-6">
 								<span className="inline-flex">
-									<p className="font-bold">{likesCount}</p>
+									<p className="font-bold">{post.likes.totalCount}</p>
 									<button onClick={() => setLikesModal(true)}>
 										<p className="text-muted ml-1 ">Likes</p>{' '}
 									</button>
@@ -308,13 +312,15 @@ export function PostCard() {
 								<span className="inline-flex items-center text-sm">
 									<Button
 										onClick={async () => {
+											// setHasLiked(!hasLiked)
+											// setLikesCount(hasLiked ? likesCount - 1 : likesCount + 1)
 											await toggleLike({
 												variables: { id: post.id },
 											})
 										}}
 										variant="dark"
 									>
-										{hasLiked ? (
+										{data.seePost.isLiked ? (
 											<HiHeart
 												className="h-5 w-5 text-brand-600"
 												aria-hidden="true"
