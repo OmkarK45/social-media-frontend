@@ -115,7 +115,7 @@ export function PostCard() {
 		}
 	)
 
-	const [toggleLike] = useMutation<
+	const [toggleLike, { loading: isLikeLoading }] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
@@ -311,6 +311,7 @@ export function PostCard() {
 							<div className="flex space-x-6">
 								<span className="inline-flex items-center text-sm">
 									<Button
+										loading={isLikeLoading}
 										onClick={async () => {
 											// setHasLiked(!hasLiked)
 											// setLikesCount(hasLiked ? likesCount - 1 : likesCount + 1)

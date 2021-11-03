@@ -41,7 +41,7 @@ export const TOGGLE_LIKE_MUTATION = gql`
 export function FeedPostCard(props: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
-	const [toggleLike] = useMutation<
+	const [toggleLike, { loading }] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
@@ -156,6 +156,7 @@ export function FeedPostCard(props: Props) {
 					<div className="flex space-x-6">
 						<span className="inline-flex items-center space-x-2  ">
 							<Button
+								loading={loading}
 								variant="dark"
 								onClick={async () => {
 									await toggleLike({

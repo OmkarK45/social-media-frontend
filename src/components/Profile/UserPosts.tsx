@@ -77,6 +77,7 @@ export function UserPosts({
 	if (error) return <div>Something failed.</div>
 
 	const posts = data.seeProfile.posts.edges.map((e) => e?.node)
+
 	return (
 		<Tab.Group>
 			<Card.Body
