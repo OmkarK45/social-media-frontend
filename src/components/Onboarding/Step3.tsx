@@ -33,6 +33,9 @@ export function Step3() {
 
 	const form = useZodForm({
 		schema: ProfileFormSchema,
+		defaultValues: {
+			bio: user?.bio,
+		},
 	})
 
 	if (loading) return <LoadingFallback />

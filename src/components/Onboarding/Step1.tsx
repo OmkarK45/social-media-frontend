@@ -17,7 +17,8 @@ export function Step1() {
 						<div>Welcome to DogeSocial!</div>
 					</h2>
 					<p className="w-full mt-5 text-base leading-6 text-pink-100 md:w-3/4">
-						A social network for dogs.
+						A social network for people like you! See what your friends are up
+						to. Post memes, share photos, and more!
 					</p>
 				</div>
 			</div>

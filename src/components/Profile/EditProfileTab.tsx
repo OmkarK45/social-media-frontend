@@ -2,6 +2,7 @@ import { useQuery, gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { object, z } from 'zod'
+import { ME_QUERY, useUser } from '~/utils/useUser'
 import { Card } from '../ui/Card'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { FileInput } from '../ui/Form/FileInput'
@@ -12,7 +13,6 @@ import { TextArea } from '../ui/TextArea'
 import {
 	EditProfileMutation,
 	EditProfileMutationVariables,
-	EditProfileQuery,
 } from './__generated__/EditProfileTab.generated'
 
 const EditProfileFormSchema = object({
@@ -41,20 +41,6 @@ const EditProfileFormSchema = object({
 	coverImage: z.any().optional(),
 })
 
-export const EDIT_PROFILE_QUERY = gql`
-	query EditProfileQuery {
-		me {
-			username
-			firstName
-			bio
-			lastName
-			email
-			avatar
-			coverImage
-		}
-	}
-`
-
 export const EDIT_PROFILE_MUTATION = gql`
 	mutation EditProfileMutation($input: EditProfileInput!) {
 		editProfile(input: $input) {
@@ -67,30 +53,37 @@ export const EDIT_PROFILE_MUTATION = gql`
 `
 
 export function EditProfileTab() {
-	const { data, loading } = useQuery<EditProfileQuery>(EDIT_PROFILE_QUERY)
+	const { user, loading } = useUser()
 
 	const [updateProfile] = useMutation<
 		EditProfileMutation,
 		EditProfileMutationVariables
-	>(EDIT_PROFILE_MUTATION)
+	>(EDIT_PROFILE_MUTATION, {
+		refetchQueries: ['MeQuery', ME_QUERY],
+	})
 
 	const form = useZodForm({
 		schema: EditProfileFormSchema,
+		defaultValues: {
+			username: user?.username,
+			bio: user?.bio,
+			firstName: user?.firstName,
+			lastName: user?.lastName,
+			email: user?.email,
+		},
 	})
 
 	useEffect(() => {
-		if (!data) return
-
 		form.reset({
-			username: data.me.username,
-			bio: data.me.bio,
-			email: data.me.email,
-			firstName: data.me.firstName,
-			lastName: data.me.lastName,
+			username: user?.username,
+			bio: user?.bio,
+			firstName: user?.firstName,
+			lastName: user?.lastName,
+			email: user?.email,
 		})
-	}, [data])
+	}, [user])
 
-	if (!data || loading) {
+	if (loading) {
 		return <LoadingFallback />
 	}
 
@@ -111,9 +104,9 @@ export function EditProfileTab() {
 						...changedValues,
 						avatar: values?.avatar?.[0],
 						coverImage: values?.coverImage?.[0],
+						bio: values.bio,
 					}
-					console.log(changedValues, input)
-
+					console.log(input)
 					await updateProfile({
 						variables: { input } as EditProfileMutationVariables,
 					})
@@ -132,7 +125,7 @@ export function EditProfileTab() {
 						<div className="flex space-x-3 ">
 							<div className="flex-[0.3]">
 								<FileInput
-									existingimage={data.me?.avatar}
+									existingimage={user?.avatar}
 									name="avatar"
 									accept="image/png, image/jpg, image/jpeg, image/gif"
 									multiple={false}
@@ -140,7 +133,7 @@ export function EditProfileTab() {
 							</div>
 							<div className="flex-[0.7]">
 								<FileInput
-									existingimage={data.me?.coverImage}
+									existingimage={user?.coverImage}
 									accept="image/png, image/jpg, image/jpeg, image/gif"
 									name="coverImage"
 									label="Cover Image"

@@ -40,20 +40,24 @@ export const TOGGLE_LIKE_MUTATION = gql`
 
 export function FeedPostCard(props: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const [likesCount, setLikesCount] = useState<number>(
-		props.post.likes?.totalCount as number
-	)
-	const [hasLiked, setHasLiked] = useState<boolean>(
-		props.post.isLiked as boolean
-	)
 
 	const [toggleLike] = useMutation<
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
-		onCompleted: () => {
-			setHasLiked(!hasLiked)
-			setLikesCount(hasLiked ? likesCount - 1 : likesCount + 1)
+		update: (cache) => {
+			cache.modify({
+				id: `Post:${props.post.id as string}`,
+				fields: {
+					isLiked: (prev) => !prev,
+					likes: (prev) => {
+						return {
+							...prev,
+							totalCount: prev.totalCount + (props?.post.isLiked ? -1 : 1),
+						}
+					},
+				},
+			})
 		},
 	})
 
@@ -64,7 +68,7 @@ export function FeedPostCard(props: Props) {
 	return (
 		<Card
 			noPadding
-			className="max-w-2xl overflow-hidden bg-white my-3 sm:rounded-lg"
+			className="max-w-2xl overflow-hidden bg-white my-3 rounded-lg"
 		>
 			<article>
 				<div className="px-6 py-4">
@@ -162,12 +166,12 @@ export function FeedPostCard(props: Props) {
 								}}
 								className="rounded-full overflow-hidden space-x-2"
 							>
-								{hasLiked ? (
+								{props.post.isLiked ? (
 									<HiHeart className="w-5 h-5 text-brand-700" />
 								) : (
 									<HiOutlineHeart className="w-5 h-5" />
 								)}
-								<p>{likesCount}</p>
+								<p>{props.post.likes?.totalCount}</p>
 							</Button>
 						</span>
 						<span className="inline-flex items-center space-x-2">

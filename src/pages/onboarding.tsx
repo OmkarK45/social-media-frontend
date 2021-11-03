@@ -56,7 +56,7 @@ export default function Onboarding() {
 
 	return (
 		<div className="px-2 md:px-0 min-h-screen">
-			<div className="fixed top-0 w-full z-50 bg-white dark:bg-gray-700">
+			<div className="fixed top-0 w-full z-50 bg-white dark:bg-gray-900">
 				<div className="py-2 flex justify-center items-center">
 					<Link href="/">
 						<svg
@@ -74,7 +74,9 @@ export default function Onboarding() {
 					</Link>
 					<Heading size="h5">DogeSocial</Heading>
 				</div>
-				<div className={`w-full bg-gray-200 rounded-full h-2.5`}>
+				<div
+					className={`w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5`}
+				>
 					<div
 						className="bg-brand-500 h-2.5 rounded-full"
 						style={{
@@ -88,13 +90,13 @@ export default function Onboarding() {
 					></div>
 				</div>
 			</div>
-			<div className="lg:px-8 mt-10 py-6 mx-auto w-full sm:py-6 lg:py-10 max-w-2xl">
+			<div className="lg:px-8 mt-10 py-6 mx-auto w-full sm:py-6 lg:py-10 max-w-2xl ">
 				<Tab.Group
 					onChange={(idx) => handleChange(idx)}
 					defaultIndex={currentStep}
 				>
 					<Tab.List
-						className="-mb-px overflow-hideen border-b border-gray-200 relative z-0 rounded-lg shadow flex divide-x divide-gray-200"
+						className="-mb-px overflow-hideen border-b border-gray-200 dark:border-gray-800 relative z-0 rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-600"
 						aria-label="Tabs"
 					>
 						{onboardingTabs.map((step, tabIdx) => {
@@ -103,11 +105,11 @@ export default function Onboarding() {
 									key={step.id}
 									className={clsx(
 										currentStep === step.id
-											? 'bg-brand-100 text-brand-700'
+											? 'bg-brand-100 text-brand-700 dark:bg-gray-700 dark:text-brand-500'
 											: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
 										tabIdx === 0 ? 'rounded-l-lg' : '',
 										tabIdx === onboardingTabs.length - 1 ? 'rounded-r-lg' : '',
-										'group relative min-w-0 flex-1  overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10'
+										'group relative min-w-0 flex-1  overflow-hidden bg-white dark:bg-gray-800 py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10'
 									)}
 								>
 									<p className="text-base font-medium">{step.label}</p>

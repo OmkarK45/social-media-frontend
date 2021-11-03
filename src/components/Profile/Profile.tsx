@@ -100,7 +100,7 @@ export function Profile({ username }: ProfileProps) {
 				<div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
 					<div className="flex">
 						<img
-							className="h-24 w-24 rounded-full ring-4 ring-brand-500 sm:h-32 sm:w-32"
+							className="h-24 w-24 rounded-full object-cover ring-4 ring-brand-500 sm:h-32 sm:w-32"
 							src={
 								user.avatar ??
 								'https://res.cloudinary.com/dogecorp/image/upload/v1631712846/dogesocial/v1/images/8_ni0eag.svg'
