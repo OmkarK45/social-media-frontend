@@ -14,6 +14,7 @@ import ButtonOrLink from '../ui/ButtonOrLink'
 import { Menu, MenuItem } from '../ui/Dropdown'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
+import { IndeterminateProgress } from '../ui/Progress'
 import { FollowButton } from './FollowButton'
 import { UserPosts } from './UserPosts'
 import {
@@ -70,7 +71,12 @@ export function Profile({ username }: ProfileProps) {
 			</div>
 		)
 
-	if (!data || loading) return <LoadingFallback />
+	if (loading || !data)
+		return (
+			<div className="mt-[74px]">
+				<IndeterminateProgress />
+			</div>
+		)
 
 	const user = data.seeProfile
 

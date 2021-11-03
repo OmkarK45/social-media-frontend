@@ -157,4 +157,74 @@ input:-webkit-autofill:active {
 	display: none;
 }
 
+.dark div.css-n21wkn {
+	background: theme('colors.gray.900') none repeat scroll 0% 0% / auto
+		padding-box border-box;
+	background-color: #171717;
+}
+div.css-n21wkn {
+	background: #edf2f7 none repeat scroll 0% 0% / auto padding-box border-box;
+	background-color: #edf2f7;
+
+	bottom: 0px;
+	box-sizing: border-box;
+	color: #2d3748;
+	font-family: Inter, sans-serif;
+	height: 0.25rem;
+	left: 0px;
+	line-height: 24px;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	position: relative;
+	right: 0px;
+	top: 0px;
+	word-wrap: break-word;
+}
+.dark div.css-h5ends {
+	background-image: linear-gradient(
+		to right,
+		transparent 0%,
+		theme('colors.pink.600') 50%,
+		transparent 100%
+	);
+}
+div.css-h5ends {
+	animation: animation-11lmxjq 1s ease 0s infinite normal none running;
+	background-image: linear-gradient(
+		to right,
+		transparent 0%,
+		theme('colors.pink.900') 50%,
+		transparent 100%
+	);
+	bottom: 0px;
+	color: #2d3748;
+	height: 100%;
+	left: 244.1px;
+	line-height: 24px;
+	min-width: 50%;
+	overflow-wrap: break-word;
+	position: absolute;
+	right: -69.5px;
+	top: 0px;
+	transition: background-color 0.3s ease 0s, border-color 0.3s ease 0s,
+		color 0.3s ease 0s, fill 0.3s ease 0s, stroke 0.3s ease 0s,
+		opacity 0.3s ease 0s, box-shadow 0.3s ease 0s, transform 0.3s ease 0s;
+	transition-duration: 0.3s;
+	transition-property: background-color, border-color, color, fill, stroke,
+		opacity, box-shadow, transform;
+	width: 0%;
+	will-change: left;
+	word-wrap: break-word;
+}
+
+@keyframes animation-11lmxjq {
+	0% {
+		left: -40%;
+	}
+
+	100% {
+		left: 100%;
+	}
+}
+
 @tailwind utilities;

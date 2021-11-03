@@ -12,6 +12,7 @@ import { ErrorFallback } from '~/components/ui/Fallbacks/ErrorFallback'
 import React from 'react'
 import { SEO } from '../SEO'
 import { WhoToFollow } from './WhoToFollow'
+import { IndeterminateProgress } from '../ui/Progress'
 
 const FEED_QUERY = gql`
 	query FeedQuery($after: ID) {
@@ -95,7 +96,7 @@ export function Feed() {
 						hasMore={data.feed.pageInfo.hasNextPage}
 						next={handleNext}
 						dataLength={length}
-						loader={<LoadingFallback />}
+						loader={<IndeterminateProgress />}
 						endMessage={<EndMessage />}
 					>
 						{data.feed.edges.map((edge, index) => {

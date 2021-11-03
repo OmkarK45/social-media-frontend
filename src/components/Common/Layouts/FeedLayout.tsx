@@ -10,6 +10,7 @@ import { CurrentUser } from '~/components/User/CurrentUser'
 import { useUser } from '~/utils/useUser'
 import Spinner from '~/components/ui/Spinner'
 import { PopularPostsFeed } from '~/components/Feed/PopularPosts'
+import { IndeterminateProgress } from '~/components/ui/Progress'
 
 const RightSidebar = dynamic<{}>(
 	async () => {
@@ -45,7 +46,12 @@ export const navigation = [
 
 export function FeedLayout() {
 	const { user, loading } = useUser()
-	if (loading || !user) return <Spinner className="w-5 h-5" />
+	if (loading || !user)
+		return (
+			<div className="mt-[74px]">
+				<IndeterminateProgress />
+			</div>
+		)
 	return (
 		<div className="py-20">
 			<div className="max-w-3xl  mx-auto sm:px-6 lg:max-w-full xl:max-w-[90rem] lg:grid lg:grid-cols-12 lg:gap-8">

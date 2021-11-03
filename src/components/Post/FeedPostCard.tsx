@@ -75,7 +75,7 @@ export function FeedPostCard(props: Props) {
 					<div className="flex space-x-3">
 						<div className="flex-shrink-0">
 							<img
-								className="h-10 w-10 rounded-full"
+								className="h-10 w-10 rounded-full object-cover"
 								src={props.post.user.avatar!}
 								alt={`Profile avatar of ${props.post.user.username}`}
 							/>
