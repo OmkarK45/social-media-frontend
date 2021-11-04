@@ -161,8 +161,7 @@ export function Profile({ username }: ProfileProps) {
 										className="flex-shrink-0 mr-1.5 h-5 w-5"
 										aria-hidden="true"
 									/>
-									Joined{' '}
-									{format(new Date('2021-09-05 10:09:49.975'), 'MMMM, yyyy')}
+									Joined {format(new Date(user.createdAt), 'MMMM, yyyy')}
 								</dd>
 							</dl>
 						</div>
