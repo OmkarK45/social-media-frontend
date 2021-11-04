@@ -66,6 +66,8 @@ export const POST_QUERY = gql`
 			user {
 				username
 				avatar
+				firstName
+				lastName
 			}
 			likes {
 				totalCount
@@ -198,7 +200,8 @@ export function PostCard() {
 												href={`/profile/${post.user.username}`}
 												className="no-underline"
 											>
-												{post.user.username}
+												{post.user.firstName}{' '}
+												{post.user.lastName ? post.user.lastName : ''}
 												<span className="text-muted ml-1 text-sm">
 													@{post.user.username}
 												</span>

@@ -11,7 +11,7 @@ export function UserHandle({ user }: UserHandleProps) {
 		<>
 			<div className="flex-shrink-0">
 				<Image
-					className="h-10 w-10 rounded-full"
+					className="h-10 w-10 rounded-full object-cover"
 					src={user.avatar!}
 					width="40px"
 					height="40px"
