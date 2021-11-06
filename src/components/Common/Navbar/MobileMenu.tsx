@@ -100,7 +100,7 @@ export function MobileMenu({ open, user }: MobileMenuProps) {
 											? link.href(user.username!)
 											: link.href
 									}
-									className="flex no-underline px-3 py-2 rounded-md text-base  hover:bg-gray-200"
+									className="flex no-underline px-3 py-2 rounded-md text-base  hover:bg-gray-200 dark:hover:bg-gray-700"
 								>
 									<span className="space-x-2 flex">
 										<Icon className="h-6 w-6" /> <span>{link.label}</span>

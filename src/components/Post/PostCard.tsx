@@ -251,13 +251,14 @@ export function PostCard() {
 								</div>
 							)}
 							{post.image && (
-								<div className="aspect-w-1 aspect-h-1">
+								<div className="aspect-w-1 aspect-h-1 ">
 									<NextImage
 										onClick={() => setImageModal(true)}
 										src={post.image}
 										layout="fill"
 										objectFit="cover"
 										placeholder="empty"
+										className="!w-full"
 									/>
 								</div>
 							)}
