@@ -14,6 +14,7 @@ import {
 import { IconType } from 'react-icons/lib'
 import { Button } from '../ui/Button'
 import { HiHeart } from 'react-icons/hi'
+import { Alert } from '../ui/Alert'
 
 interface TechStackInfo {
 	name: string
@@ -162,6 +163,12 @@ export function Footer() {
 						<p className="cursor-pointer">Feedback</p>
 					</FeedbackFish>
 				</div>
+			</div>
+			<div className="mt-4 shadow-lg">
+				<Alert
+					status="warning"
+					message="This app is in preview beta. Not all features will work as expected. Any sensitive information will be lost."
+				/>
 			</div>
 		</div>
 	)
