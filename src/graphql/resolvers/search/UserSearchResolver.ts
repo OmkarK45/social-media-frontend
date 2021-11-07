@@ -11,7 +11,7 @@ builder.queryField('searchUser', (t) =>
 				...query,
 				where: {
 					username: {
-						startsWith: keyword.toLowerCase(),
+						startsWith: keyword,
 					},
 				},
 			})

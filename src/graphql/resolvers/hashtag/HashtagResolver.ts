@@ -39,7 +39,7 @@ builder.queryField('searchByHashtag', (t) =>
 					hashtags: {
 						some: {
 							hashtag: {
-								startsWith: keyword.toLowerCase(),
+								startsWith: keyword,
 							},
 						},
 					},
