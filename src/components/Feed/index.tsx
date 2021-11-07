@@ -125,7 +125,9 @@ export function EndMessage() {
 				<div className="flex flex-col items-center justify-center">
 					<HiCheckCircle className="w-10 h-10 mb-1 text-brand-500" />
 					<p className="font-medium ">You&apos;re All Caught Up ! </p>
-					<span>Empty Feed? Follow people to see their posts.</span>
+					<span className="text-center">
+						Empty Feed? Follow people to see their posts.
+					</span>
 				</div>
 			</div>
 		</Card>
