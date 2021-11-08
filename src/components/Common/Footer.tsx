@@ -164,7 +164,7 @@ export function Footer() {
 					</FeedbackFish>
 				</div>
 			</div>
-			<div className="mt-4 shadow-lg">
+			<div className="mt-4 mx-auto">
 				<Alert
 					status="warning"
 					message="This app is in preview beta. Not all features will work as expected. Any sensitive information will be lost."
