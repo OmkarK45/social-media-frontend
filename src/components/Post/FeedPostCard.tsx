@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { ApolloCache, gql, useMutation } from '@apollo/client'
 import {
 	HiHeart,
 	HiOutlineHeart,
@@ -23,6 +23,7 @@ import NextImage from 'next/image'
 import { Post } from '~/__generated__/schema.generated'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import toast from 'react-hot-toast'
+import { useDebounce } from 'use-debounce'
 
 type DeepPartial<T> = {
 	[propertyKey in keyof T]?: DeepPartial<T[propertyKey]>
@@ -45,21 +46,25 @@ export function FeedPostCard(props: Props) {
 		ToggleLikeMutation,
 		ToggleLikeMutationVariables
 	>(TOGGLE_LIKE_MUTATION, {
-		update: (cache) => {
-			cache.modify({
-				id: `Post:${props.post.id as string}`,
-				fields: {
-					isLiked: (prev) => !prev,
-					likes: (prev) => {
-						return {
-							...prev,
-							totalCount: prev.totalCount + (props?.post.isLiked ? -1 : 1),
-						}
-					},
-				},
-			})
-		},
+		update: (cache) => handleCacheUpdate(cache),
 	})
+
+	const [debounced] = useDebounce(toggleLike, 1000)
+
+	function handleCacheUpdate(cache: ApolloCache<any>) {
+		cache.modify({
+			id: `Post:${props.post.id as string}`,
+			fields: {
+				isLiked: (prev) => !prev,
+				likes: (prev) => {
+					return {
+						...prev,
+						totalCount: prev.totalCount + (props?.post.isLiked ? -1 : 1),
+					}
+				},
+			},
+		})
+	}
 
 	if (!props.post || !props.post.user) {
 		return <ErrorFallback message="Failed to load" />
@@ -157,11 +162,7 @@ export function FeedPostCard(props: Props) {
 								loading={loading}
 								variant="dark"
 								onClick={async () => {
-									await toggleLike({
-										variables: {
-											id: props.post.id!,
-										},
-									})
+									await debounced({ variables: { id: props.post.id! } })
 								}}
 								className="rounded-full overflow-hidden space-x-2"
 							>

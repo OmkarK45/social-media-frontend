@@ -61,7 +61,7 @@ export function NotificationOverlay({
 	open,
 	setOpen,
 }: NotificationOverlayProps) {
-	const [loadNotifications, { data, error, fetchMore }] = useLazyQuery<
+	const [loadNotifications, { data, error, fetchMore, loading }] = useLazyQuery<
 		NotificationsQuery,
 		NotificationsQueryVariables
 	>(NOTIFICATIONS_QUERY, {
@@ -121,10 +121,16 @@ export function NotificationOverlay({
 						})}
 					</InfiniteScroll>
 				) : (
-					<ErrorFallback
-						noAction
-						message="No notifications for now. All caught up!"
-					/>
+					<>
+						{loading ? (
+							<Spinner className="w-5 h-5" />
+						) : (
+							<ErrorFallback
+								noAction
+								message="No notifications for now. All caught up!"
+							/>
+						)}
+					</>
 				)}
 			</div>
 		</Overlay>
