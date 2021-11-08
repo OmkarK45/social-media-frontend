@@ -31,14 +31,14 @@ export function Navbar() {
 	return (
 		<Popover
 			as="header"
-			className={({ open }) =>
+			className={({ open, close }) =>
 				clsx(
 					open ? 'fixed inset-0 z-40 overflow-y-auto' : '',
 					'bg-white dark:bg-gray-900 shadow-sm lg:static lg:overflow-y-visible'
 				)
 			}
 		>
-			{({ open }) => (
+			{({ open, close }) => (
 				<>
 					<GradientBar
 						color="pink"
@@ -102,7 +102,7 @@ export function Navbar() {
 						open={openNotifications}
 						setOpen={setNotificationOpen}
 					/>
-					<MobileMenu user={user} open={open} />
+					<MobileMenu user={user} open={open} closeFx={close} />
 				</>
 			)}
 		</Popover>

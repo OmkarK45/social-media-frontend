@@ -75,6 +75,7 @@
 		"react-infinite-scroll-component": "^6.1.0",
 		"react-laag": "^2.0.3",
 		"sharp": "^0.29.2",
+		"use-debounce": "^7.0.1",
 		"yup": "^0.32.11",
 		"zod": "^3.11.6",
 		"zustand": "^3.5.10"

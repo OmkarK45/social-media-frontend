@@ -53,20 +53,7 @@ export function Followers({ username }: FollowersProps) {
 		fetchPolicy: 'cache-first',
 	})
 
-	if (!data) {
-		return <ErrorFallback message="No followers for the user." />
-	}
-
 	if (error) return <ErrorFallback message="Something went wrong." />
-
-	if (data.seeProfile.followers.edges.length === 0)
-		return (
-			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
-				<h1 className="text-muted font-medium text-center">
-					There are no users {username} are followed by.
-				</h1>
-			</div>
-		)
 
 	if (loading) {
 		return (
@@ -75,6 +62,14 @@ export function Followers({ username }: FollowersProps) {
 			</div>
 		)
 	}
+	if (!data || data.seeProfile.followers.edges.length === 0)
+		return (
+			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
+				<h1 className="text-muted font-medium text-center">
+					There are no users {username} are followed by.
+				</h1>
+			</div>
+		)
 
 	return (
 		<>
@@ -88,7 +83,7 @@ export function Followers({ username }: FollowersProps) {
 								console.log('called')
 								fetchMore({
 									variables: {
-										first: 2,
+										first: 10,
 										after: data.seeProfile.followers.pageInfo.endCursor,
 										username,
 									},
