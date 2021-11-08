@@ -7,9 +7,12 @@ import { Link } from '~/components/ui/Link'
 import { useAuthRedirect } from '~/utils/useAuthRedirect'
 import { User } from '~/__generated__/schema.generated'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import ButtonOrLink from '~/components/ui/ButtonOrLink'
 interface MobileMenuProps {
 	open: boolean
 	user: Partial<User>
+	closeFx: () => void
 }
 type TLink = {
 	href: string | ((username: string) => string)
@@ -43,9 +46,9 @@ const LOGOUT_MUTATION = gql`
 	}
 `
 
-export function MobileMenu({ open, user }: MobileMenuProps) {
+export function MobileMenu({ open, user, closeFx }: MobileMenuProps) {
 	const authRedirect = useAuthRedirect()
-
+	const router = useRouter()
 	const [signout] = useMutation(LOGOUT_MUTATION, {
 		onCompleted: () => {
 			authRedirect()
@@ -93,24 +96,37 @@ export function MobileMenu({ open, user }: MobileMenuProps) {
 						{links.map((link, idx) => {
 							const Icon = link.icon
 							return (
-								<Link
+								<ButtonOrLink
 									key={idx}
-									href={
-										typeof link.href === 'function'
-											? link.href(user.username!)
-											: link.href
-									}
+									onClick={() => {
+										closeFx()
+										router.push(
+											typeof link.href === 'function'
+												? link.href(user.username!)
+												: link.href,
+											undefined,
+											{ shallow: true }
+										)
+									}}
 									className="flex no-underline px-3 py-2 rounded-md text-base  hover:bg-gray-200 dark:hover:bg-gray-700"
 								>
 									<span className="space-x-2 flex">
 										<Icon className="h-6 w-6" /> <span>{link.label}</span>
 									</span>
-								</Link>
+								</ButtonOrLink>
 							)
 						})}
 					</div>
 					<div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
-						<Button className="mt-2" fullWidth href="/post/new" size="lg">
+						<Button
+							className="mt-2"
+							fullWidth
+							onClick={() => {
+								closeFx()
+								router.push('/post/new', undefined, { shallow: true })
+							}}
+							size="lg"
+						>
 							New Post
 						</Button>
 					</div>

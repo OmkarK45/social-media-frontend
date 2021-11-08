@@ -55,19 +55,6 @@ export function Following({ username }: FollowingProps) {
 		fetchPolicy: 'cache-first',
 	})
 
-	if (!data) {
-		return <ErrorFallback message="No following list for this user." />
-	}
-
-	if (data.seeProfile.following.edges.length === 0)
-		return (
-			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
-				<h1 className="text-muted font-medium text-center">
-					There are no users {username} are followed by.
-				</h1>
-			</div>
-		)
-
 	if (loading) {
 		return (
 			<div className="py-6">
@@ -75,6 +62,15 @@ export function Following({ username }: FollowingProps) {
 			</div>
 		)
 	}
+
+	if (!data || data.seeProfile.following.edges.length === 0)
+		return (
+			<div className="px-4 py-5 sm:p-6 flex items-start justify-center">
+				<h1 className="text-muted font-medium text-center">
+					There are no users {username} are followed by.
+				</h1>
+			</div>
+		)
 
 	return (
 		<>
@@ -87,7 +83,7 @@ export function Following({ username }: FollowingProps) {
 							next={() => {
 								fetchMore({
 									variables: {
-										first: 2,
+										first: 10,
 										after: data.seeProfile.following.pageInfo.endCursor,
 										username,
 									},
