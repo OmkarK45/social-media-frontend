@@ -49,10 +49,6 @@ export function FeedPostCard(props: Props) {
 		update: (cache) => handleCacheUpdate(cache),
 	})
 
-	const debounced = useDebouncedCallback((id) => {
-		toggleLike({ variables: { id } })
-	}, 1000)
-
 	function handleCacheUpdate(cache: ApolloCache<any>) {
 		cache.modify({
 			id: `Post:${props.post.id as string}`,
@@ -164,7 +160,7 @@ export function FeedPostCard(props: Props) {
 								loading={loading}
 								variant="dark"
 								onClick={async () => {
-									await debounced({ variables: { id: props.post.id! } })
+									await toggleLike({ variables: { id: props.post.id! } })
 								}}
 								className="rounded-full overflow-hidden space-x-2"
 							>
