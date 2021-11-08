@@ -23,7 +23,7 @@ import NextImage from 'next/image'
 import { Post } from '~/__generated__/schema.generated'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import toast from 'react-hot-toast'
-import { useDebounce } from 'use-debounce'
+import { useDebouncedCallback } from 'use-debounce'
 
 type DeepPartial<T> = {
 	[propertyKey in keyof T]?: DeepPartial<T[propertyKey]>
@@ -49,7 +49,9 @@ export function FeedPostCard(props: Props) {
 		update: (cache) => handleCacheUpdate(cache),
 	})
 
-	const [debounced] = useDebounce(toggleLike, 1000)
+	const debounced = useDebouncedCallback((id) => {
+		toggleLike({ variables: { id } })
+	}, 1000)
 
 	function handleCacheUpdate(cache: ApolloCache<any>) {
 		cache.modify({
