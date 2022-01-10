@@ -167,7 +167,7 @@ export function Footer() {
 			<div className="mt-4 mx-auto">
 				<Alert
 					status="warning"
-					message="This app is in preview beta. Not all features will work as expected. Any sensitive information will be lost."
+					message="Do not store any sensitive information. Any sensitive information will be lost."
 				/>
 			</div>
 		</div>

@@ -40,7 +40,9 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 					<div>{children}</div>
 				</Card.Body>
 			</Card>
-			<Footer />
+			<div className="mx-auto">
+				<Footer />
+			</div>
 		</main>
 	)
 }

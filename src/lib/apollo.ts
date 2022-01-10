@@ -45,12 +45,6 @@ export async function preloadQuery(
 		}
 
 		return { props: {} }
-
-		// NOTE: By default, we treat errors to preloading as if we didn't attempt to
-		// preload the request at all. This allows the client to react to this, re-attempt
-		// the request, and react accordingly. If you'd rather the error trigger a failure
-		// in the server-side rendering itself, replace the return with the following line:
-		// throw e;
 	}
 }
 
@@ -79,7 +73,6 @@ export function createApolloClient({ initialState, headers }: ClientOptions) {
 	})
 
 	const uploadLink = new createUploadLink({
-		// uri: 'https://social-media-backend-production.up.railway.app/graphql',
 		uri:
 			typeof window === 'undefined'
 				? 'http://localhost:3000/api/graphql-micro'
