@@ -14,7 +14,8 @@ import {
 	LoginFormMutationVariables,
 } from './__generated__/SignIn.generated'
 import FormSubmitButton from '../ui/Form/SubmitButton'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Button } from '../ui/Button'
 
 const loginSchema = object({
 	email: string().email(),
@@ -55,6 +56,17 @@ export function LoginForm() {
 		schema: loginSchema,
 	})
 
+	async function handleGuestLogin(e: any) {
+		form.setValue('email', 'test_account@dogesocial.app')
+		form.setValue('password', 'test_user')
+		e.preventDefault()
+		await login({
+			variables: {
+				input: { email: 'test_account@dogesocial.app', password: 'test_user' },
+			},
+		})
+	}
+
 	return (
 		<AuthLayout
 			title="Sign In."
@@ -84,7 +96,10 @@ export function LoginForm() {
 					{...form.register('password')}
 				/>
 
-				<FormSubmitButton>Login</FormSubmitButton>
+				<FormSubmitButton size="lg">Login</FormSubmitButton>
+				<Button variant="dark" size="lg" onClick={handleGuestLogin}>
+					Login as guest
+				</Button>
 			</Form>
 			<div>
 				<Card rounded="lg" className="mt-4">
